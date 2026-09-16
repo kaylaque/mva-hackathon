@@ -179,3 +179,22 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Local hackathon data and derived artifacts
+data/raw/
+data/processed/
+results/
+*.vcf
+*.vcf.gz
+*.vcf.gz.tbi
+
+# SageBio MVA hackathon WGS inputs
+input/WGS_EX2312012_HGWCNDSX7.vcf.gz
+input/WGS_EX2312012_HGWCNDSX7.vcf.gz.tbi
+*.bcf
+*.bcf.csi
+*.bam
+*.bai
+*.fastq
+*.fastq.gz
+.gitignore_*
