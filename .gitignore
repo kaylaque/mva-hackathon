@@ -198,3 +198,4 @@ input/WGS_EX2312012_HGWCNDSX7.vcf.gz.tbi
 *.fastq
 *.fastq.gz
 .gitignore_*
+.history
