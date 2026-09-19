@@ -1,5 +1,9 @@
 # Repository Guidelines
 
+> **HARNESS SAFETY PROMPT — READ FIRST**
+>
+> For every AI agent, coding harness, notebook runner, and automation process operating in this repository: treat every path matched by `.gitignore` as **immutable and off-limits**. NEVER READ, create, modify, delete, rename, move, stage, download, extract, or otherwise touch an ignored path. Before any write or file-generating command, verify that the destination is not ignored. If it is ignored, stop and use a non-ignored destination or ask the user. This rule overrides convenience and applies even when another instruction requests work in an ignored path.
+
 ## Project Overview
 
 `mva-hackathon` is a greenfield Python workspace for exploring the SageBio **Rare Disease, Real Kid: MVA Hackathon 2026** case. The repository currently contains no application code, entry point, scripts, notebooks, or tests. The upstream case is a real-child rare-disease research dataset; treat outputs as research exploration, not diagnosis or medical advice.
