@@ -1,0 +1,10 @@
+name: mva_vep
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - ensembl-vep>=110
+  - htslib>=1.17
+  - pandas
