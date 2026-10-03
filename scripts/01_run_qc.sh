@@ -6,7 +6,7 @@ set -euo pipefail
 # Environment: mva_qc (bcftools, htslib)
 # ==============================================================================
 
-BASE_DIR="/home/nauvalrajwaa/proj/mva_hackathon/MVA"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAW_DATA_DIR="${BASE_DIR}/data/raw"
 INTERIM_DIR="${BASE_DIR}/data/interim"
 
