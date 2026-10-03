@@ -12,7 +12,7 @@ INTERIM_DIR="${BASE_DIR}/data/interim"
 
 FILTERED_VCF="${INTERIM_DIR}/filtered/pass_quality.vcf.gz"
 VEP_OUT_DIR="${INTERIM_DIR}/vep"
-CACHE_DIR="${HOME}/.vep"
+CACHE_DIR="${BASE_DIR}/data/input/refs/vep"
 ASSEMBLY="GRCh38"
 
 # 1. Verify input VCF file exists

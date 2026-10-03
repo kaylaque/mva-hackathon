@@ -30,7 +30,7 @@ class PipelinePaths:
 
     @property
     def references(self) -> Path:
-        return self.root / "database" / "refs"
+        return self.data / "input" / "refs"
 
     @property
     def vep_input(self) -> Path:

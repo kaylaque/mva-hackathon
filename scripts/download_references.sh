@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Download public GRCh38 resources into database/refs. Never stores patient data.
+# Download public GRCh38 resources into data/input/refs. Never stores patient data.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REFS="${ROOT}/database/refs"
+REFS="${ROOT}/data/input/refs"
 
 fetch() {
   local url="$1" destination="$2"

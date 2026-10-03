@@ -7,7 +7,7 @@ set -euo pipefail
 # ==============================================================================
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-RAW_DATA_DIR="${BASE_DIR}/data/raw"
+RAW_DATA_DIR="${BASE_DIR}/data/input/patient"
 INTERIM_DIR="${BASE_DIR}/data/interim"
 
 INPUT_VCF="${RAW_DATA_DIR}/WGS_EX2312012_HGWCNDSX7.vcf.gz"

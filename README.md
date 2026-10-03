@@ -32,10 +32,11 @@ Supported inputs include `.vcf`, `.vcf.gz`, `.bam`, `.cram`, `.fastq`, and `.fas
 mva-hackathon/
 ├── data/
 │   ├── README.md                     # private-data contract and stage schemas
-│   ├── raw/                          # source patient data (ignored)
+│   ├── input/
+│   │   ├── patient/                  # source patient data (ignored)
+│   │   └── refs/                     # large public reference assets (ignored)
 │   ├── interim/                      # resumable private stage artifacts (ignored)
 │   └── processed/                    # consolidated evidence tables (ignored)
-├── database/refs/                    # large public reference assets (local only)
 ├── envs/                             # conda environments for VCF/VEP tooling
 ├── scripts/
 │   ├── 01_run_qc.sh                  # bcftools QC + filtering
