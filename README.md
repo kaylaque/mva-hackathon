@@ -49,51 +49,89 @@ mva-hackathon/
 └── pyproject.toml / uv.lock
 ```
 
-## WGS variant annotation and enrichment pipeline
+## End-to-end analysis flow
 
-The established QC → snpEff → VEP workflow emits private intermediate files
-under `data/interim/`. The enrichment layer consumes the latest VEP
-high/moderate table at `data/interim/vep/vep_high_moderate.csv` and completed
-candidate-level annotation tables for CADD, gnomAD, REVEL, AlphaMissense,
-SpliceAI, AlphaGenome, and optionally Exomiser.
+All analysis uses GRCh38. Patient data and every derived artifact remain local
+under `data/` and are ignored by Git.
+
+```text
+data/input/patient/
+  WGS VCF + tabix index, clinical phenotype document
+        │
+        ▼
+[1] QC and quality filtering — bcftools / tabix
+  scripts/01_run_qc.sh
+  └── data/interim/qc/raw_vcf_stats.txt
+  └── data/interim/filtered/pass_quality.vcf.gz + .tbi
+        │
+        ├───────────────────────────────────────┐
+        ▼                                       ▼
+[2a] Secondary annotation — SnpEff          [2b] Primary annotation — Ensembl VEP
+  scripts/02_run_snpeff.sh                     scripts/03_run_ensembl_vep.sh
+  scripts/py/filter_variants_snpeff.py         scripts/py/filter_variants_vep.py
+  └── data/interim/snpeff/                     └── data/interim/vep/
+                                                   high/moderate VEP candidate CSV
+                                                         │
+                                                         ▼
+[3] Variant-level evidence enrichment
+  Input: VEP high/moderate candidate table
+  ├── baseline QC and descriptive summaries
+  ├── population rarity: AF_POPULATION + gnomAD
+  ├── clinical evidence: CLIN_SIG + ACMG fields
+  ├── protein/coding: SIFT, PolyPhen, CADD, REVEL, AlphaMissense
+  ├── splicing: SpliceAI
+  ├── regulatory/molecular: AlphaGenome
+  ├── inheritance: genotype and multi-hit gene patterns
+  └── phenotype: panel context and optional Exomiser/HPO ranking
+        │
+        ▼
+data/interim/{cadd,gnomad,revel,alphamissense,spliceai,alphagenome,exomiser}/
+        │
+        ▼
+[4] Evidence consolidation — scripts/run_enrichment.py
+  ├── data/processed/variant_evidence_master.csv
+  └── data/processed/prioritized_candidates.csv
+        │
+        ▼
+[5] Research interpretation
+  rare/protein-damaging, splice-driven, regulatory, phenotype-focused,
+  and recessive/multi-hit candidates → manual MVA mechanism review
+```
+
+SnpEff and VEP run from the same filtered VCF and may be compared, but the
+evidence master table is VEP-centred. Each enrichment stage is optional: the
+consolidator retains VEP evidence when a completed external-stage CSV is absent.
+The integration score is research prioritization, not an ACMG classification or
+diagnosis; in-silico predictors are correlated and are not independent clinical
+evidence.
+
+### Running each stage
 
 ```bash
-# Public reference downloads only; never downloads patient data.
+# Download public reference assets only; no patient data.
 bash scripts/download_references.sh
 
-# Merge completed stage outputs. This does not launch CADD, gnomAD, or other annotators.
-uv run python scripts/run_enrichment.py --vep /private/path/to/current-chunked-output.csv
+# QC → SnpEff → VEP. These are separate long-running workflows.
+conda env create -f envs/mva_qc.yml
+conda env create -f envs/mva_snpeff.yml
+conda env create -f envs/mva_vep.yml
+bash scripts/01_run_qc.sh
+bash scripts/02_run_snpeff.sh
+bash scripts/03_run_ensembl_vep.sh
 
-# Prepare Exomiser candidate VCF/YAML only.
+# Consolidate existing enrichment-stage outputs. This does not launch CADD,
+# gnomAD, REVEL, AlphaMissense, SpliceAI, AlphaGenome, or Exomiser.
+uv run python scripts/run_enrichment.py \
+  --vep /private/path/to/current-high-moderate-or-chunked-output.csv
+
+# Prepare Exomiser candidate VCF/YAML. Add --execute only to launch Exomiser.
 uv run python scripts/run_exomiser.py \
   --jar /path/to/exomiser-cli.jar \
   --hpo HP:0000001
-
-# Execute Exomiser only when intentionally requested.
-uv run python scripts/run_exomiser.py \
-  --jar /path/to/exomiser-cli.jar \
-  --hpo HP:0000001 \
-  --execute
 ```
 
-Read [`data/README.md`](data/README.md) before placing or naming any private
-artifact. `variant_evidence_master.csv` and `prioritized_candidates.csv` are
-research-prioritization outputs; they are not diagnostic classifications.
-### Existing annotation setup
-
-`scripts/` contains a three-step bcftools -> snpEff -> Ensembl VEP workflow for the WGS VCF, driven by conda environments in `envs/` (bioconda tools that the uv environment does not provide):
-
-```bash
-conda env create -f envs/mva_qc.yml      # bcftools, htslib
-conda env create -f envs/mva_snpeff.yml  # snpEff, SnpSift, OpenJDK 17
-conda env create -f envs/mva_vep.yml     # ensembl-vep, htslib
-
-bash scripts/01_run_qc.sh             # QC + PASS-quality filtering -> data/interim/filtered/
-bash scripts/02_run_snpeff.sh         # snpEff annotation (GRCh38.mane.1.0.ensembl) -> data/interim/snpeff/
-bash scripts/03_run_ensembl_vep.sh    # offline VEP annotation (GRCh38) -> data/interim/vep/
-```
-
-`scripts/py/filter_variants_snpeff.py` and `scripts/py/filter_variants_vep.py` reduce the annotated outputs to compact candidate CSVs under `data/interim/*/filtered_csv/`. All raw and interim genomic artifacts stay outside Git per `.gitignore`; keep every committed file below 8 MB (enforced by the pre-commit hook).
+Read [`data/README.md`](data/README.md) before placing or naming private
+artifacts.
 
 ## Analysis resources
 
@@ -108,10 +146,10 @@ in [`scripts/download_references.sh`](scripts/download_references.sh).
 | ClinVar | Clinical-variant annotations | [NCBI ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), [GRCh38 VCF](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/) |
 | gnomAD v4 | Population allele frequency and rarity | [Browser](https://gnomad.broadinstitute.org/), [GraphQL API](https://gnomad.broadinstitute.org/api), [v4.1 joint VCF](https://storage.googleapis.com/gcp-public-data--gnomad/release/4.1/vcf/joint/) |
 | CADD v1.7 | Genome-wide deleteriousness score | [CADD](https://cadd.gs.washington.edu/), [GRCh38 API](https://cadd.gs.washington.edu/api/v1.0/GRCh38-v1.7), [precomputed scores](https://krishna.gs.washington.edu/download/CADD/v1.7/GRCh38/) |
-| REVEL v1.3 | Missense-specific ensemble score | [Zenodo archive](https://zenodo.org/records/7072866) |
-| AlphaMissense | Missense pathogenicity score and class | [Project](https://deepmind.google/technologies/alphamissense/), [GRCh38 table](https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz) |
+| REVEL v1.3 | Missense-specific ensemble score | [Official project](https://sites.google.com/site/revelgenomics/), [Zenodo archive](https://zenodo.org/records/7072866), [research paper](https://doi.org/10.1016/j.ajhg.2016.08.016) |
+| AlphaMissense | Missense pathogenicity score and class | [Official project](https://deepmind.google/technologies/alphamissense/), [official repository](https://github.com/google-deepmind/alphamissense), [GRCh38 archive](https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz) |
 | SpliceAI | Predicted splice donor/acceptor disruption | [GitHub](https://github.com/Illumina/SpliceAI), [GRCh38 reference](https://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz) |
-| AlphaGenome | Regulatory and molecular-effect evidence | [AlphaGenome](https://deepmind.google/science/alphagenome/) |
+| AlphaGenome | Regulatory and molecular-effect evidence | [Official project](https://deepmind.google/science/alphagenome/), [official documentation](https://www.alphagenomedocs.com/), [official repository](https://github.com/google-deepmind/alphagenome), [research paper](https://doi.org/10.1038/s41586-025-10014-0) |
 | Exomiser | HPO and disease-model phenotype ranking | [Exomiser](https://github.com/exomiser/Exomiser), [data downloads](https://data.monarchinitiative.org/exomiser/) |
 | bcftools / samtools | VCF QC, filtering, indexing, and reference indexing | [bcftools](https://samtools.github.io/bcftools/), [samtools](https://www.htslib.org/) |
 | SnpEff / SnpSift | Secondary functional annotation and field extraction | [SnpEff](https://pcingola.github.io/SnpEff/) |
