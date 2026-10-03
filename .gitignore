@@ -209,7 +209,7 @@ patient.stats
 .DS_Store
 
 # WGS variant annotation pipeline: derived interim artifacts (never commit)
-data/interim/
+# data/interim/
 
 # Size policy: no file larger than 8 MB may ever be committed.
 # Raw/interim genomic data stays out of Git; enforced by pre-commit hook (.git/hooks/pre-commit).
