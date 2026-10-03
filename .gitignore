@@ -212,3 +212,6 @@ data/interim/
 
 # Size policy: no file larger than 8 MB may ever be committed.
 # Raw/interim genomic data stays out of Git; enforced by pre-commit hook (.git/hooks/pre-commit).
+
+# Public reference archives and extracted tool databases remain local.
+database/refs/
