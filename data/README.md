@@ -6,7 +6,8 @@ All patient-derived files and generated analysis tables stay untracked. This rep
 
 | Location | Content | Git policy |
 | --- | --- | --- |
-| `raw/` | Original WGS VCF/index, clinical phenotype document, and any source files received for the case. | Ignored |
+| `input/patient/` | Original WGS VCF/index, clinical phenotype document, and any source files received for the case. | Ignored |
+| `input/refs/` | Public reference archives, extracted databases, indexes, and tool-specific caches. | Ignored |
 | `interim/qc/` | QC summaries from `01_run_qc.sh`. | Ignored |
 | `interim/filtered/` | Filtered VCF and index. | Ignored |
 | `interim/vep/` | VEP table. Put the latest chunked-processing result at `vep_high_moderate.csv`. | Ignored |
@@ -43,4 +44,4 @@ CADD, REVEL, AlphaMissense, SpliceAI, AlphaGenome, and other computational predi
 
 ## Public references
 
-Large public reference resources remain in `database/refs/`, outside `data/`. `scripts/download_references.sh` retrieves only public resources; it never downloads patient data. Reference archives, decompressed files, indexes, and tool-specific caches remain local and must not be committed.
+Large public reference resources remain in `input/refs/`. `scripts/download_references.sh` retrieves only public resources; it never downloads patient data. Reference archives, decompressed files, indexes, and tool-specific caches remain local and must not be committed.
