@@ -7,7 +7,7 @@ set -euo pipefail
 # ==============================================================================
 
 # Define base paths
-BASE_DIR="/home/nauvalrajwaa/proj/mva_hackathon/MVA"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INTERIM_DIR="${BASE_DIR}/data/interim"
 
 FILTERED_VCF="${INTERIM_DIR}/filtered/pass_quality.vcf.gz"
