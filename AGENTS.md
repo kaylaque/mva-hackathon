@@ -10,6 +10,26 @@
 
 The upstream Hugging Face dataset is `SageBio/mva-hackathon-2026-data`. It includes a compressed WGS VCF plus tabix index, a clinical-phenotype DOCX, and very large FASTQ files. Do not commit downloaded patient/genomic data to this repository.
 
+## Mechanism
+
+Domain context that drives gene panels, candidate selection, and interpretation:
+
+```text
+Pathogenic BUB1B variants
+              ↓
+spindle assembly checkpoint impaired
+              ↓
+chromosomes segregate incorrectly
+              ↓
+different cells gain/lose chromosomes
+              ↓
+mosaic variegated aneuploidy
+              ↓
+developmental phenotype + cancer predisposition
+```
+
+`BUB1B` is the canonical gene; `CEP57` and `TRIP13` cause related forms of the same biology. This pathway is encoded in `mva_kaggle_annotation_pipeline.ipynb` as `MVA_KNOWN_GENES` (`BUB1B`, `CEP57`, `TRIP13`, `CENATAC`, `SLF2`, `SMC5`, `MAD1L1`) and `MVA_MECHANISM_GENES`. Keep those sets consistent with the mechanism, and do not silently drop variants in these genes: the prefilter keeps records that are rare and are either high/moderate impact, a member of these gene sets, or ClinVar P/LP/VUS/conflicting. Gene membership never bypasses the rarity filter, and no single variant in this list is causal evidence on its own.
+
 ## Architecture & Data Flow
 
 No implementation architecture exists yet. When adding code, keep the first version small and explicit:
