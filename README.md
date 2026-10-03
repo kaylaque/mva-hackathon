@@ -26,6 +26,22 @@ Use the `Python (mva-hackathon)` kernel. On Kaggle, the notebook reads from `/ka
 
 Supported inputs include `.vcf`, `.vcf.gz`, `.bam`, `.cram`, `.fastq`, and `.fastq.gz`. Large patient/genomic files are intentionally excluded from Git by `.gitignore`; do not force-add them.
 
+## WGS variant annotation pipeline
+
+`scripts/` contains a three-step bcftools -> snpEff -> Ensembl VEP workflow for the WGS VCF, driven by conda environments in `envs/` (bioconda tools that the uv environment does not provide):
+
+```bash
+conda env create -f envs/mva_qc.yml      # bcftools, htslib
+conda env create -f envs/mva_snpeff.yml  # snpEff, SnpSift, OpenJDK 17
+conda env create -f envs/mva_vep.yml     # ensembl-vep, htslib
+
+bash scripts/01_run_qc.sh             # QC + PASS-quality filtering -> data/interim/filtered/
+bash scripts/02_run_snpeff.sh         # snpEff annotation (GRCh38.mane.1.0.ensembl) -> data/interim/snpeff/
+bash scripts/03_run_ensembl_vep.sh    # offline VEP annotation (GRCh38) -> data/interim/vep/
+```
+
+`scripts/py/filter_variants_snpeff.py` and `scripts/py/filter_variants_vep.py` reduce the annotated outputs to compact candidate CSVs under `data/interim/*/filtered_csv/`. All raw and interim genomic artifacts stay outside Git per `.gitignore`; keep every committed file below 8 MB (enforced by the pre-commit hook).
+
 ## Project guidance
 
 See [`AGENTS.md`](AGENTS.md) for repository architecture, data-handling rules, VCF analysis conventions, and QA guidance.
