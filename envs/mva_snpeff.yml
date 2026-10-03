@@ -1,0 +1,11 @@
+name: mva_snpeff
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - openjdk=17
+  - snpeff=5.2
+  - snpsift=5.2
+  - pandas
