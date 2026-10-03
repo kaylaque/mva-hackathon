@@ -26,6 +26,37 @@ Use the `Python (mva-hackathon)` kernel. On Kaggle, the notebook reads from `/ka
 
 Supported inputs include `.vcf`, `.vcf.gz`, `.bam`, `.cram`, `.fastq`, and `.fastq.gz`. Large patient/genomic files are intentionally excluded from Git by `.gitignore`; do not force-add them.
 
+## Project structure
+
+```text
+mva-hackathon/
+├── data/
+│   ├── raw/                          # source data (ignored): WGS VCF + tabix index, clinical phenotype DOCX
+│   └── interim/                      # pipeline intermediates (ignored by default)
+│       ├── qc/                       # bcftools QC summaries            (committed - curated)
+│       ├── filtered/                 # PASS-quality filtered VCF        (ignored)
+│       ├── snpeff/                   # snpEff annotation outputs        (ignored)
+│       │   └── filtered_csv/         # snpEff candidate tables          (committed - curated)
+│       └── vep/                      # VEP annotation outputs           (ignored)
+│           └── filtered_csv/         # VEP candidate tables             (committed - curated)
+├── docs/
+│   └── README.md                     # project overview, methods brief, case background
+├── envs/                             # conda environments: mva_qc, mva_snpeff, mva_vep
+├── scripts/
+│   ├── 01_run_qc.sh                  # bcftools QC + PASS-quality filtering
+│   ├── 02_run_snpeff.sh              # snpEff functional annotation
+│   ├── 03_run_ensembl_vep.sh         # offline Ensembl VEP annotation
+│   └── py/
+│       ├── filter_variants_snpeff.py # reduce snpEff output to candidate CSVs
+│       └── filter_variants_vep.py    # reduce VEP output to candidate CSVs
+├── mutation_analysis.ipynb           # variant exploration notebook
+├── quality_check_analysis.ipynb      # QC review notebook
+├── AGENTS.md                         # repo conventions and data-handling rules
+└── pyproject.toml / uv.lock          # Python 3.13 environment for notebooks
+```
+
+Raw and large derived data (anything over 8 MB) never enter Git history — enforced by `.gitignore` and a pre-commit hook.
+
 ## WGS variant annotation pipeline
 
 `scripts/` contains a three-step bcftools -> snpEff -> Ensembl VEP workflow for the WGS VCF, driven by conda environments in `envs/` (bioconda tools that the uv environment does not provide):
