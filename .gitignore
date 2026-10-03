@@ -181,6 +181,7 @@ cython_debug/
 .cursorindexingignore
 
 # Local hackathon data and derived artifacts
+*.env
 data/raw/
 data/processed/
 results/
@@ -204,6 +205,7 @@ Homo_sapiens.GRCh38.dna.primary_assembly.fa.fai
 Homo_sapiens.GRCh38.dna.primary_assembly.fa
 genotype_qc.tsv
 patient.stats
+.DS_Store
 
 # WGS variant annotation pipeline: derived interim artifacts (never commit)
 data/interim/
