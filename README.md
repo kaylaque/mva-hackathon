@@ -159,6 +159,134 @@ Do not treat any computational predictor, population-frequency annotation, or
 rank as diagnostic evidence. Manual review, phenotype fit, inheritance, and
 the hackathon's research-only scope remain required.
 
+## `variant_evidence_master.csv` data dictionary
+
+The master table contains annotation and research-triage evidence. A row may
+represent one transcript annotation rather than one unique genomic variant.
+No single column, score, or combination of computational predictors establishes
+causality or diagnosis.
+
+### Priority and gene context
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `PRIORITY_SCORE` | Internal workflow ranking score. | Higher usually means review sooner; it is not a calibrated pathogenicity probability. |
+| `SYMBOL` | Standard gene symbol, such as `BUB1B`. | The gene assigned to this annotation row; one variant can map to multiple genes. |
+| `GENE_ID` | Stable gene identifier, usually from Ensembl. | Identifies the gene independently of symbol changes. |
+| `INHERITANCE_MODEL` | Imported disease-inheritance label. | Describes reported gene-disease inheritance, not the patient's confirmed inheritance. |
+| `PHENOTYPE_PANEL` | Imported panel or phenotype category. | Explains why a gene was included upstream; it is not an observed patient symptom. |
+
+### Genomic identity
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `CHROM` | Source chromosome name. | May be written as `1`, `chr1`, `X`, and so on. |
+| `CHROM_NORM` | Normalized chromosome name. | Standardizes forms such as `chr1` → `1` and `23` → `X`. |
+| `POS` | 1-based genomic position. | Location of the first reference base on the claimed reference assembly. |
+| `REF` | Reference allele. | Sequence expected in the reference genome. |
+| `ALT` | Alternate allele. | Sequence observed instead of `REF`. |
+| `VARIANT_KEY` | Normalized key such as `1:12345:A:G`. | Primary key used to join records for the same genomic variant. |
+| `VARIANT_ID` | Identifier supplied by the source workflow. | May be another coordinate-based or source-specific identifier. |
+| `EXISTING_VARIATION` | Known database identifier. | Often a dbSNP `rs` ID; missing does not prove that the variant is novel. |
+
+### Transcript and HGVS annotation
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `FEATURE_TRANSCRIPT` | Transcript used for annotation. | Different transcripts can produce different consequences. |
+| `CANONICAL` | Canonical-transcript flag. | Useful for selecting a representative row, but not always the clinically relevant transcript. |
+| `HGVS_C` | HGVS coding-DNA description. | Transcript-relative change such as `c.123A>G`. |
+| `HGVS_P` | HGVS protein description. | Predicted protein change such as `p.Gly41Arg`. |
+| `CDNA_POS` | Position in the complete transcript cDNA. | Locates the variant relative to the transcript. |
+| `CDS_POS` | Position in the coding sequence. | Locates the variant within the protein-coding region. |
+| `PROTEIN_POS` | Affected amino-acid position. | May be an integer, range, uncertain value, or missing. |
+| `AMINO_ACIDS` | Reference and alternate amino acids. | For example, `G/R` means glycine changes to arginine. |
+| `CODONS` | Reference and altered codons. | Shows the codon-level nucleotide change. |
+
+### Consequence and clinical annotation
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `CONSEQUENCE` | VEP consequence term or `&`-separated terms. | Examples include missense, frameshift, stop-gain, and splice effects. |
+| `IMPACT` | Broad VEP impact label. | `HIGH`, `MODERATE`, `LOW`, or `MODIFIER`; not proof of pathogenicity. |
+| `CLIN_SIG` | Imported clinical-significance text, commonly from ClinVar. | May report P/LP, VUS, benign, or conflicting interpretations without full condition/review context. |
+| `ACMG_CLASSIFICATION` | Imported ACMG-style classification. | Not an independently verified classification for this case. |
+| `ACMG_CRITERIA` | Upstream ACMG evidence codes. | Codes such as `PM2`, `PP3`, or `PVS1`; their presence does not prove correct application. |
+
+### SIFT, PolyPhen, and source population frequency
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `SIFT_PRED` | SIFT category. | Usually `deleterious` or `tolerated`; mainly relevant to missense variants. |
+| `SIFT_SCORE` | SIFT score, normally 0–1. | Lower means a stronger predicted effect; missing is unknown, not benign. |
+| `POLYPHEN_PRED` | PolyPhen category. | Commonly benign, possibly damaging, or probably damaging. |
+| `POLYPHEN_SCORE` | PolyPhen score, normally 0–1. | Higher means a stronger predicted damaging effect; not disease probability. |
+| `AF_POPULATION` | Population allele frequency from the source annotation. | Provenance must be checked; `0.001` means about 0.1% of sampled alleles. |
+
+### CADD
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `CADD_RAW` | Raw CADD model score. | Higher generally means more predicted deleteriousness; the raw scale has no simple clinical meaning. |
+| `CADD_PHRED` | Rank-scaled CADD score. | Roughly 10 = top 10%, 20 = top 1%, and 30 = top 0.1% of possible substitutions. |
+| `CADD_SOURCE` | CADD annotation provenance. | Identifies the API, local file, version, or variant class used. |
+
+### gnomAD
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `GNOMAD_STATUS` | Lookup result. | `not_found` means reported not found with coverage/provenance unverified, not confirmed absence. |
+| `GNOMAD_AF` | Overall alternate-allele frequency. | Frequency across the available gnomAD reference cohort. |
+| `GNOMAD_AC` | Alternate-allele count. | Number of observed alternate alleles. |
+| `GNOMAD_AN` | Allele number. | Number of evaluated alleles and the denominator for `AC`. |
+| `GNOMAD_NHOMALT` | Alternate-homozygote count. | Reference-cohort count; it does not describe this patient's genotype. |
+| `GNOMAD_GRPMAX_AF` | Highest raw frequency among population groups. | Detects ancestry-group enrichment; it is not filtering AF/FAF. |
+| `GNOMAD_RARITY` | Workflow rarity category. | Threshold-dependent label such as rare, common, or unknown. |
+| `GNOMAD_RARE_FLAG` | Workflow Boolean rarity flag. | Check the source and threshold before relying on it. |
+| `RARE_AND_CADD_HIGH` | Combined rarity/CADD flag. | Research-triage shortcut, not clinical evidence by itself. |
+
+Useful consistency checks are `AC ≤ AN`, `2 × NHOMALT ≤ AC`, and—when
+`AN > 0`—`AF ≈ AC / AN`.
+
+### REVEL and AlphaMissense
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `REVEL_SCORE` | REVEL missense score, normally 0–1. | Higher indicates stronger predicted pathogenicity for missense substitutions only. |
+| `AM_SCORE` | AlphaMissense score, normally 0–1. | Higher indicates a stronger predicted protein effect; it is not patient disease probability. |
+| `AM_CLASS` | AlphaMissense category. | Likely benign, ambiguous, or likely pathogenic; not an ACMG classification. |
+| `AM_UNIPROT` | UniProt protein accession. | Identifies the protein sequence used for the prediction. |
+| `AM_TRANSCRIPT` | Transcript used by AlphaMissense. | Compare with `FEATURE_TRANSCRIPT`; disagreement may explain differing predictions. |
+| `AM_PROTEIN_VARIANT` | Protein substitution used for lookup. | Identifies the exact amino-acid change, such as `G41R`. |
+
+### SpliceAI
+
+| Column | Meaning | Interpretation |
+| --- | --- | --- |
+| `SPLICEAI_GENE` | Gene associated with the splice prediction. | May differ from `SYMBOL`; preserve both rather than overwriting either. |
+| `DS_AG` | Acceptor-gain delta score. | Predicted creation or strengthening of an acceptor site. |
+| `DS_AL` | Acceptor-loss delta score. | Predicted weakening or loss of an acceptor site. |
+| `DS_DG` | Donor-gain delta score. | Predicted creation or strengthening of a donor site. |
+| `DS_DL` | Donor-loss delta score. | Predicted weakening or loss of a donor site. |
+| `DP_AG` | Acceptor-gain position offset. | Add to `POS` to estimate the predicted genomic event position. |
+| `DP_AL` | Acceptor-loss position offset. | Add to `POS` to estimate the predicted genomic event position. |
+| `DP_DG` | Donor-gain position offset. | Add to `POS` to estimate the predicted genomic event position. |
+| `DP_DL` | Donor-loss position offset. | Add to `POS` to estimate the predicted genomic event position. |
+| `SPLICEAI_MAX_DS` | Largest imported `DS_*` score. | Summarizes the strongest predicted event; inspect the event-specific fields for meaning. |
+
+`DP_AG`, `DP_AL`, `DP_DG`, and `DP_DL` are signed position offsets, **not**
+sequencing depth. SpliceAI values around 0.2, 0.5, and 0.8 are commonly used
+as high-recall, general, and high-precision research reference points; they are
+not proof of splice disruption.
+
+### Reading a row
+
+Review identity first (`CHROM`, `POS`, `REF`, `ALT`, `VARIANT_KEY`), then the
+gene/transcript and consequence, population frequency, clinical annotations,
+protein predictors, and splice evidence. Genotype, allele balance, phase,
+segregation, confirmed phenotype, cytogenetics, CNV/SV evidence, and mosaic
+fraction are not supplied by these columns.
+
 ## Project guidance
 
 See [`AGENTS.md`](AGENTS.md) for repository architecture, data-handling rules, VCF analysis conventions, and QA guidance.
