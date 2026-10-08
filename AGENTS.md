@@ -120,3 +120,14 @@ uv lock --check
 ```
 
 Do not download the multi-gigabyte upstream FASTQ files for a routine smoke test. Any analysis using the real child’s data must keep provenance, access controls, and the hackathon’s non-diagnostic scope explicit.
+
+## Data-Blind Execution
+
+Running code is a verification step, not a read. When executing anything that touches real patient/genomic data, keep outputs out of agent context:
+
+- Slice only the target cells into an in-memory scratch notebook (`nbformat` + `nbclient`, `allow_errors=True`) and execute that. NEVER run the whole notebook, write the scratch copy back, or persist its outputs.
+- Print a whitelist only: per-cell source first line, pass/fail, error `ename`/`evalue`. NEVER print `stream`, `display_data`, or `execute_result` payloads.
+- Inspect state by type and count: `len(cell.outputs)`, `{o.output_type}`, `execution_count`. Assert on row counts, column presence, or `json.dumps` equality instead of displaying frames.
+- NEVER open data files with `read`, `grep`, or `glob`; `Path.is_file()` is the most inspection allowed.
+- Error text can interpolate raw values: keep your own messages token-free, and disclose any value a library error leaks.
+- Leave executed cells with `execution_count: null` and empty `outputs` before committing or sharing.
