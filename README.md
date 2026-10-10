@@ -133,25 +133,23 @@ uv run python scripts/run_exomiser.py \
 # Phase 0 & Phase 1 Downstream Workflows (Lightweight, Non-Rerunning)
 # ------------------------------------------------------------------------------
 # Phase 0: Candidate Intake, Quality & Evidence Gating, and Candidate Consolidation
-# Consumes existing caller-supplied evidence and optional Exomiser tables via CLI.
+# Consumes caller-supplied evidence and optional Exomiser tables via CLI.
 # Does NOT rerun QC, VEP, snpEff, enrichment, or Exomiser.
+# Can write to flat Track 2 layout directly or hierarchical paths:
 uv run python scripts/consolidate_candidates.py \
-  --evidence /path/to/variant_evidence_master.csv \
-  --exomiser-variants /path/to/exomiser.variants.tsv \
-  --exomiser-genes /path/to/exomiser.genes.tsv \
-  --output-candidates /path/to/consolidated_candidates.csv \
-  --output-provenance /path/to/phase0_provenance.json
+  --evidence data/processed/variant_evidence_master.csv \
+  --exomiser-variants data/interim/exomiser/mva_patient_exomiser.variants.tsv \
+  --exomiser-genes data/interim/exomiser/mva_patient_exomiser.genes.tsv \
+  --output-candidates data/processed/track2/00_phase0_consolidated_candidates.csv \
+  --output-provenance data/processed/track2/00_phase0_provenance.json
 
 # Phase 1: Biological Mechanism & Directionality Matrix.
-# This requires the Phase 0 output and only maps existing candidates; it does not
-# rerun QC, annotation, enrichment, or Exomiser.
-# It adds research-hypothesis pathway/directionality fields and phase-verification
-# gates; it does not create clinical classifications or treatment recommendations.
+# Consumes Phase 0 consolidated candidates table.
 uv run python scripts/build_mechanism_matrix.py \
-  --candidates /path/to/consolidated_candidates.csv \
-  --output-variant-matrix /path/to/variant_mechanism_matrix.csv \
-  --output-gene-matrix /path/to/gene_mechanism_matrix.csv \
-  --output-provenance /path/to/phase1_provenance.json
+  --candidates data/processed/track2/00_phase0_consolidated_candidates.csv \
+  --output-variant-matrix data/processed/track2/01_phase1_variant_mechanism_matrix.csv \
+  --output-gene-matrix data/processed/track2/02_phase1_gene_mechanism_matrix.csv \
+  --output-provenance data/processed/track2/02_phase1_provenance.json
 
 # ------------------------------------------------------------------------------
 # Phase 2 Downstream Workflow: PPI & Pathway Network Context Engine
@@ -159,14 +157,22 @@ uv run python scripts/build_mechanism_matrix.py \
 # Phase 2: Protein-Protein Interaction (PPI) and Pathway Network Context.
 # Consumes caller-supplied Phase 1 gene mechanism matrix (and optional variant matrix).
 # Queries external biomedical APIs at runtime (STRING v12.5, Reactome, g:Profiler).
-# Does NOT rerun upstream QC, VEP, snpEff, enrichment, or Exomiser.
-# Outputs: seed_genes.csv, string_edges.csv, network_summary.csv, pathway_enrichment.csv,
-# network_gene_context.csv, and phase2_network_provenance.json to a caller-supplied directory.
+# Use --flat-names to write directly to flat numbered Track 2 filenames (03_.. through 08_..):
 uv run python scripts/run_network_analysis.py \
-  --gene-mechanism /path/to/gene_mechanism_matrix.csv \
-  --variant-matrix /path/to/variant_mechanism_matrix.csv \
-  --output-dir /path/to/phase2_network_output/ \
+  --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv \
+  --variant-matrix data/processed/track2/01_phase1_variant_mechanism_matrix.csv \
+  --output-dir data/processed/track2/ \
+  --flat-names \
   --string-score 700
+
+# ------------------------------------------------------------------------------
+# Track 2 Artifact Migration & Validation
+# ------------------------------------------------------------------------------
+# Safely copy hierarchical phase artifacts (phase0/, phase1/, phase2/) into flat
+# ordered Track 2 files directly in data/processed/track2/, keeping phase folders:
+uv run python scripts/migrate_track2_layout.py --dry-run        # preview copies
+uv run python scripts/migrate_track2_layout.py                  # copy & validate
+uv run python scripts/migrate_track2_layout.py --validate-only  # verify SHA-256 matches
 ```
 
 Read [`data/README.md`](data/README.md) before placing or naming private

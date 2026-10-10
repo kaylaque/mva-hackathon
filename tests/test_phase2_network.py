@@ -378,6 +378,16 @@ def test_write_network_outputs_to_dir() -> None:
             assert prov["counts"]["mapped_hgnc_count"] == 4
             assert any("directionality" in c for c in prov["interpretation_caveats"])
 
+        # Also test flat_prefix=True
+        flat_dir = Path(tmp_dir) / "flat_results"
+        flat_paths = write_network_outputs(results, flat_dir, flat_prefix=True)
+        assert (flat_dir / "03_phase2_seed_genes.csv").is_file()
+        assert (flat_dir / "04_phase2_string_edges.csv").is_file()
+        assert (flat_dir / "05_phase2_network_summary.csv").is_file()
+        assert (flat_dir / "06_phase2_pathway_enrichment.csv").is_file()
+        assert (flat_dir / "07_phase2_network_gene_context.csv").is_file()
+        assert (flat_dir / "08_phase2_network_provenance.json").is_file()
+
 
 def test_cli_runner_with_mocks() -> None:
     """Verify that scripts/run_network_analysis.py CLI entrypoint executes cleanly."""

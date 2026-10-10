@@ -943,17 +943,28 @@ class NetworkContextEngine:
 def write_network_outputs(
     results: Mapping[str, Any],
     output_dir: Path,
+    flat_prefix: bool = False,
 ) -> dict[str, Path]:
-    """Write all Phase 2 result tables and provenance record to output directory."""
+    """Write all Phase 2 result tables and provenance record to output directory.
+
+    If flat_prefix is True, writes ordered Track 2 filenames:
+    - 03_phase2_seed_genes.csv
+    - 04_phase2_string_edges.csv
+    - 05_phase2_network_summary.csv
+    - 06_phase2_pathway_enrichment.csv
+    - 07_phase2_network_gene_context.csv
+    - 08_phase2_network_provenance.json
+    Otherwise writes standard un-prefixed phase filenames.
+    """
     output_dir.mkdir(parents=True, exist_ok=True)
     paths: dict[str, Path] = {}
 
     table_mapping = [
-        ("seed_genes_df", "seed_genes.csv"),
-        ("string_edges_df", "string_edges.csv"),
-        ("network_summary_df", "network_summary.csv"),
-        ("pathway_enrichment_df", "pathway_enrichment.csv"),
-        ("network_gene_context_df", "network_gene_context.csv"),
+        ("seed_genes_df", "03_phase2_seed_genes.csv" if flat_prefix else "seed_genes.csv"),
+        ("string_edges_df", "04_phase2_string_edges.csv" if flat_prefix else "string_edges.csv"),
+        ("network_summary_df", "05_phase2_network_summary.csv" if flat_prefix else "network_summary.csv"),
+        ("pathway_enrichment_df", "06_phase2_pathway_enrichment.csv" if flat_prefix else "pathway_enrichment.csv"),
+        ("network_gene_context_df", "07_phase2_network_gene_context.csv" if flat_prefix else "network_gene_context.csv"),
     ]
 
     for key, filename in table_mapping:
@@ -962,7 +973,8 @@ def write_network_outputs(
         df.to_csv(dest, index=False)
         paths[key] = dest
 
-    prov_dest = output_dir / "phase2_network_provenance.json"
+    prov_filename = "08_phase2_network_provenance.json" if flat_prefix else "phase2_network_provenance.json"
+    prov_dest = output_dir / prov_filename
     with prov_dest.open("w", encoding="utf-8") as f:
         json.dump(results["provenance"], f, indent=2)
     paths["provenance"] = prov_dest

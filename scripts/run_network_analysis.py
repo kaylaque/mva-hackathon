@@ -115,6 +115,11 @@ def parse_args() -> argparse.Namespace:
         default=20.0,
         help="HTTP request timeout in seconds (default: 20.0)",
     )
+    parser.add_argument(
+        "--flat-names",
+        action="store_true",
+        help="Write outputs using flat Track 2 ordered prefixes (03_phase2_seed_genes.csv, etc.)",
+    )
     return parser.parse_args()
 
 
@@ -149,7 +154,7 @@ def main() -> None:
     results = engine.run_analysis(gene_df, variant_matrix_df=var_df)
 
     # Write outputs
-    written_paths = write_network_outputs(results, args.output_dir)
+    written_paths = write_network_outputs(results, args.output_dir, flat_prefix=args.flat_names)
 
     print("\nPhase 2 Outputs Generated Successfully:")
     for key, path in written_paths.items():
