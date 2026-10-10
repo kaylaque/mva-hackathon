@@ -109,8 +109,8 @@ flowchart TD
 
 ### Step 6 (Phase 2): PPI & Pathway Network Context Engine
 - **Purpose**: Map candidate genes into system-wide molecular interactomes and functional pathways using external runtime APIs (STRING v12.5, Reactome, g:Profiler).
-- **Status**: Implemented and validated against synthetic mocked fixtures (11 unit tests passing). **Not yet executed against the real candidate set** — Phase 0/1 outputs must be generated first, then `scripts/run_network_analysis.sh` queries the live APIs.
-- **Expected findings (hypothesis, pending execution)**:
+- **Status**: Executed end-to-end on the real candidate set (13 unit tests passing). Phase 0 consolidated 18,252 evaluated variants into a rarity/impact-gated shortlist, Phase 1 built the mechanism matrices, and Phase 2 queried live STRING v12.5 / Reactome / g:Profiler with 1,985 gated seed genes (min. 1 passing candidate variant), yielding 477 high-confidence PPI edges (combined score >= 0.7) and 84 enriched pathway terms. The Reactome analysis token is retained in `phase2_network_provenance.json` for 7-day retrieval. Outputs live under gitignored `data/processed/track2/`: `phase0/consolidated_candidates.csv`, `phase1/{variant,gene}_mechanism_matrix.csv`, `phase2/{seed_genes,string_edges,network_summary,pathway_enrichment,network_gene_context}.csv`.
+- **Interpretation guide (validate against `phase2/network_gene_context.csv`)**:
   - Canonical SAC genes (`BUB1B`, `MAD1L1`, `TRIP13`, `TTK`, `AURKB`, `BUB1`, `CDC20`) are expected to form a high-confidence interaction module centered on Mitotic Checkpoint Complex (MCC) assembly and turnover.
   - Spindle assembly checkpoint, mitotic prometaphase, and kinetochore-attachment pathways are expected to dominate overrepresentation results; significance depends on the final seed-gene count.
 - **Limitations & Caveats**:
