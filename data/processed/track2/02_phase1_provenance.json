@@ -1,0 +1,9 @@
+{
+  "pipeline_stage": "Phase 1 (Mechanism & Directionality Matrix)",
+  "timestamp_utc": "2026-10-10T13:07:04.140063+00:00",
+  "total_variants_evaluated": 18252,
+  "total_genes_evaluated": 8876,
+  "canonical_mva_genes_evaluated": 5,
+  "multihit_genes_passing_gates": 168,
+  "disclaimer": "Research candidate exploration only; non-diagnostic; not medical advice."
+}

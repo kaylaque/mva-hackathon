@@ -184,13 +184,15 @@ cython_debug/
 # Local hackathon data and derived artifacts
 *.env
 data/raw/
-# data/processed/
 results/
 *.vcf
 *.vcf.gz
 *.vcf.gz.tbi
 
-# SageBio MVA hackathon WGS inputs
+# Derived interim genomic artifacts (never commit)
+data/interim/
+
+# SageBio MVA hackathon WGS inputs and common genomic artifacts
 input/WGS_EX2312012_HGWCNDSX7.vcf.gz
 input/WGS_EX2312012_HGWCNDSX7.vcf.gz.tbi
 *.bcf
@@ -199,8 +201,6 @@ input/WGS_EX2312012_HGWCNDSX7.vcf.gz.tbi
 *.bai
 *.fastq
 *.fastq.gz
-.gitignore_*
-.history
 data/input/*
 Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 Homo_sapiens.GRCh38.dna.primary_assembly.fa.fai
@@ -208,9 +208,16 @@ Homo_sapiens.GRCh38.dna.primary_assembly.fa
 genotype_qc.tsv
 patient.stats
 .DS_Store
+.gitignore_*
+.history
 
-# WGS variant annotation pipeline: derived interim artifacts (never commit)
-# data/interim/
+# Processed data policy:
+# Ignore large tables > 8MB by default to prevent accidental staging
+data/processed/track2/00_phase0_consolidated_candidates.csv
+data/processed/track2/01_phase1_variant_mechanism_matrix.csv
+# Permit explicitly curated processed summaries and visualizations under 8 MB:
+# (00_phase0_provenance, 02_phase1_gene_mechanism, 02_phase1_provenance,
+#  03_phase2_seed_genes through 13_phase2_pathway_enrichment.html)
 
 # Size policy: no file larger than 8 MB may ever be committed.
 # Raw/interim genomic data stays out of Git; enforced by pre-commit hook (.git/hooks/pre-commit).

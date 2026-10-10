@@ -48,7 +48,8 @@ def test_check_sources_exist_missing():
         # Empty directory
         all_present, missing = check_sources_exist(base_dir)
         assert all_present is False
-        assert len(missing) == len(TRACK2_ARTIFACT_MAPPINGS)
+        expected_missing = [m for m in TRACK2_ARTIFACT_MAPPINGS if not m.optional]
+        assert len(missing) == len(expected_missing)
 
 
 def test_migration_dry_run_leaves_files_untouched():
@@ -57,7 +58,7 @@ def test_migration_dry_run_leaves_files_untouched():
         create_synthetic_track2_tree(base_dir)
 
         results = migrate_track2_artifacts(base_dir=base_dir, dry_run=True)
-        assert len(results) == 11
+        assert len(results) == len(TRACK2_ARTIFACT_MAPPINGS)
         for mapping in TRACK2_ARTIFACT_MAPPINGS:
             dst = base_dir / mapping.target_rel
             assert not dst.exists(), f"Target {dst} should not exist after dry run"
@@ -69,7 +70,7 @@ def test_migration_copy_and_validation():
         sizes = create_synthetic_track2_tree(base_dir)
 
         results = migrate_track2_artifacts(base_dir=base_dir, dry_run=False)
-        assert len(results) == 11
+        assert len(results) == len(TRACK2_ARTIFACT_MAPPINGS)
 
         for mapping in TRACK2_ARTIFACT_MAPPINGS:
             src = base_dir / mapping.source_rel
