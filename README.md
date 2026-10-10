@@ -128,6 +128,30 @@ uv run python scripts/run_enrichment.py \
 uv run python scripts/run_exomiser.py \
   --jar /path/to/exomiser-cli.jar \
   --hpo HP:0000001
+
+# ------------------------------------------------------------------------------
+# Phase 0 & Phase 1 Downstream Workflows (Lightweight, Non-Rerunning)
+# ------------------------------------------------------------------------------
+# Phase 0: Candidate Intake, Quality & Evidence Gating, and Candidate Consolidation
+# Consumes existing caller-supplied evidence and optional Exomiser tables via CLI.
+# Does NOT rerun QC, VEP, snpEff, enrichment, or Exomiser.
+uv run python scripts/consolidate_candidates.py \
+  --evidence /path/to/variant_evidence_master.csv \
+  --exomiser-variants /path/to/exomiser.variants.tsv \
+  --exomiser-genes /path/to/exomiser.genes.tsv \
+  --output-candidates /path/to/consolidated_candidates.csv \
+  --output-provenance /path/to/phase0_provenance.json
+
+# Phase 1: Biological Mechanism & Directionality Matrix.
+# This requires the Phase 0 output and only maps existing candidates; it does not
+# rerun QC, annotation, enrichment, or Exomiser.
+# It adds research-hypothesis pathway/directionality fields and phase-verification
+# gates; it does not create clinical classifications or treatment recommendations.
+uv run python scripts/build_mechanism_matrix.py \
+  --candidates /path/to/consolidated_candidates.csv \
+  --output-variant-matrix /path/to/variant_mechanism_matrix.csv \
+  --output-gene-matrix /path/to/gene_mechanism_matrix.csv \
+  --output-provenance /path/to/phase1_provenance.json
 ```
 
 Read [`data/README.md`](data/README.md) before placing or naming private
