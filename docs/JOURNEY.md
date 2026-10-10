@@ -264,6 +264,33 @@ The live execution completed with complete provenance recorded:
 
 ---
 
+## 5. Track 2 — Phase 3: Multi-Source Drug Repurposing Evidence & Safety Review
+
+### Task & Purpose
+Phase 3 bridges biological variant mechanisms and network interactome topology into pharmacological knowledge space. It queries multiple authoritative biomedical APIs:
+- **Open Targets Platform v4 GraphQL**: Target tractability, clinical drug candidates, developmental stages, and curated safety liabilities.
+- **ChEMBL v2.0 REST API**: Curated drug mechanisms of action, maximum clinical trial phases, and target classifications.
+- **DGIdb GraphQL API**: Curated drug-gene interactions across public biomedical sources (e.g., PharmGKB, CIViC, ChEMBL, CKB-CORE).
+
+Crucially, Phase 3 evaluates **mechanistic directionality**:
+$$\text{Variant Defect (LoF / SAC Impairment)} \longrightarrow \text{Target Action (Inhibition vs Activation)} \longrightarrow \text{Safety & Biological Feasibility}$$
+
+Phase 3 explicitly identifies **mechanistic contradictions** (e.g. testing an inhibitor against an already broken spindle assembly checkpoint) and strictly enforces research-only governance that prohibits clinical or treatment recommendations.
+
+### Directionality & Safety Logic
+1. **Mechanistic Hazard (Tier 4)**: If a patient harbors loss-of-function / hypomorphic alleles in a mitotic checkpoint gene (e.g. `BUB1B`, `MAD1L1`) or DNA damage surveillance (`TP53`), a pharmacological **inhibitor** directly exacerbates chromosome missegregation or permissive aneuploidy survival. These compounds are flagged as `MECHANISTIC_HAZARD` with `CONTRADICTION_FLAG = True` and relegated to the bottom of the research ranking.
+2. **Concordant Hypothesis (Tier 1)**: Compounds that activate, stabilize, or restore deficient pathway functions (e.g. TP53 exogenous gene transfer or stabilizers) match the desired biological direction of effect.
+3. **Off-Target Mitotic Compensation (Tier 2)**: Mitotic inhibitors (e.g., AURKA or PLK1 inhibitors) may induce selective lethality in highly aneuploid tumor cells, but present severe pediatric risks in developing normal tissues.
+4. **Uncertain Directionality (Tier 3)**: Compounds with uncharacterized functional modulation or non-directional binding interactions.
+
+### Outputs & Catalog
+- `14_phase3_drug_evidence_matrix.csv`: Normalized multi-source evidence matrix (709 rows, 23 columns) linking targets to drug candidates, clinical stages, tractability, and directional fit flags.
+- `15_phase3_safety_ranking.csv`: Drug-level safety and directionality ranking (669 rows, 14 columns) categorizing hypotheses into 4 safety tiers with strict non-recommendation disclaimers.
+- `16_phase3_mechanism_action_map.csv`: Gene-level summary table (10 seed genes) detailing total drug candidates, approved drugs, and identified directional hazards.
+- `17_phase3_repurposing_provenance.json`: Full execution audit trail recording query parameters, API URLs, response counts, and regulatory disclaimers.
+
+---
+
 ## 6. Track 2 Flat Output File Catalog
 
 All primary Track 2 result artifacts are organized directly under `data/processed/track2/` with flat, ordered, descriptive filenames:
@@ -286,6 +313,10 @@ All primary Track 2 result artifacts are organized directly under `data/processe
 | `11_phase2_largest_component.html` | Phase 2 | HTML | Interactive Plotly visualization of Component 1 (42 nodes, 64 edges) with deterministic spring layout, hoverable edge confidence scores, and node metadata. |
 | `12_phase2_mva_focus_network.html` | Phase 2 | HTML | Interactive Plotly visualization of the MVA-focused interactome subgraph (Component 2, 37 nodes, 52 edges) anchoring `BUB1B`, `MAD1L1`, and `MAD2L2`. |
 | `13_phase2_pathway_enrichment.html` | Phase 2 | HTML | Interactive Plotly bubble chart displaying top 25 enriched biological pathways across Reactome, GO:BP, KEGG, WikiPathways, and Human Phenotype Ontology. |
+| `14_phase3_drug_evidence_matrix.csv` | Phase 3 | CSV | Normalized multi-source drug-target evidence matrix (709 rows) integrating Open Targets v4, ChEMBL, and DGIdb GraphQL with directional fit flags. |
+| `15_phase3_safety_ranking.csv` | Phase 3 | CSV | Drug-level safety and directionality ranking (669 rows) categorizing candidates into 4 safety tiers with strict non-recommendation disclaimers. |
+| `16_phase3_mechanism_action_map.csv` | Phase 3 | CSV | Target-level mechanism action map (10 evaluated seed genes) linking baseline pathway direction to target actions and hazard counts. |
+| `17_phase3_repurposing_provenance.json` | Phase 3 | JSON | Execution metadata, query parameters, API URLs, source retrieval counts, and regulatory/ethical non-diagnostic disclaimers for Phase 3. |
 
 *(Note: Duplicate phase directories `phase0/`, `phase1/`, and `phase2/` remain preserved alongside these flat files for backward compatibility).*
 

@@ -217,7 +217,8 @@ data/processed/track2/00_phase0_consolidated_candidates.csv
 data/processed/track2/01_phase1_variant_mechanism_matrix.csv
 # Permit explicitly curated processed summaries and visualizations under 8 MB:
 # (00_phase0_provenance, 02_phase1_gene_mechanism, 02_phase1_provenance,
-#  03_phase2_seed_genes through 13_phase2_pathway_enrichment.html)
+#  03_phase2_seed_genes through 13_phase2_pathway_enrichment.html,
+#  14_phase3_drug_evidence_matrix.csv through 17_phase3_repurposing_provenance.json)
 
 # Size policy: no file larger than 8 MB may ever be committed.
 # Raw/interim genomic data stays out of Git; enforced by pre-commit hook (.git/hooks/pre-commit).

@@ -65,6 +65,19 @@ Track 2 translates multimodal variant annotations into prioritized mechanism mat
   ```
   *(Or run `bash scripts/run_network_visualization.sh` with no arguments to use default flat paths).*
 
+### 5. Phase 3: Multi-Source Drug Repurposing Evidence & Safety Review
+- **Script**: `scripts/run_drug_evidence.py` (Wrapper: `scripts/run_drug_evidence.sh`)
+- **Purpose**: Queries Open Targets v4, ChEMBL v2.0, and DGIdb GraphQL to map candidate and interactome seed genes into pharmacological space. Evaluates variant mechanism -> pathway -> target action -> safety directionality, detecting directional contradictions (e.g. BUB1B/SAC inhibitors in a child with baseline checkpoint impairment) and strictly prohibiting clinical treatment recommendations.
+- **Direct Flat Output Usage**:
+  ```bash
+  uv run python scripts/run_drug_evidence.py \
+    --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv \
+    --network-context data/processed/track2/07_phase2_network_gene_context.csv \
+    --output-dir data/processed/track2/ \
+    --flat-names
+  ```
+  *(Or run `bash scripts/run_drug_evidence.sh` with no arguments to use default flat paths).*
+
 ---
 
 ## Safe Layout Migration Tool
@@ -101,3 +114,7 @@ uv run python scripts/migrate_track2_layout.py --validate-only
 | `phase2/largest_component.html` | `11_phase2_largest_component.html` | Interactive graph of largest component (Comp 1) |
 | `phase2/mva_focus_network.html` | `12_phase2_mva_focus_network.html` | Interactive graph of MVA component (Comp 2) |
 | `phase2/pathway_enrichment.html` | `13_phase2_pathway_enrichment.html` | Interactive pathway enrichment bubble chart |
+| `phase3/drug_evidence_matrix.csv` | `14_phase3_drug_evidence_matrix.csv` | Normalized multi-source drug-target evidence matrix |
+| `phase3/safety_ranking.csv` | `15_phase3_safety_ranking.csv` | Drug safety, directionality tier, and research ranking |
+| `phase3/mechanism_action_map.csv` | `16_phase3_mechanism_action_map.csv` | Gene-level mechanism-to-action summary map |
+| `phase3/phase3_repurposing_provenance.json` | `17_phase3_repurposing_provenance.json` | Provenance metadata, API endpoints, and disclaimers |

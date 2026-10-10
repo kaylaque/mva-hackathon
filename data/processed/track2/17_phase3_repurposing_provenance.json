@@ -1,0 +1,44 @@
+{
+  "execution_timestamp_utc": "2026-10-10T16:19:35.183362+00:00",
+  "pipeline_version": "0.3.0",
+  "seed_mode": "mva_network",
+  "seed_genes_evaluated": [
+    "ATM",
+    "AURKA",
+    "BUB1B",
+    "CENATAC",
+    "MAD1L1",
+    "MAD2L2",
+    "NF1",
+    "SLF2",
+    "SMC5",
+    "TP53"
+  ],
+  "seed_genes_count": 10,
+  "total_drug_target_pairs_retrieved": 709,
+  "sources_contacted": {
+    "open_targets": {
+      "queried": true,
+      "status": "active",
+      "drug_candidates_retrieved": 28
+    },
+    "chembl": {
+      "queried": true,
+      "status": "active",
+      "mechanisms_retrieved": 25
+    },
+    "dgidb": {
+      "queried": true,
+      "status": "active",
+      "interactions_retrieved": 656
+    }
+  },
+  "contradiction_count": 15,
+  "mechanistic_hazard_count": 15,
+  "offline_mode": false,
+  "execution_duration_seconds": 39.678906,
+  "ethical_and_regulatory_notice": {
+    "disclaimer": "RESEARCH EXPLORATION ONLY \u2014 STRICTLY NOT CLINICAL OR TREATMENT ADVICE. Hypotheses generated computationally from public databases for mechanistic inquiry.",
+    "regulatory_status": "Strictly research exploration; no drug evaluated in this pipeline is approved or recommended for clinical use in this patient."
+  }
+}
