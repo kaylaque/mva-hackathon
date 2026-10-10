@@ -152,6 +152,21 @@ uv run python scripts/build_mechanism_matrix.py \
   --output-variant-matrix /path/to/variant_mechanism_matrix.csv \
   --output-gene-matrix /path/to/gene_mechanism_matrix.csv \
   --output-provenance /path/to/phase1_provenance.json
+
+# ------------------------------------------------------------------------------
+# Phase 2 Downstream Workflow: PPI & Pathway Network Context Engine
+# ------------------------------------------------------------------------------
+# Phase 2: Protein-Protein Interaction (PPI) and Pathway Network Context.
+# Consumes caller-supplied Phase 1 gene mechanism matrix (and optional variant matrix).
+# Queries external biomedical APIs at runtime (STRING v12.5, Reactome, g:Profiler).
+# Does NOT rerun upstream QC, VEP, snpEff, enrichment, or Exomiser.
+# Outputs: seed_genes.csv, string_edges.csv, network_summary.csv, pathway_enrichment.csv,
+# network_gene_context.csv, and phase2_network_provenance.json to a caller-supplied directory.
+uv run python scripts/run_network_analysis.py \
+  --gene-mechanism /path/to/gene_mechanism_matrix.csv \
+  --variant-matrix /path/to/variant_mechanism_matrix.csv \
+  --output-dir /path/to/phase2_network_output/ \
+  --string-score 700
 ```
 
 Read [`data/README.md`](data/README.md) before placing or naming private
