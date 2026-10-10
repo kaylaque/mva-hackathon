@@ -121,6 +121,21 @@ class MockNetworkHttpClient(HttpClient):
         if url.endswith("/api/json/version"):
             return mock_response(200, json_data=[{"string_version": "12.5"}])
         if url.endswith("/api/json/network"):
+            # Simulate real STRING behavior: HTTP 404 when NO identifier in the
+            # request batch resolves (keeps the skip-failed-batch path tested).
+            identifiers = str((params or {}).get("identifiers", ""))
+            batch_symbols = {s.strip().upper() for s in identifiers.split("\n") if s.strip()}
+            known_symbols = {"BUB1B", "MAD1L1", "TRIP13"}
+            if batch_symbols and not (batch_symbols & known_symbols):
+                missing = sorted(batch_symbols)[0]
+                return mock_response(
+                    404,
+                    text=(
+                        f'[{{ "Error" : "not found", "ErrorMessage" : '
+                        f'"<p>Sorry, STRING did not find a protein called \'{missing}\' '
+                        f"in the taxon '9606'.</p>\" }}"
+                    ),
+                )
             # Synthetic STRING interaction edges between BUB1B, MAD1L1, TRIP13
             edges = [
                 {
@@ -388,3 +403,41 @@ def test_cli_runner_with_mocks() -> None:
 
         assert (out_dir / "network_gene_context.csv").is_file()
         assert (out_dir / "phase2_network_provenance.json").is_file()
+
+
+def test_seed_filter_min_passing_variants() -> None:
+    """Genes without passing Phase 0 candidates are excluded from the seed set."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        df = make_synthetic_gene_mechanism_df()  # GENE_ISOLATED has 0 passing variants
+        with patch("mva_hackathon.network_analysis.HttpClient", MockNetworkHttpClient):
+            # Engine must be constructed INSIDE the patch: __init__ binds the client.
+            engine = NetworkContextEngine(
+                config=NetworkAnalysisConfig(min_passing_variants=1, polite_delay=0.0)
+            )
+            results = engine.run_analysis(df, None)
+        seed_symbols = set(results["seed_genes_df"]["HGNC_SYMBOL"])
+        assert len(seed_symbols) == 3
+        assert "GENE_ISOLATED" not in seed_symbols
+
+
+def test_string_batching_preserves_edges() -> None:
+    """STRING GET requests are chunked without losing edges across batch merges.
+
+    The mock returns 404 for a batch in which no identifier resolves (real
+    STRING behavior), so this also exercises the skip-failed-batch path.
+    """
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        df = make_synthetic_gene_mechanism_df()
+        with patch("mva_hackathon.network_analysis.HttpClient", MockNetworkHttpClient):
+            engine = NetworkContextEngine(
+                config=NetworkAnalysisConfig(string_batch_size=1, polite_delay=0.0)
+            )
+            results = engine.run_analysis(df, None)
+        edges = results["string_edges_df"]
+        assert len(edges) == 2
+        pairs = {
+            tuple(sorted([e.PREFERRED_NAME_A, e.PREFERRED_NAME_B]))
+            for e in edges.itertuples()
+        }
+        assert ("BUB1B", "TRIP13") in pairs
+        assert ("BUB1B", "MAD1L1") in pairs

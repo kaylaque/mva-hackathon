@@ -74,6 +74,18 @@ def parse_args() -> argparse.Namespace:
         help="Number of network expansion interactors to add (default: 0, seeds only)",
     )
     parser.add_argument(
+        "--min-passing",
+        type=int,
+        default=1,
+        help="Keep only genes with >= N passing Phase 0 candidate variants (0 = use full gene matrix)",
+    )
+    parser.add_argument(
+        "--string-batch-size",
+        type=int,
+        default=300,
+        help="Max symbols per STRING GET request (batches large seed lists to avoid URL limits)",
+    )
+    parser.add_argument(
         "--min-escore",
         type=float,
         default=None,
@@ -124,6 +136,8 @@ def main() -> None:
     config = NetworkAnalysisConfig(
         string_required_score=args.string_score,
         string_additional_nodes=args.string_additional_nodes,
+        min_passing_variants=args.min_passing,
+        string_batch_size=args.string_batch_size,
         min_escore=args.min_escore,
         min_dscore=args.min_dscore,
         min_tscore=args.min_tscore,

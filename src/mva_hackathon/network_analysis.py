@@ -62,6 +62,13 @@ class NetworkAnalysisConfig:
     min_tscore: float | None = None  # textmining
     min_ascore: float | None = None  # co-expression
 
+    # Seed filtering: keep genes carrying at least N passing Phase 0 candidate
+    # variants (0 disables filtering and uses the full input gene matrix).
+    min_passing_variants: int = 0
+
+    # STRING GET requests are batched so large seed lists stay within URL limits.
+    string_batch_size: int = 300
+
     # Reactome parameters
     reactome_page_size: int = 50
 
@@ -197,7 +204,25 @@ class NetworkContextEngine:
         """
         start_time = datetime.now(timezone.utc).isoformat()
 
-        # 1. Extract and sanitize seed genes
+        # 1. Restrict seeds to gated candidates, then extract and sanitize symbols.
+        #    A gene qualifies if it carries at least min_passing_variants passing
+        #    Phase 0 candidates (0 disables filtering = full input gene matrix).
+        if (
+            self.config.min_passing_variants > 0
+            and "TOTAL_PASSING_CANDIDATE_VARIANTS" in gene_mechanism_df.columns
+        ):
+            passing_numeric = pd.to_numeric(
+                gene_mechanism_df["TOTAL_PASSING_CANDIDATE_VARIANTS"], errors="coerce"
+            ).fillna(0)
+            keep_mask = passing_numeric >= self.config.min_passing_variants
+            filtered_df = gene_mechanism_df.loc[keep_mask].reset_index(drop=True)
+            logger.info(
+                "Seed filter: kept %d of %d gene rows with >= %d passing candidate variants",
+                len(filtered_df),
+                len(gene_mechanism_df),
+                self.config.min_passing_variants,
+            )
+            gene_mechanism_df = filtered_df
         input_symbols = self._extract_symbols(gene_mechanism_df)
         logger.info("Extracted %d unique candidate symbols from input table", len(input_symbols))
 
@@ -406,27 +431,48 @@ class NetworkContextEngine:
         if len(symbols) < 2:
             return pd.DataFrame(columns=columns), "tiny_list_under_2_genes"
 
-        params = {
-            "identifiers": "\n".join(symbols),
-            "species": self.config.string_species,
-            "required_score": self.config.string_required_score,
-            "add_nodes": self.config.string_additional_nodes,
-            "network_flavor": self.config.string_network_flavor,
-        }
+        # Batch the GET requests so large seed lists stay within URL limits.
+        batch_size = max(1, int(self.config.string_batch_size))
+        batches = [symbols[i : i + batch_size] for i in range(0, len(symbols), batch_size)]
 
-        resp = self.client.get(self.config.string_api_url, params=params)
-        if resp is None or resp.status_code != 200:
-            status = f"http_failure_{resp.status_code if resp else 'no_response'}"
-            return pd.DataFrame(columns=columns), status
+        all_rows: list[dict[str, Any]] = []
+        batch_statuses: list[str] = []
+        for batch in batches:
+            params = {
+                "identifiers": "\n".join(batch),
+                "species": self.config.string_species,
+                "required_score": self.config.string_required_score,
+                "add_nodes": self.config.string_additional_nodes,
+                "network_flavor": self.config.string_network_flavor,
+            }
 
-        try:
-            data = resp.json()
+            resp = self.client.get(self.config.string_api_url, params=params)
+            if resp is None or resp.status_code != 200:
+                # STRING returns 404 when NO identifier in a batch resolves.
+                # A failed batch must not discard results from other batches.
+                batch_status = f"http_failure_{resp.status_code if resp else 'no_response'}"
+                batch_statuses.append(batch_status)
+                logger.warning(
+                    "STRING batch %d/%d failed (%s); skipping batch",
+                    batches.index(batch) + 1,
+                    len(batches),
+                    batch_status,
+                )
+                continue
+
+            try:
+                data = resp.json()
+            except Exception as exc:
+                logger.error("Failed to parse STRING response: %s", exc)
+                batch_statuses.append(f"parse_error_{type(exc).__name__}")
+                continue
             if not isinstance(data, list):
-                return pd.DataFrame(columns=columns), "unexpected_format"
+                batch_statuses.append("unexpected_format")
+                continue
             if not data:
-                return pd.DataFrame(columns=columns), "zero_edges_found"
+                batch_statuses.append("zero_edges_found")
+                continue
 
-            rows = []
             for item in data:
                 node_a = str(item.get("preferredName_A", "")).strip().upper()
                 node_b = str(item.get("preferredName_B", "")).strip().upper()
@@ -451,7 +497,7 @@ class NetworkContextEngine:
                 if self.config.min_ascore is not None and ascore < self.config.min_ascore:
                     continue
 
-                rows.append({
+                all_rows.append({
                     "PREFERRED_NAME_A": node_a,
                     "PREFERRED_NAME_B": node_b,
                     "STRING_ID_A": item.get("stringId_A", ""),
@@ -471,19 +517,34 @@ class NetworkContextEngine:
                     "TEXTMINING_ONLY": "YES" if (tscore > 0.0 and escore == 0.0 and dscore == 0.0) else "NO",
                 })
 
-            df = pd.DataFrame(rows, columns=columns)
-            # Deduplicate undirected edges (e.g. A-B vs B-A)
-            if not df.empty:
-                df["EDGE_PAIR"] = df.apply(
-                    lambda r: tuple(sorted([r["PREFERRED_NAME_A"], r["PREFERRED_NAME_B"]])), axis=1
-                )
-                df = df.drop_duplicates(subset=["EDGE_PAIR"]).drop(columns=["EDGE_PAIR"])
-                df = df.sort_values(by="SCORE", ascending=False).reset_index(drop=True)
+        rows = all_rows
+        df = pd.DataFrame(rows, columns=columns)
+        if df.empty:
+            failed_statuses = [
+                s for s in batch_statuses
+                if s.startswith("http_failure") or s.startswith("parse_error")
+            ]
+            if failed_statuses and "success" not in batch_statuses:
+                return df, "all_batches_failed"
+            return df, "zero_edges_found"
 
-            return df, "success"
-        except Exception as exc:
-            logger.error("Failed to parse STRING PPI response: %s", exc)
-            return pd.DataFrame(columns=columns), f"parse_error_{type(exc).__name__}"
+        # Deduplicate undirected edges (e.g. A-B vs B-A)
+        df["EDGE_PAIR"] = df.apply(
+            lambda r: tuple(sorted([r["PREFERRED_NAME_A"], r["PREFERRED_NAME_B"]])), axis=1
+        )
+        df = df.drop_duplicates(subset=["EDGE_PAIR"]).drop(columns=["EDGE_PAIR"])
+        df = df.sort_values(by="SCORE", ascending=False).reset_index(drop=True)
+
+        failed_count = sum(
+            1 for s in batch_statuses
+            if s.startswith("http_failure") or s.startswith("parse_error")
+        )
+        status = (
+            "success"
+            if failed_count == 0
+            else f"partial_batch_failures_{failed_count}_of_{len(batch_statuses)}"
+        )
+        return df, status
 
     def compute_network_topology(
         self,

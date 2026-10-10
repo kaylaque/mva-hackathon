@@ -184,6 +184,7 @@ class CandidateConsolidator:
         df.columns = df.columns.str.strip()
 
         aliases = {
+            # Standard / JSON-style names
             "variantScore": "EXOMISER_VARIANT_SCORE",
             "geneScore": "EXOMISER_GENE_SCORE",
             "phenotypeScore": "EXOMISER_PHENOTYPE_SCORE",
@@ -192,6 +193,14 @@ class CandidateConsolidator:
             "pos": "POS",
             "ref": "REF",
             "alt": "ALT",
+            # Exomiser variants.tsv export names
+            "#RANK": "EXOMISER_RANK",
+            "EXOMISER_GENE_COMBINED_SCORE": "EXOMISER_GENE_SCORE",
+            "EXOMISER_GENE_PHENO_SCORE": "EXOMISER_PHENOTYPE_SCORE",
+            "CONTIG": "CHROM",
+            "CHR": "CHROM",
+            "CHROMOSOME": "CHROM",
+            "START": "POS",
         }
         df = df.rename(columns={k: v for k, v in aliases.items() if k in df.columns})
 
@@ -226,6 +235,10 @@ class CandidateConsolidator:
             "geneScore": "EXOMISER_GENE_SCORE",
             "phenotypeScore": "EXOMISER_PHENOTYPE_SCORE",
             "rank": "EXOMISER_GENE_RANK",
+            # Exomiser genes.tsv export names
+            "#RANK": "EXOMISER_GENE_RANK",
+            "EXOMISER_GENE_COMBINED_SCORE": "EXOMISER_GENE_SCORE",
+            "EXOMISER_GENE_PHENO_SCORE": "EXOMISER_PHENOTYPE_SCORE",
         }
         df = df.rename(columns={k: v for k, v in aliases.items() if k in df.columns})
         if "SYMBOL" not in df.columns:
