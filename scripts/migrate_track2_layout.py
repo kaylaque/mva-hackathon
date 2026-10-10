@@ -43,6 +43,7 @@ class ArtifactMapping(NamedTuple):
     source_rel: str
     target_rel: str
     description: str
+    optional: bool = False
 
 
 TRACK2_ARTIFACT_MAPPINGS: list[ArtifactMapping] = [
@@ -101,16 +102,48 @@ TRACK2_ARTIFACT_MAPPINGS: list[ArtifactMapping] = [
         target_rel="08_phase2_network_provenance.json",
         description="Phase 2 API queries, parameter configurations, and research caveats",
     ),
+    ArtifactMapping(
+        source_rel="phase2/network_nodes.csv",
+        target_rel="09_phase2_network_nodes.csv",
+        description="Phase 2 complete node-level interactome metrics, component ranks, and degrees",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase2/component_summary.csv",
+        target_rel="10_phase2_component_summary.csv",
+        description="Phase 2 connected component ranking, sizes, densities, and MVA membership",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase2/largest_component.html",
+        target_rel="11_phase2_largest_component.html",
+        description="Phase 2 interactive network graph for the largest connected component",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase2/mva_focus_network.html",
+        target_rel="12_phase2_mva_focus_network.html",
+        description="Phase 2 interactive network graph for the MVA-focused candidate component",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase2/pathway_enrichment.html",
+        target_rel="13_phase2_pathway_enrichment.html",
+        description="Phase 2 interactive pathway enrichment bubble chart",
+        optional=True,
+    ),
 ]
 
 
 def check_sources_exist(base_dir: Path) -> tuple[bool, list[str]]:
-    """Verify that all expected hierarchical source artifacts exist.
+    """Verify that all expected non-optional hierarchical source artifacts exist.
 
     Returns (all_present, missing_list).
     """
     missing: list[str] = []
     for mapping in TRACK2_ARTIFACT_MAPPINGS:
+        if mapping.optional:
+            continue
         src = base_dir / mapping.source_rel
         if not src.is_file():
             missing.append(f"{mapping.source_rel} (expected at {src})")
@@ -154,6 +187,9 @@ def migrate_track2_artifacts(
     for mapping in TRACK2_ARTIFACT_MAPPINGS:
         src_path = base_dir / mapping.source_rel
         dst_path = base_dir / mapping.target_rel
+
+        if not src_path.is_file() and mapping.optional:
+            continue
 
         if validate_only:
             src_exists = src_path.is_file()

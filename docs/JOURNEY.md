@@ -241,12 +241,19 @@ The live execution completed with complete provenance recorded:
 - `data/processed/track2/06_phase2_pathway_enrichment.csv` (62 KB)
 - `data/processed/track2/07_phase2_network_gene_context.csv` (823 KB)
 - `data/processed/track2/08_phase2_network_provenance.json` (2.6 KB)
+- `data/processed/track2/09_phase2_network_nodes.csv` (435 KB)
+- `data/processed/track2/10_phase2_component_summary.csv` (5.8 KB)
+- `data/processed/track2/11_phase2_largest_component.html` (47 KB)
+- `data/processed/track2/12_phase2_mva_focus_network.html` (43 KB)
+- `data/processed/track2/13_phase2_pathway_enrichment.html` (54 KB)
 
 ### How to Read the Files
-- In `05_phase2_network_summary.csv`: Review global topological metrics (edge counts, average degree, component sizes).
+- In `05_phase2_network_summary.csv` & `10_phase2_component_summary.csv`: Review global topological metrics (edge counts, average degree, component sizes, densities, and MVA gene membership).
 - In `04_phase2_string_edges.csv`: Inspect specific physical and functional protein-protein interactions, score breakdowns (database vs experimental vs textmining), and confidence ratings.
-- In `06_phase2_pathway_enrichment.csv`: Examine statistically overrepresented biological pathways, FDR values, and intersection candidate gene lists.
-- In `07_phase2_network_gene_context.csv`: For any candidate gene of interest, find its unified row containing network degree, clustering coefficient, interaction partners, and enriched pathways.
+- In `06_phase2_pathway_enrichment.csv` & `13_phase2_pathway_enrichment.html`: Examine statistically overrepresented biological pathways, FDR values, and interactive bubble charts colored by source database.
+- In `07_phase2_network_gene_context.csv` & `09_phase2_network_nodes.csv`: For any candidate gene of interest, find its unified row containing network degree, component rank, clustering coefficient, interaction partners, and enriched pathways.
+- In `11_phase2_largest_component.html`: Explore the largest connected interactome component (Component 1, 42 genes, 64 edges) centered on general cellular machinery (splicing, translation, transcription regulation).
+- In `12_phase2_mva_focus_network.html`: Explore the MVA-focused candidate component (Component 2, 37 genes, 52 edges) directly connecting `BUB1B`, `MAD1L1`, and `MAD2L2` to spindle assembly checkpoint and genome stability networks (`TP53`, `ATM`, `DDX11`, `NF1`).
 - In `08_phase2_network_provenance.json`: Inspect exact execution timestamps, API URLs, versions, parameter thresholds, and the Reactome live projection token.
 
 ### Conclusions & Limitations
@@ -274,6 +281,11 @@ All primary Track 2 result artifacts are organized directly under `data/processe
 | `06_phase2_pathway_enrichment.csv` | Phase 2 | CSV | 84 enriched biological pathway terms from Reactome and g:Profiler (g:GOSt), reporting term names, IDs, p-values, FDR, and hitting candidate gene symbols. |
 | `07_phase2_network_gene_context.csv` | Phase 2 | CSV | Unified gene-level context table synthesizing Phase 1 candidate metrics, network graph degree, clustering, STRING interactors, and top enriched biological pathways. |
 | `08_phase2_network_provenance.json` | Phase 2 | JSON | Complete Phase 2 audit trail capturing API versions (STRING v12.5), query endpoints, network parameters, execution runtime, and explicit biological interpretation caveats. |
+| `09_phase2_network_nodes.csv` | Phase 2 | CSV | Complete node-level network table for 1,989 evaluated genes, reporting network degree, component rank, isolation status, MVA canonical/extended tags, and candidate variant counts. |
+| `10_phase2_component_summary.csv` | Phase 2 | CSV | Connected component ranking across 124 multi-node subgraphs, detailing component sizes, edge counts, graph densities, MVA gene presence, and complete gene rosters. |
+| `11_phase2_largest_component.html` | Phase 2 | HTML | Interactive Plotly visualization of Component 1 (42 nodes, 64 edges) with deterministic spring layout, hoverable edge confidence scores, and node metadata. |
+| `12_phase2_mva_focus_network.html` | Phase 2 | HTML | Interactive Plotly visualization of the MVA-focused interactome subgraph (Component 2, 37 nodes, 52 edges) anchoring `BUB1B`, `MAD1L1`, and `MAD2L2`. |
+| `13_phase2_pathway_enrichment.html` | Phase 2 | HTML | Interactive Plotly bubble chart displaying top 25 enriched biological pathways across Reactome, GO:BP, KEGG, WikiPathways, and Human Phenotype Ontology. |
 
 *(Note: Duplicate phase directories `phase0/`, `phase1/`, and `phase2/` remain preserved alongside these flat files for backward compatibility).*
 

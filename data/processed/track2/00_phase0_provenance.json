@@ -1,0 +1,23 @@
+{
+  "pipeline_stage": "Phase 0 (Candidate Intake, Gating, and Consolidation)",
+  "timestamp_utc": "2026-10-10T13:06:54.809751+00:00",
+  "genome_build": "GRCh38",
+  "pipeline_version": "0.2.0",
+  "gates_config": {
+    "max_af": 0.001,
+    "min_cadd_phred": 20.0,
+    "min_spliceai_ds": 0.2,
+    "min_revel": 0.5,
+    "min_alphamissense": 0.5,
+    "reference_build": "GRCh38",
+    "pipeline_version": "0.2.0"
+  },
+  "input_evidence": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/processed/variant_evidence_master.csv",
+  "input_exomiser_variants": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/interim/exomiser/mva_patient_exomiser.variants.tsv",
+  "input_exomiser_genes": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/interim/exomiser/mva_patient_exomiser.genes.tsv",
+  "total_variants_ingested": 18252,
+  "total_variants_passing_gates": 2215,
+  "total_mva_core_variants": 6,
+  "total_multihit_genes": 168,
+  "disclaimer": "Research candidate exploration only; non-diagnostic; not medical advice."
+}

@@ -1,0 +1,72 @@
+{
+  "workflow_phase": "Phase 2: Protein-Protein Interaction (PPI) and Pathway Network Context",
+  "timestamp_start": "2026-10-10T13:12:55.309836+00:00",
+  "timestamp_end": "2026-10-10T13:13:11.883501+00:00",
+  "config": {
+    "string_species": 9606,
+    "string_required_score": 700,
+    "string_additional_nodes": 0,
+    "string_network_flavor": "confidence",
+    "min_escore": null,
+    "min_dscore": null,
+    "min_tscore": null,
+    "min_ascore": null,
+    "min_passing_variants": 1,
+    "string_batch_size": 300,
+    "reactome_page_size": 50,
+    "gprofiler_organism": "hsapiens",
+    "gprofiler_target": "HGNC",
+    "gprofiler_sources": [
+      "GO:BP",
+      "REAC",
+      "KEGG",
+      "HP",
+      "WP"
+    ],
+    "gprofiler_user_threshold": 0.05,
+    "request_timeout": 20.0,
+    "max_retries": 3,
+    "retry_backoff": 1.0,
+    "polite_delay": 0.25,
+    "user_agent": "mva-hackathon/0.2.0 (SageBio MVA Hackathon 2026; research exploration; non-diagnostic)",
+    "string_api_url": "https://version-12-5.string-db.org/api/json/network",
+    "string_version_url": "https://version-12-5.string-db.org/api/json/version",
+    "reactome_api_url": "https://reactome.org/AnalysisService/identifiers/projection",
+    "gprofiler_convert_url": "https://biit.cs.ut.ee/gprofiler/api/convert/convert/",
+    "gprofiler_gost_url": "https://biit.cs.ut.ee/gprofiler/api/gost/profile/"
+  },
+  "external_resources": {
+    "string_db": {
+      "version": "12.5",
+      "endpoint": "https://version-12-5.string-db.org/api/json/network",
+      "species": 9606,
+      "required_score": 700,
+      "additional_nodes": 0,
+      "network_flavor": "confidence",
+      "status": "success"
+    },
+    "reactome": {
+      "endpoint": "https://reactome.org/AnalysisService/identifiers/projection",
+      "status": "success"
+    },
+    "gprofiler": {
+      "convert_endpoint": "https://biit.cs.ut.ee/gprofiler/api/convert/convert/",
+      "gost_endpoint": "https://biit.cs.ut.ee/gprofiler/api/gost/profile/",
+      "organism": "hsapiens",
+      "convert_status": "success",
+      "gost_status": "success"
+    }
+  },
+  "counts": {
+    "input_genes_count": 1985,
+    "mapped_hgnc_count": 1985,
+    "string_edges_count": 477,
+    "pathways_count": 84
+  },
+  "interpretation_caveats": [
+    "Research exploration only. Not for clinical diagnosis or treatment guidance.",
+    "Network topology and co-membership DO NOT infer biological directionality.",
+    "Direct edges in STRING reflect physical or functional association, not causality or drug suitability.",
+    "Enrichment p-values reflect term overrepresentation among candidates, not disease-causing mechanisms."
+  ]
+}

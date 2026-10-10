@@ -166,6 +166,18 @@ uv run python scripts/run_network_analysis.py \
   --string-score 700
 
 # ------------------------------------------------------------------------------
+# Phase 2 Downstream Workflow: Interactive Network & Pathway Visualizations
+# ------------------------------------------------------------------------------
+# Generates deterministic spring-layout Plotly HTML network graphs (largest component,
+# MVA-focused component, pathway enrichment bubble chart) and node/component CSV summaries:
+uv run python scripts/run_network_visualization.py \
+  --gene-context data/processed/track2/07_phase2_network_gene_context.csv \
+  --edges data/processed/track2/04_phase2_string_edges.csv \
+  --enrichment data/processed/track2/06_phase2_pathway_enrichment.csv \
+  --output-dir data/processed/track2/ \
+  --flat-names
+
+# ------------------------------------------------------------------------------
 # Track 2 Artifact Migration & Validation
 # ------------------------------------------------------------------------------
 # Safely copy hierarchical phase artifacts (phase0/, phase1/, phase2/) into flat

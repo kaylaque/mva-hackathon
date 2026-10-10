@@ -51,6 +51,20 @@ Track 2 translates multimodal variant annotations into prioritized mechanism mat
   ```
   *(Or run `bash scripts/run_network_analysis.sh` with no arguments to use default flat paths).*
 
+### 4. Phase 2 Visualization: Interactive Interactome & Pathway Graphs
+- **Script**: `scripts/run_network_visualization.py` (Wrapper: `scripts/run_network_visualization.sh`)
+- **Purpose**: Generates reproducible interactive Plotly visualizations and structural component tables without hairball dilution, using a deterministic Fruchterman-Reingold layout with fixed seeds.
+- **Direct Flat Output Usage**:
+  ```bash
+  uv run python scripts/run_network_visualization.py \
+    --gene-context data/processed/track2/07_phase2_network_gene_context.csv \
+    --edges data/processed/track2/04_phase2_string_edges.csv \
+    --enrichment data/processed/track2/06_phase2_pathway_enrichment.csv \
+    --output-dir data/processed/track2/ \
+    --flat-names
+  ```
+  *(Or run `bash scripts/run_network_visualization.sh` with no arguments to use default flat paths).*
+
 ---
 
 ## Safe Layout Migration Tool
@@ -82,3 +96,8 @@ uv run python scripts/migrate_track2_layout.py --validate-only
 | `phase2/pathway_enrichment.csv` | `06_phase2_pathway_enrichment.csv` | Reactome & g:Profiler enrichment terms |
 | `phase2/network_gene_context.csv` | `07_phase2_network_gene_context.csv` | Unified gene-level network context table |
 | `phase2/phase2_network_provenance.json` | `08_phase2_network_provenance.json` | API parameters, versions, and caveats |
+| `phase2/network_nodes.csv` | `09_phase2_network_nodes.csv` | Node metrics, component ranks, and degrees |
+| `phase2/component_summary.csv` | `10_phase2_component_summary.csv` | Connected component ranking and MVA hits |
+| `phase2/largest_component.html` | `11_phase2_largest_component.html` | Interactive graph of largest component (Comp 1) |
+| `phase2/mva_focus_network.html` | `12_phase2_mva_focus_network.html` | Interactive graph of MVA component (Comp 2) |
+| `phase2/pathway_enrichment.html` | `13_phase2_pathway_enrichment.html` | Interactive pathway enrichment bubble chart |
