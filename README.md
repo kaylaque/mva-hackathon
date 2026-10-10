@@ -178,6 +178,18 @@ uv run python scripts/run_network_visualization.py \
   --flat-names
 
 # ------------------------------------------------------------------------------
+# Phase 3 Downstream Workflow: Multi-Source Drug Repurposing Evidence Engine
+# ------------------------------------------------------------------------------
+# Queries runtime pharmacological sources (Open Targets GraphQL, ChEMBL REST, DGIdb GraphQL)
+# to build a normalized drug-evidence matrix, evaluate variant mechanism -> pathway ->
+# target action -> safety directionality, flag mechanistic hazards, and produce safety rankings:
+uv run python scripts/run_drug_evidence.py \
+  --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv \
+  --network-context data/processed/track2/07_phase2_network_gene_context.csv \
+  --output-dir data/processed/track2/ \
+  --flat-names
+
+# ------------------------------------------------------------------------------
 # Track 2 Artifact Migration & Validation
 # ------------------------------------------------------------------------------
 # Safely copy hierarchical phase artifacts (phase0/, phase1/, phase2/) into flat
