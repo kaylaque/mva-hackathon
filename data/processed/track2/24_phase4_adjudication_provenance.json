@@ -1,0 +1,294 @@
+{
+  "pipeline_name": "mva_phase4_adjudication",
+  "pipeline_version": "0.4.0",
+  "execution_timestamp": "2026-10-11T09:20:36.684149+00:00",
+  "duration_seconds": 63.51,
+  "offline_mode": false,
+  "research_only_notice": "RESEARCH EXPLORATION ONLY \u2014 STRICTLY NOT CLINICAL OR TREATMENT ADVICE. Hypotheses generated computationally from public databases for mechanistic inquiry.",
+  "input_files": {
+    "gene_mechanism": {
+      "path": "data/processed/track2/02_phase1_gene_mechanism_matrix.csv",
+      "sha256": "dcba68f6e47d0e09edb0cd43340db8b7ea553206725e70debf0c73d2c02299c1"
+    },
+    "drug_evidence": {
+      "path": "data/processed/track2/14_phase3_drug_evidence_matrix.csv",
+      "sha256": "8c181017455d83f020ed9c6c81265ff9e273ffd1ff585522cb0b247e0601e321"
+    },
+    "safety_ranking": {
+      "path": "data/processed/track2/15_phase3_safety_ranking.csv",
+      "sha256": "5ea939ef872fc9a80027e64cbf299b94e7270bcfff8069b5c5fd537af076a35e"
+    },
+    "query_panel": {
+      "path": "data/processed/track2/18_phase3_query_gene_panel.csv",
+      "sha256": "844c16dc46d312e18c2b4ada405975a59fee7892a0d5c2a70216a1cac8e6b433"
+    },
+    "pathway_enrichment": {
+      "path": "data/processed/track2/06_phase2_pathway_enrichment.csv",
+      "sha256": "97e58107fb580824b5fb1e708770119b7758a7e4c79490351025712698468027"
+    }
+  },
+  "PREREGISTERED_ENDPOINTS": {
+    "SAC_ACTIVITY": [
+      "BUB1B",
+      "MAD1L1",
+      "CDC20",
+      "BUB1",
+      "BUB3",
+      "MAD2L1",
+      "MAD2L2"
+    ],
+    "KT_MT_ATTACHMENT": [
+      "AURKA",
+      "PLK1",
+      "CENPE",
+      "KNL1",
+      "NDC80",
+      "TTK"
+    ],
+    "MINOR_INTRON_SPLICING": [
+      "CENATAC",
+      "CCDC84",
+      "RNU11",
+      "RNU12"
+    ],
+    "CHROMOSOME_STABILITY": [
+      "CEP57",
+      "SLF2",
+      "SMC5",
+      "TP53"
+    ],
+    "P53_APOPTOSIS_SURVEILLANCE": [
+      "TP53",
+      "ATM",
+      "CHEK1",
+      "CHEK2"
+    ],
+    "PEDIATRIC_MALIGNANCY_RMS_WILMS": [
+      "ALK",
+      "KIT",
+      "WT1",
+      "DICER1",
+      "NF1",
+      "FGFR4"
+    ]
+  },
+  "PREREGISTERED_SIGN_CONVENTION": {
+    "activation_sign": 1,
+    "inhibition_sign": -1,
+    "unknown_ambiguous_sign": 0,
+    "drug_action_mapping": {
+      "inhibitor_antagonist_degrader_blocker": -1,
+      "activator_agonist_inducer_opener": 1,
+      "modulator_binder_other_unknown": 0
+    },
+    "net_path_sign_formula": "drug_sign * product(edge_signs_along_path)"
+  },
+  "PREREGISTERED_MAX_PATH_LENGTH": 2,
+  "PREREGISTERED_SOURCE_HIERARCHY": {
+    "CURATED": [
+      "SIGNOR",
+      "OmniPath (omnipath)",
+      "Reactome ContentService"
+    ],
+    "INFERRED": [
+      "OmniPath (pathwayextra, kinaseextra)",
+      "Pathway Commons SIF"
+    ],
+    "TEXTMINED": [
+      "Europe PMC Annotations",
+      "DGIdb Interaction Claims"
+    ]
+  },
+  "PREREGISTERED_SCORING_WEIGHTS": {
+    "curated_signed_path": 0.4,
+    "literature_verification": 0.3,
+    "multi_source_consensus": 0.2,
+    "reaction_level_corroboration": 0.1
+  },
+  "PREREGISTERED_HAZARD_THRESHOLDS": {
+    "pediatric_hazard_score_mandatory_hold": 60,
+    "signed_path_hazard_contraindication": true
+  },
+  "PREREGISTERED_CLASS_RULES": {
+    "H1": "DISEASE_MECHANISM_CORRECTION (SAC / KT-MT / minor splicing rescue)",
+    "H2": "CANCER_COMPLICATION_MANAGEMENT (RMS / Wilms / leukemia / synthetic lethality)",
+    "H3": "SUPPORTIVE_CARE_SYMPTOM_MANAGEMENT (renal tubular / ion transport without mitotic impact)",
+    "H0": "NO_CLASS (unresolved or evidence gap)"
+  },
+  "PREREGISTERED_ENTRY_CRITERIA": {
+    "E1": "All Phase 3 Tier 1 concordant rows",
+    "E2": "Phase 3 Tier 2 off-target compensation with >=2 sources",
+    "E3": "Curated negative-control subset of Tier 4 (must-reject sanity)",
+    "E4": "Pairs with target in MVA-associated pediatric malignancies",
+    "E5": "Pairs in Phase 2 MVA-focus component with signed edge or reaction"
+  },
+  "sources_contacted": [
+    {
+      "name": "SIGNOR",
+      "endpoint": "https://signor.uniroma2.it/getData.php?organism=9606",
+      "version": "3.0",
+      "status": "ONLINE",
+      "rows_retrieved": 30884
+    },
+    {
+      "name": "OmniPath",
+      "endpoint": "https://omnipathdb.org/interactions",
+      "version": "2024",
+      "status": "ONLINE",
+      "rows_retrieved": 30884
+    },
+    {
+      "name": "Reactome ContentService",
+      "endpoint": "https://reactome.org/ContentService",
+      "version": "v88",
+      "status": "ONLINE",
+      "reactions_adjudicated": 21
+    },
+    {
+      "name": "Crossref REST",
+      "endpoint": "https://api.crossref.org/works",
+      "status": "ONLINE"
+    },
+    {
+      "name": "NCBI Entrez E-utilities",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi",
+      "status": "ONLINE"
+    },
+    {
+      "name": "Europe PMC REST",
+      "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "status": "ONLINE"
+    }
+  ],
+  "metrics": {
+    "entry_pairs_evaluated": 1088,
+    "signed_edges_reconciled": 30884,
+    "curated_conflicts_detected": 265,
+    "reactions_adjudicated": 21,
+    "gate_statistics": {
+      "G1_HYGIENE_PASS": 1088,
+      "G1_HYGIENE_FAIL": 0,
+      "G2_REACHABLE": 1058,
+      "G2_EVIDENCE_GAP": 30,
+      "G3_CONCORDANT": 1077,
+      "G3_HAZARD": 11,
+      "G4_CLASSES_ASSIGNED": 1136,
+      "G5_PEDIATRIC_HOLD": 11,
+      "G5_PEDIATRIC_PASS": 1077,
+      "G6_LIT_VERIFIED": 942,
+      "G6_LIT_PENDING": 146,
+      "G6_LIT_CONTRADICTED": 0,
+      "G7_VERDICTS_ISSUED": 1136
+    },
+    "verdict_distribution": {
+      "KEEP_WITH_CAVEAT": 653,
+      "ACCEPTED_RESEARCH_HYPOTHESIS": 442,
+      "EVIDENCE_INSUFFICIENT": 30,
+      "MECHANISTIC_HAZARD_REJECTED": 11
+    },
+    "class_distribution": {
+      "H0_NO_CLASS": 278,
+      "H2_CANCER_COMPLICATION_MANAGEMENT": 799,
+      "H1_DISEASE_MECHANISM_CORRECTION": 59
+    }
+  },
+  "best_options_per_class": {
+    "H1_DISEASE_MECHANISM_CORRECTION": [
+      {
+        "rank": 1,
+        "target": "ALK",
+        "drug": "LORLATINIB",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.85,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 2,
+        "target": "ALK",
+        "drug": "PLB1003",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.85,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 3,
+        "target": "ALK",
+        "drug": "ALECTINIB HYDROCHLORIDE",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.85,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 4,
+        "target": "ALK",
+        "drug": "BRIGATINIB",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.85,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 5,
+        "target": "ALK",
+        "drug": "CRIZOTINIB",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.85,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      }
+    ],
+    "H2_CANCER_COMPLICATION_MANAGEMENT": [
+      {
+        "rank": 1,
+        "target": "ALK",
+        "drug": "FAM150B",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.6,
+        "pediatric_hazard_score": 20,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 2,
+        "target": "ALK",
+        "drug": "LORLATINIB",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.6,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 3,
+        "target": "ALK",
+        "drug": "PLB1003",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.6,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 4,
+        "target": "ALK",
+        "drug": "ALECTINIB HYDROCHLORIDE",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.6,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      },
+      {
+        "rank": 5,
+        "target": "ALK",
+        "drug": "BRIGATINIB",
+        "verdict": "ACCEPTED_RESEARCH_HYPOTHESIS",
+        "confidence": 0.6,
+        "pediatric_hazard_score": 45,
+        "justification": "ACCEPTED_RESEARCH_HYPOTHESIS: Rigorously corroborated by curated signed paths (6), 3 independent curated repositories, and verified primary literature."
+      }
+    ],
+    "H3_SUPPORTIVE_CARE_SYMPTOM_MANAGEMENT": []
+  },
+  "truncation_ledger": [],
+  "quarantine_ledger": []
+}
