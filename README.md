@@ -26,6 +26,37 @@ Use the `Python (mva-hackathon)` kernel. On Kaggle, the notebook reads from `/ka
 
 Supported inputs include `.vcf`, `.vcf.gz`, `.bam`, `.cram`, `.fastq`, and `.fastq.gz`. Large patient/genomic files are intentionally excluded from Git by `.gitignore`; do not force-add them.
 
+## Track 2 Workflows & Pipelines
+
+Run full Phase 0 through Phase 3 pipelines using `uv run` or dedicated shell wrappers:
+
+- **Phase 0 Candidate Consolidation**:
+  ```bash
+  uv run python scripts/consolidate_candidates.py --evidence <csv> --output-candidates data/processed/track2/00_phase0_consolidated_candidates.csv
+  ```
+- **Phase 1 Mechanism Matrix**:
+  ```bash
+  uv run python scripts/build_mechanism_matrix.py --candidates data/processed/track2/00_phase0_consolidated_candidates.csv --output-variant-matrix data/processed/track2/01_phase1_variant_mechanism_matrix.csv --output-gene-matrix data/processed/track2/02_phase1_gene_mechanism_matrix.csv
+  ```
+- **Phase 2 Network Analysis & Topology**:
+  ```bash
+  uv run python scripts/run_network_analysis.py --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv --output-dir data/processed/track2/
+  ```
+- **Phase 2 Interactive Network Visualization**:
+  ```bash
+  uv run python scripts/run_network_visualization.py --gene-context data/processed/track2/07_phase2_network_gene_context.csv --edges data/processed/track2/04_phase2_string_edges.csv --enrichment data/processed/track2/06_phase2_pathway_enrichment.csv --output-dir data/processed/track2/
+  ```
+- **Phase 3 Query Gene Panel Generation**:
+  ```bash
+  uv run python scripts/run_query_gene_panel.py --track2-dir data/processed/track2 --output-dir data/processed/track2 --flat-names
+  # Or wrapper: bash scripts/run_query_gene_panel.sh
+  ```
+- **Phase 3 Multi-Source Drug Repurposing Evidence**:
+  ```bash
+  uv run python scripts/run_drug_evidence.py --query-panel data/processed/track2/18_phase3_query_gene_panel.csv --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv --network-context data/processed/track2/07_phase2_network_gene_context.csv --output-dir data/processed/track2/ --flat-names
+  # Or wrapper: bash scripts/run_drug_evidence.sh
+  ```
+
 ## Project structure
 
 ```text

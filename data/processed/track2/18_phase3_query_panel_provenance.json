@@ -1,0 +1,75 @@
+{
+  "pipeline_version": "0.3.0",
+  "execution_timestamp_utc": "2026-10-11T05:53:07.011117+00:00",
+  "config": {
+    "track2_dir": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/processed/track2",
+    "output_dir": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/processed/track2",
+    "flat_names": true,
+    "string_min_score": 0.7,
+    "max_context_modifiers": 25,
+    "max_panel_size": 120,
+    "include_core_absent_from_phase1": true,
+    "mva_focus_component_only": true,
+    "allow_unmapped_identity": false,
+    "include_no_kb_genes": false,
+    "verify_literature": true,
+    "literature_registry_path": null,
+    "control_positive_genes": [
+      "AURKA",
+      "PLK1",
+      "BUB1",
+      "CDC20",
+      "MAD2L1",
+      "PLK4",
+      "ATR",
+      "CHEK1",
+      "WEE1"
+    ],
+    "control_negative_max": 4,
+    "pipeline_version": "0.3.0"
+  },
+  "detected_mva_focus_component": {
+    "component_rank": 2,
+    "size": 37,
+    "edge_count": 52,
+    "anchors": [
+      "BUB1B",
+      "MAD1L1"
+    ]
+  },
+  "panel_category_counts": {
+    "GRAPH_DERIVED_NEIGHBOR": 31,
+    "CONTEXT_MODIFIER": 29,
+    "DRUG_TARGET_CONTROL": 13,
+    "CORE_MVA_CAUSAL": 7
+  },
+  "control_counts": {
+    "NONE": 67,
+    "POSITIVE": 9,
+    "NEGATIVE": 4
+  },
+  "total_panel_size": 80,
+  "citations_count": 130,
+  "literature_verification": {
+    "verified_count": 20,
+    "pending_count": 0,
+    "sources": [
+      "NCBI_EUTILITIES",
+      "OMIM",
+      "STRING_DB",
+      "REACTOME"
+    ]
+  },
+  "gate0_dropped_ledger_counts": {
+    "UNMAPPED_HGNC_STATUS": 360,
+    "PSEUDOGENE": 87,
+    "READTHROUGH_OR_NON_CODING_TRANSCRIPT": 72,
+    "HLA_COMPLEX_NON_QUERY": 11
+  },
+  "total_gate0_dropped": 530,
+  "core_genes_injected_phase1_absent": [
+    "TRIP13",
+    "CEP57"
+  ],
+  "research_only_disclaimer": "RESEARCH EXPLORATION ONLY \u2014 STRICTLY NOT CLINICAL OR TREATMENT ADVICE. Hypotheses generated computationally from public databases for mechanistic inquiry."
+}

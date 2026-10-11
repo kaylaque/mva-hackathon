@@ -49,6 +49,12 @@ def parse_args() -> argparse.Namespace:
         help="Path to Phase 1 gene mechanism matrix CSV (e.g. 02_phase1_gene_mechanism_matrix.csv)",
     )
     parser.add_argument(
+        "--query-panel",
+        type=Path,
+        default=None,
+        help="Optional path to Phase 3 query gene panel CSV (18_phase3_query_gene_panel.csv)",
+    )
+    parser.add_argument(
         "--network-context",
         type=Path,
         default=None,
@@ -62,9 +68,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--seed-mode",
-        choices=["mva_core", "mva_network", "passing_candidates", "custom"],
+        choices=["query_panel", "mva_core", "mva_network", "passing_candidates", "custom"],
         default="mva_network",
-        help="Candidate seed selection strategy (default: mva_network)",
+        help="Candidate seed selection strategy (default: mva_network; auto-switches to query_panel if --query-panel provided)",
     )
     parser.add_argument(
         "--custom-genes",
@@ -128,9 +134,14 @@ def main() -> int:
         g.strip().upper() for g in args.custom_genes.split(",") if g.strip()
     ]
 
+    seed_mode = args.seed_mode
+    if args.query_panel and args.query_panel.exists() and seed_mode == "mva_network":
+        seed_mode = "query_panel"
+
     config = DrugEvidenceConfig(
-        seed_mode=args.seed_mode,
+        seed_mode=seed_mode,
         custom_genes=custom_gene_list,
+        query_panel_path=args.query_panel,
         min_passing_variants=args.min_passing,
         enable_open_targets=not args.disable_open_targets and not args.offline,
         enable_chembl=not args.disable_chembl and not args.offline,

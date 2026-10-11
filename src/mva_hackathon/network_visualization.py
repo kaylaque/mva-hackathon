@@ -31,9 +31,7 @@ import plotly.graph_objects as go
 
 logger = logging.getLogger("mva_hackathon.network_visualization")
 
-# Canonical and reported MVA / chromosome instability genes
-MVA_CANONICAL_GENES = {"BUB1B", "CEP57", "TRIP13"}
-MVA_EXTENDED_GENES = {"MAD1L1", "CENATAC", "SLF2", "SMC5"}
+from mva_hackathon.mva_gene_sets import MVA_CANONICAL_GENES, MVA_EXTENDED_GENES
 
 
 def fruchterman_reingold_layout(

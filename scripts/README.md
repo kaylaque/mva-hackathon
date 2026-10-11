@@ -65,12 +65,30 @@ Track 2 translates multimodal variant annotations into prioritized mechanism mat
   ```
   *(Or run `bash scripts/run_network_visualization.sh` with no arguments to use default flat paths).*
 
-### 5. Phase 3: Multi-Source Drug Repurposing Evidence & Safety Review
+### 5. Phase 3 Query Gene Panel Generation
+- **Script**: `scripts/run_query_gene_panel.py` (Wrapper: `scripts/run_query_gene_panel.sh`)
+- **Purpose**: Derives an objective, graph-grounded, multi-tiered gene query panel from Phase 1 and Phase 2 artifacts:
+  - Gate 0: Symbol hygiene & non-query quarantine (quarantining unmapped symbols, HLA-* complex genes, readthrough transcripts, and pseudogenes).
+  - Gate 1: Core MVA causal genes (7 genes: BUB1B, CEP57, TRIP13, CENATAC, MAD1L1, SLF2, SMC5) injected even if absent from Phase 1.
+  - Gate 2: Graph-derived interactome neighbors from the programmatically detected MVA-focus component (differentiating one-hop vs component-member tiers).
+  - Gate 3: Biological context modifiers (ranked Phase 1/2 candidates + curated literature references TP53, ATM, NF1, MAD2L2).
+  - Gate 4: Positive druggable controls and programmatically derived negative sensory receptor controls.
+- **Direct Flat Output Usage**:
+  ```bash
+  uv run python scripts/run_query_gene_panel.py \
+    --track2-dir data/processed/track2 \
+    --output-dir data/processed/track2 \
+    --flat-names
+  ```
+  *(Or run `bash scripts/run_query_gene_panel.sh` with no arguments to use default flat paths).*
+
+### 6. Phase 3: Multi-Source Drug Repurposing Evidence & Safety Review
 - **Script**: `scripts/run_drug_evidence.py` (Wrapper: `scripts/run_drug_evidence.sh`)
 - **Purpose**: Queries Open Targets v4, ChEMBL v2.0, and DGIdb GraphQL to map candidate and interactome seed genes into pharmacological space. Evaluates variant mechanism -> pathway -> target action -> safety directionality, detecting directional contradictions (e.g. BUB1B/SAC inhibitors in a child with baseline checkpoint impairment) and strictly prohibiting clinical treatment recommendations.
 - **Direct Flat Output Usage**:
   ```bash
   uv run python scripts/run_drug_evidence.py \
+    --query-panel data/processed/track2/18_phase3_query_gene_panel.csv \
     --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv \
     --network-context data/processed/track2/07_phase2_network_gene_context.csv \
     --output-dir data/processed/track2/ \
@@ -118,3 +136,6 @@ uv run python scripts/migrate_track2_layout.py --validate-only
 | `phase3/safety_ranking.csv` | `15_phase3_safety_ranking.csv` | Drug safety, directionality tier, and research ranking |
 | `phase3/mechanism_action_map.csv` | `16_phase3_mechanism_action_map.csv` | Gene-level mechanism-to-action summary map |
 | `phase3/phase3_repurposing_provenance.json` | `17_phase3_repurposing_provenance.json` | Provenance metadata, API endpoints, and disclaimers |
+| `phase3/query_gene_panel.csv` | `18_phase3_query_gene_panel.csv` | Graph-derived multi-tiered query gene panel across 4 evidence gates |
+| `phase3/query_panel_provenance.json` | `18_phase3_query_panel_provenance.json` | Query gene panel provenance, gate counts, and component metrics |
+| `phase3/query_panel_citations.csv` | `19_phase3_query_panel_citations.csv` | Normalized long-format citations table with verified PMIDs/DOIs |
