@@ -390,3 +390,61 @@ fraction are not supplied by these columns.
 ## Project guidance
 
 See [`AGENTS.md`](AGENTS.md) for repository architecture, data-handling rules, VCF analysis conventions, and QA guidance.
+
+## Independent pathway workflow
+
+The Phase 1 gene matrix also forks into an independent P0–P7 pathway workflow; it does not modify the existing STRING Phase 2 or drug-evidence Phase 3 branches. Run its privacy-safe synthetic fixture first:
+
+```bash
+uv run python scripts/run_pathway_workflow.py --gene-mechanism tests/fixtures/pathway_sample/genes.csv --offline-fixture tests/fixtures/pathway_sample --output-dir /tmp/pathway-sample
+```
+
+Its default output and cache locations are private, ignored paths. See `docs/JOURNEY.md`, `scripts/README.md`, and `data/README.md` for limitations and output handling.
+[data/README.md#A17B]
+
+## Pathway workflow private artifacts
+
+`processed/track2/pathway/` holds P0–P7 tables, provenance, and cumulative reports; `interim/pathway_cache/` holds response fixtures and request caches. Both are ignored and therefore are **not agent-accessible** under this repository's policy. Only normalized gene identifiers may leave the repository; variant identifiers, genotypes, coordinates, clinical text, patient identifiers, and internal scores must never be sent to external services. Reports are private research artifacts, not clinical evidence.
+[scripts/README.md#C610]
+
+### Independent pathway workflow
+
+`run_pathway_workflow.py` accepts `--gene-mechanism`, `--offline-fixture`, `--output-dir`, optional `--network-panel`, and `--min-passing`. Run the synthetic fixture before any authorized real input. Offline mode never falls back to live services. The command returns `0` for a complete comparison and `2` when the STRING baseline is unavailable; a partial run is evidence of unavailable sources, not zero evidence. DAVID credentials, if later enabled, must be provided through `DAVID_EMAIL`, never command-line arguments.
+[docs/JOURNEY.md#B8CF]
+
+---
+
+## Independent pathway workflow (P0–P7)
+
+Phase 1 forks into an independent pathway branch while existing STRING Phase 2 and drug-evidence Phase 3 remain unchanged:
+
+```text
+Phase 1 gene mechanism matrix
+├── STRING Phase 2 → existing drug-evidence Phase 3
+└── Pathway P0 input QC → P1 enrichment → P2 prioritization → P3 mechanisms
+    → P4 full-pathway targets → P5 drug evidence → P6 comparison → P7 report
+```
+
+The pathway background is Phase 1 evaluated genes, not the whole-exome callable universe. Provider BH-adjusted values remain distinct from raw hypergeometric values; enrichment is not efficacy, and pharmacologic direction is not biological rescue. HP terms are observational gene-annotation enrichment, never observed patient phenotype. The current branch contains synthetic-only verification; private reports and real-input execution remain unavailable under repository access policy.
+
+### Independent pathway branch
+
+The independent P0–P7 pathway workflow consumes only the Phase 1 gene matrix,
+leaving the existing STRING Phase 2 / drug-evidence Phase 3 branch unchanged.
+
+```bash
+# Synthetic privacy-safe smoke run; no network access.
+uv run python scripts/run_pathway_workflow.py \
+  --gene-mechanism tests/fixtures/pathway_sample/genes.csv \
+  --offline-fixture tests/fixtures/pathway_sample \
+  --output-dir /tmp/mva-pathway-sample
+
+# Authorized gene-only live run; private outputs remain ignored.
+bash scripts/run_pathway_workflow.sh
+```
+
+The cumulative local report is
+`data/processed/track2/pathway/p7_pathway_report.md`; stage tables and
+provenance are colocated. Read [`docs/JOURNEY.md`](docs/JOURNEY.md) for the
+method and source comparison, and [`scripts/README.md`](scripts/README.md) for
+options and partial-run semantics.
