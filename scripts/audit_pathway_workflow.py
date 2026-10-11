@@ -15,8 +15,9 @@ from mva_hackathon.pathway_audit import audit_pathway_outputs
 def main() -> int:
     parser = argparse.ArgumentParser(description="Aggregate-only pathway validation audit.")
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--baseline-hash", required=True, help="SHA-256 of the baseline P0 artifact bound to sensitivity provenance.")
     args = parser.parse_args()
-    summary, report_path = audit_pathway_outputs(args.output_dir)
+    summary, report_path = audit_pathway_outputs(args.output_dir, args.baseline_hash)
     baseline = summary["baseline"]
     print(
         "audit completed "

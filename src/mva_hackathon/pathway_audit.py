@@ -2,10 +2,29 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
+
+
+_SENSITIVITY_PROVENANCE_FIELDS = {
+    "baseline_p0_sha256",
+    "background_count",
+    "query_count",
+    "sources",
+    "fdr_method",
+    "min_passing",
+    "generated_at",
+    "cache_key",
+    "outcome",
+}
+
+
+def _file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _read_csv(path: Path) -> pd.DataFrame:
@@ -34,19 +53,23 @@ def _baseline_summary(output_dir: Path) -> dict[str, int]:
     }
 
 
-def _sensitivity_summary(output_dir: Path, name: str) -> dict[str, int | str]:
+def _sensitivity_summary(output_dir: Path, name: str, baseline_hash: str) -> dict[str, int | str]:
     path = output_dir / name
-    if not path.is_file():
-        return {"status": "UNAVAILABLE"}
+    manifest_path = output_dir / f"{path.stem}.provenance.json"
+    if not path.is_file() or not manifest_path.is_file():
+        return {"status": "UNAVAILABLE", "reason": "MISSING_PROVENANCE"}
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not _SENSITIVITY_PROVENANCE_FIELDS.issubset(manifest) or manifest["baseline_p0_sha256"] != baseline_hash:
+        return {"status": "UNAVAILABLE", "reason": "STALE_OR_INVALID_PROVENANCE"}
     frame = _read_csv(path)
-    return {"status": "AVAILABLE", "prioritized_pathways": len(frame)}
+    return {"status": "AVAILABLE", "prioritized_pathways": len(frame), "outcome": str(manifest["outcome"])}
 
 
-def audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, Any], Path]:
-    """Create local aggregate report without emitting patient-derived rows."""
+def audit_pathway_outputs(output_dir: Path, baseline_hash: str) -> tuple[dict[str, Any], Path]:
+    """Create local aggregate report from provenance-bound, non-ignored artifacts."""
     baseline = _baseline_summary(output_dir)
-    threshold_two = _sensitivity_summary(output_dir, "p2_sensitivity_min_passing_2.csv")
-    hp_excluded = _sensitivity_summary(output_dir, "p2_sensitivity_hp_excluded.csv")
+    threshold_two = _sensitivity_summary(output_dir, "p2_sensitivity_min_passing_2.csv", baseline_hash)
+    hp_excluded = _sensitivity_summary(output_dir, "p2_sensitivity_hp_excluded.csv", baseline_hash)
     p6 = _read_csv(output_dir / "p6_evaluation_summary.csv")
     comparison = {key: int(p6.iloc[0][key]) for key in ("pathway_only_targets", "string_only_targets", "shared_targets") if key in p6}
     summary = {
@@ -81,9 +104,9 @@ def audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, Any], Path]:
         _sensitivity_line("Threshold-2", threshold_two),
         _sensitivity_line("HP-excluded", hp_excluded),
         "- Gene-length bias: UNMEASURED; no documented length covariate was supplied.",
-        *_sensitivity_table(output_dir, "p2_sensitivity_min_passing_2.csv"),
+        *_sensitivity_table(output_dir, "p2_sensitivity_min_passing_2.csv", threshold_two),
         "",
-        *_sensitivity_table(output_dir, "p2_sensitivity_hp_excluded.csv", "HP-excluded prioritized pathways"),
+        *_sensitivity_table(output_dir, "p2_sensitivity_hp_excluded.csv", hp_excluded, "HP-excluded prioritized pathways"),
         "",
         "## Downstream evidence applicability",
         "",
@@ -108,7 +131,11 @@ def audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, Any], Path]:
         "## Interpretation limits",
         "",
         "- Drug comparison: UNAVAILABLE. Current P6 consumes target-panel overlap only; it does not consume network drug evidence or retrieve union-panel evidence.",
-        "- No baseline pathway target or drug hypothesis is eligible when no provider BH-significant pathway exists.",
+        *(
+            ["- No baseline pathway target or drug hypothesis is eligible when no provider BH-significant pathway exists."]
+            if baseline["prioritized_pathways"] == 0
+            else []
+        ),
         "- Threshold-2 findings are sensitivity results, not confirmation of baseline enrichment.",
         "- ChEMBL activity/assay evidence remains unavailable unless retrieved with source-native records.",
         "- Directional pharmacology does not prove biological rescue.",
@@ -126,14 +153,13 @@ def audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, Any], Path]:
 
 
 
-def _sensitivity_table(output_dir: Path, name: str, heading: str = "Threshold-2 prioritized pathways") -> list[str]:
-    """Render local pathway evidence table without exposing it to command output."""
-    path = output_dir / name
-    if not path.is_file():
-        return [f"## {heading}", "", "UNAVAILABLE"]
-    frame = _read_csv(path)
-    columns = [column for column in ("TERM_ID", "TERM_NAME", "SOURCE", "BH_Q", "FOLD_ENRICHMENT", "CONTRIBUTING_GENES") if column in frame]
+def _sensitivity_table(output_dir: Path, name: str, summary: dict[str, int | str], heading: str = "Threshold-2 prioritized pathways") -> list[str]:
+    """Render only provenance-bound local pathway evidence."""
     lines = [f"## {heading}", ""]
+    if summary["status"] != "AVAILABLE":
+        return [*lines, f"UNAVAILABLE: {summary['reason']}"]
+    frame = _read_csv(output_dir / name)
+    columns = [column for column in ("TERM_ID", "TERM_NAME", "SOURCE", "BH_Q", "FOLD_ENRICHMENT", "CONTRIBUTING_GENES") if column in frame]
     if frame.empty or not columns:
         return [*lines, "No prioritized pathways."]
     lines.extend([
@@ -146,7 +172,7 @@ def _sensitivity_table(output_dir: Path, name: str, heading: str = "Threshold-2 
 def _sensitivity_line(label: str, summary: dict[str, int | str]) -> str:
     """Format aggregate sensitivity availability without pathway identities."""
     if summary["status"] == "UNAVAILABLE":
-        return f"- {label}: UNAVAILABLE"
+        return f"- {label}: UNAVAILABLE ({summary['reason']})"
     count = summary["prioritized_pathways"]
     noun = "pathway" if count == 1 else "pathways"
     return f"- {label} sensitivity produced {count} prioritized {noun}."

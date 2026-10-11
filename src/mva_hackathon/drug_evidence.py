@@ -183,20 +183,17 @@ class OpenTargetsClient:
           }
         }
         """
-        try:
-            resp = self.http_client.post(
-                self.config.open_targets_url,
-                json_data={"query": query, "variables": {"queryString": symbol}},
-            )
-            data = resp.json().get("data", {}).get("search", {})
-            hits = data.get("hits", [])
-            for hit in hits:
-                if hit.get("name") == symbol and hit.get("entity") == "target":
-                    return hit.get("id")
-            if hits and hits[0].get("entity") == "target":
-                return hits[0].get("id")
-        except Exception as exc:
-            logger.warning("Open Targets target search failed for %s: %s", symbol, exc)
+        resp = self.http_client.post(
+            self.config.open_targets_url,
+            json_data={"query": query, "variables": {"queryString": symbol}},
+        )
+        data = resp.json().get("data", {}).get("search", {})
+        hits = data.get("hits", [])
+        for hit in hits:
+            if hit.get("name") == symbol and hit.get("entity") == "target":
+                return hit.get("id")
+        if hits and hits[0].get("entity") == "target":
+            return hits[0].get("id")
         return None
 
     def fetch_target_drugs_and_safety(self, ensembl_id: str) -> dict[str, Any]:
@@ -256,16 +253,12 @@ class OpenTargetsClient:
           }
         }
         """
-        try:
-            resp = self.http_client.post(
-                self.config.open_targets_url,
-                json_data={"query": query, "variables": {"ensemblId": ensembl_id}},
-            )
-            target = resp.json().get("data", {}).get("target", {})
-            return target or {}
-        except Exception as exc:
-            logger.warning("Open Targets target drug query failed for %s: %s", ensembl_id, exc)
-            return {}
+        resp = self.http_client.post(
+            self.config.open_targets_url,
+            json_data={"query": query, "variables": {"ensemblId": ensembl_id}},
+        )
+        target = resp.json().get("data", {}).get("target", {})
+        return target or {}
 
 
 class ChEMBLClient:
@@ -278,36 +271,31 @@ class ChEMBLClient:
     def fetch_target_mechanisms(self, symbol: str) -> list[dict[str, Any]]:
         """Fetch target records and their corresponding mechanism of action entries."""
         results: list[dict[str, Any]] = []
-        try:
-            target_url = f"{self.config.chembl_api_url}/target.json"
-            resp = self.http_client.get(target_url, params={"target_synonym": symbol})
-            targets = resp.json().get("targets", [])
-            for target in targets:
-                tid = target.get("target_chembl_id")
-                target_type = target.get("target_type")
-                pref_name = target.get("pref_name")
-                if not tid:
-                    continue
-
-                # Query mechanisms for this target
-                mech_url = f"{self.config.chembl_api_url}/mechanism.json"
-                m_resp = self.http_client.get(mech_url, params={"target_chembl_id": tid})
-                mechs = m_resp.json().get("mechanisms", [])
-                for m in mechs:
-                    results.append({
-                        "target_chembl_id": tid,
-                        "target_pref_name": pref_name,
-                        "target_type": target_type,
-                        "molecule_chembl_id": m.get("molecule_chembl_id"),
-                        "mechanism_of_action": m.get("mechanism_of_action"),
-                        "action_type": m.get("action_type"),
-                        "max_phase": m.get("max_phase"),
-                        "direct_interaction": m.get("direct_interaction"),
-                        "disease_efficacy": m.get("disease_efficacy"),
-                        "mechanism_comment": m.get("mechanism_comment"),
-                    })
-        except Exception as exc:
-            logger.warning("ChEMBL query failed for %s: %s", symbol, exc)
+        target_url = f"{self.config.chembl_api_url}/target.json"
+        resp = self.http_client.get(target_url, params={"target_synonym": symbol})
+        targets = resp.json().get("targets", [])
+        for target in targets:
+            tid = target.get("target_chembl_id")
+            target_type = target.get("target_type")
+            pref_name = target.get("pref_name")
+            if not tid:
+                continue
+            mech_url = f"{self.config.chembl_api_url}/mechanism.json"
+            m_resp = self.http_client.get(mech_url, params={"target_chembl_id": tid})
+            mechs = m_resp.json().get("mechanisms", [])
+            for m in mechs:
+                results.append({
+                    "target_chembl_id": tid,
+                    "target_pref_name": pref_name,
+                    "target_type": target_type,
+                    "molecule_chembl_id": m.get("molecule_chembl_id"),
+                    "mechanism_of_action": m.get("mechanism_of_action"),
+                    "action_type": m.get("action_type"),
+                    "max_phase": m.get("max_phase"),
+                    "direct_interaction": m.get("direct_interaction"),
+                    "disease_efficacy": m.get("disease_efficacy"),
+                    "mechanism_comment": m.get("mechanism_comment"),
+                })
         return results
 
 
@@ -347,16 +335,12 @@ class DGIdbClient:
           }
         }
         """
-        try:
-            resp = self.http_client.post(
-                self.config.dgidb_url,
-                json_data={"query": query, "variables": {"genes": symbols}},
-            )
-            nodes = resp.json().get("data", {}).get("interactions", {}).get("nodes", [])
-            return nodes or []
-        except Exception as exc:
-            logger.warning("DGIdb interactions query failed for genes %s: %s", symbols, exc)
-            return []
+        resp = self.http_client.post(
+            self.config.dgidb_url,
+            json_data={"query": query, "variables": {"genes": symbols}},
+        )
+        nodes = resp.json().get("data", {}).get("interactions", {}).get("nodes", [])
+        return nodes or []
 
 
 @dataclass
