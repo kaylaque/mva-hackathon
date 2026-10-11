@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 from typing import Any
 
 import pandas as pd
@@ -23,9 +24,25 @@ _SENSITIVITY_PROVENANCE_FIELDS = {
 }
 
 
+_FDR_METHOD = "fdr"
+
+
 def _file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
+
+
+def _require_nonignored_paths(paths: list[Path]) -> None:
+    repo_root = Path(__file__).parents[2]
+    for path in paths:
+        check = subprocess.run(
+            ["git", "check-ignore", "--quiet", str(path.resolve())],
+            cwd=repo_root,
+            check=False,
+            capture_output=True,
+        )
+        if check.returncode == 0:
+            raise ValueError(f"ignored artifact path is forbidden: {path}")
 
 def _read_csv(path: Path) -> pd.DataFrame:
     """Read required audit table with a path-specific error."""
@@ -59,14 +76,35 @@ def _sensitivity_summary(output_dir: Path, name: str, baseline_hash: str) -> dic
     if not path.is_file() or not manifest_path.is_file():
         return {"status": "UNAVAILABLE", "reason": "MISSING_PROVENANCE"}
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if not _SENSITIVITY_PROVENANCE_FIELDS.issubset(manifest) or manifest["baseline_p0_sha256"] != baseline_hash:
+    if (
+        not _SENSITIVITY_PROVENANCE_FIELDS.issubset(manifest)
+        or manifest["baseline_p0_sha256"] != baseline_hash
+        or manifest["fdr_method"] != _FDR_METHOD
+    ):
         return {"status": "UNAVAILABLE", "reason": "STALE_OR_INVALID_PROVENANCE"}
     frame = _read_csv(path)
     return {"status": "AVAILABLE", "prioritized_pathways": len(frame), "outcome": str(manifest["outcome"])}
 
-
-def audit_pathway_outputs(output_dir: Path, baseline_hash: str) -> tuple[dict[str, Any], Path]:
+def audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, Any], Path]:
     """Create local aggregate report from provenance-bound, non-ignored artifacts."""
+    report_path = output_dir / "pathway_validation_report.md"
+    _require_nonignored_paths(
+        [
+            output_dir / name
+            for name in (
+                "p0_gene_qc.csv",
+                "p1_enrichment_results.csv",
+                "p2_prioritized_pathways.csv",
+                "p6_evaluation_summary.csv",
+                "p2_sensitivity_min_passing_2.csv",
+                "p2_sensitivity_min_passing_2.provenance.json",
+                "p2_sensitivity_hp_excluded.csv",
+                "p2_sensitivity_hp_excluded.provenance.json",
+                report_path.name,
+            )
+        ]
+    )
+    baseline_hash = _file_sha256(output_dir / "p0_gene_qc.csv")
     baseline = _baseline_summary(output_dir)
     threshold_two = _sensitivity_summary(output_dir, "p2_sensitivity_min_passing_2.csv", baseline_hash)
     hp_excluded = _sensitivity_summary(output_dir, "p2_sensitivity_hp_excluded.csv", baseline_hash)

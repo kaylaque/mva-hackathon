@@ -25,6 +25,7 @@ from mva_hackathon.drug_evidence import (
     ChEMBLClient,
     DrugEvidenceConfig,
     DrugEvidencePipeline,
+    OpenTargetsClient,
     evaluate_mechanism_directionality,
     write_drug_evidence_outputs,
 )
@@ -111,6 +112,15 @@ def test_chembl_programming_errors_propagate() -> None:
         ChEMBLClient(http_client, DrugEvidenceConfig()).fetch_target_mechanisms("TEST")
 
 
+
+def test_open_targets_graphql_errors_raise_source_failure() -> None:
+    response = MagicMock()
+    response.json.return_value = {"errors": [{"message": "synthetic failure"}]}
+    http_client = MagicMock()
+    http_client.post.return_value = response
+
+    with pytest.raises(RuntimeError, match="Open Targets GraphQL response contained errors"):
+        OpenTargetsClient(http_client, DrugEvidenceConfig()).fetch_target_drugs_and_safety("ENSGTEST")
 def test_evaluate_mechanism_directionality_bub1b_inhibitor():
     """BUB1B inhibitor must be flagged as a critical mechanistic hazard."""
     eval_res = evaluate_mechanism_directionality(
