@@ -22,6 +22,7 @@ import pytest
 import requests
 
 from mva_hackathon.drug_evidence import (
+    ChEMBLClient,
     DrugEvidenceConfig,
     DrugEvidencePipeline,
     evaluate_mechanism_directionality,
@@ -100,6 +101,14 @@ def make_synthetic_network_context_df() -> pd.DataFrame:
             "COMPONENT_ID": 1,
         },
     ])
+
+
+def test_chembl_programming_errors_propagate() -> None:
+    http_client = MagicMock()
+    http_client.get.side_effect = ValueError("malformed fixture")
+
+    with pytest.raises(ValueError, match="malformed fixture"):
+        ChEMBLClient(http_client, DrugEvidenceConfig()).fetch_target_mechanisms("TEST")
 
 
 def test_evaluate_mechanism_directionality_bub1b_inhibitor():

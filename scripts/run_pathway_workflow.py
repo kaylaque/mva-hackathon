@@ -82,7 +82,7 @@ def _drug_records(targets: pd.DataFrame, args: argparse.Namespace) -> tuple[list
                             "MECHANISM_ID": row.get("molecule_chembl_id"),
                         }
                     )
-            except Exception:
+            except RuntimeError:
                 failures.append("ChEMBL_UNAVAILABLE")
     if config.enable_dgidb:
         try:
@@ -96,7 +96,7 @@ def _drug_records(targets: pd.DataFrame, args: argparse.Namespace) -> tuple[list
                         "DGIDB_INTERACTION_ID": (node.get("drug") or {}).get("conceptId"),
                     }
                 )
-        except Exception:
+        except RuntimeError:
             failures.append("DGIdb_UNAVAILABLE")
     if config.enable_open_targets:
         ot = OpenTargetsClient(client, config)
@@ -116,7 +116,7 @@ def _drug_records(targets: pd.DataFrame, args: argparse.Namespace) -> tuple[list
                                     "OPEN_TARGETS_DRUG_ID": drug.get("id"),
                                 }
                             )
-            except Exception:
+            except RuntimeError:
                 failures.append("OPEN_TARGETS_UNAVAILABLE")
     return records, sorted(set(failures))
 
