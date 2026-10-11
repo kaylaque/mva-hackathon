@@ -108,8 +108,9 @@ class PathwayWorkflow:
     def map_hgnc(self, symbols: Iterable[str], client: Any) -> pd.DataFrame:
         """Resolve exact HGNC symbols; ambiguous results are deliberately unmapped."""
         records: list[dict[str, Any]] = []
+        unavailable = False
         for symbol in sorted({str(item).strip().upper() for item in symbols if str(item).strip()}):
-            response = client.get(f"{_HGNC_URL}{symbol}")
+            response = None if unavailable else client.get(f"{_HGNC_URL}{symbol}")
             try:
                 docs = (
                     response.json().get("response", {}).get("docs", [])
@@ -117,6 +118,7 @@ class PathwayWorkflow:
                     else []
                 )
             except (ValueError, TypeError):
+                unavailable = True
                 docs = []
             exact = [doc for doc in docs if doc.get("symbol") == symbol]
             ensembl_ids = {doc.get("ensembl_gene_id") for doc in exact if doc.get("ensembl_gene_id")}
@@ -135,7 +137,7 @@ class PathwayWorkflow:
                         "SYMBOL": symbol,
                         "HGNC_ID": pd.NA,
                         "ENSEMBL_ID": pd.NA,
-                        "STATUS": "unmapped",
+                        "STATUS": "hgnc_unavailable" if unavailable else "unmapped",
                     }
                 )
         return pd.DataFrame(records, columns=["SYMBOL", "HGNC_ID", "ENSEMBL_ID", "STATUS"])
@@ -153,7 +155,7 @@ class PathwayWorkflow:
         for ensembl_id, symbols in mapping.items():
             for symbol in symbols or []:
                 symbol_to_ids.setdefault(str(symbol).upper(), set()).add(str(ensembl_id))
-        records: list[dict[str, Any]] = []
+        records = []
         for symbol in normalized["SYMBOL"]:
             ids = symbol_to_ids.get(symbol, set())
             records.append(
@@ -162,6 +164,34 @@ class PathwayWorkflow:
                     "HGNC_ID": pd.NA,
                     "ENSEMBL_ID": next(iter(ids)) if len(ids) == 1 else pd.NA,
                     "STATUS": "mapped" if len(ids) == 1 else "unmapped",
+                }
+            )
+        return pd.DataFrame(records)
+
+    def fetch_gprofiler_mapping(self, normalized: pd.DataFrame, client: Any) -> pd.DataFrame:
+        """Fallback mapping when HGNC is unavailable; never guesses an ENSG ID."""
+        symbols = sorted(normalized["SYMBOL"].astype(str).unique())
+        response = client.post(
+            "https://biit.cs.ut.ee/gprofiler/api/convert/convert/",
+            json_data={"organism": "hsapiens", "query": symbols, "target": "ENSG"},
+        )
+        if response is None or response.status_code != 200:
+            raise RuntimeError("gProfiler mapping request failed")
+        mapping: dict[str, set[str]] = {}
+        for row in response.json().get("result", []):
+            incoming = str(row.get("incoming") or "").upper()
+            converted = row.get("converted")
+            if incoming and isinstance(converted, str) and converted.startswith("ENSG"):
+                mapping.setdefault(incoming, set()).add(converted)
+        records = []
+        for symbol in symbols:
+            converted = mapping.get(symbol, set())
+            records.append(
+                {
+                    "SYMBOL": symbol,
+                    "HGNC_ID": pd.NA,
+                    "ENSEMBL_ID": next(iter(converted)) if len(converted) == 1 else pd.NA,
+                    "STATUS": "mapped" if len(converted) == 1 else "unmapped",
                 }
             )
         return pd.DataFrame(records)
