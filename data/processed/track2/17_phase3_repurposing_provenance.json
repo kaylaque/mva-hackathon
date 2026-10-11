@@ -1,42 +1,785 @@
 {
-  "execution_timestamp_utc": "2026-10-10T16:19:35.183362+00:00",
+  "execution_timestamp_utc": "2026-10-11T05:59:20.975414+00:00",
   "pipeline_version": "0.3.0",
-  "seed_mode": "mva_network",
+  "seed_mode": "query_panel",
+  "seed_provenance": "Dynamically derived from query panel at data/processed/track2/18_phase3_query_gene_panel.csv (80 genes across multiple functional tiers)",
+  "query_panel_path": "data/processed/track2/18_phase3_query_gene_panel.csv",
+  "panel_category_counts": {
+    "GRAPH_DERIVED_NEIGHBOR": 31,
+    "CONTEXT_MODIFIER": 29,
+    "DRUG_TARGET_CONTROL": 13,
+    "CORE_MVA_CAUSAL": 7
+  },
   "seed_genes_evaluated": [
-    "ATM",
-    "AURKA",
     "BUB1B",
+    "CEP57",
+    "TRIP13",
     "CENATAC",
     "MAD1L1",
-    "MAD2L2",
-    "NF1",
     "SLF2",
     "SMC5",
-    "TP53"
+    "HLA-A",
+    "HLA-B",
+    "HLA-DQA2",
+    "HLA-DQB1",
+    "HLA-DRB1",
+    "HLA-DRB5",
+    "KIT",
+    "MYH9",
+    "ACTG2",
+    "ACTN1",
+    "HIF1A",
+    "ACTN2",
+    "ALK",
+    "CCT3",
+    "LZTR1",
+    "MYO15A",
+    "MYO5A",
+    "PSMA4",
+    "CSRP3",
+    "CYP27A1",
+    "DDX11",
+    "FCGR3B",
+    "MYL12B",
+    "MYO15B",
+    "OAS1",
+    "PIK3C3",
+    "PSMG4",
+    "SDHD",
+    "SUMO4",
+    "TYR",
+    "VAMP2",
+    "ACADS",
+    "SNRPE",
+    "CTNNB1",
+    "RPL13",
+    "SNRNP40",
+    "ALDH1B1",
+    "CDK1",
+    "MRPS2",
+    "MRPS22",
+    "MRPS9",
+    "PPP1CA",
+    "RACK1",
+    "SNRPB",
+    "FGA",
+    "ACSS3",
+    "ALDH7A1",
+    "MRPL24",
+    "MRPL32",
+    "NDUFAF4",
+    "PARP1",
+    "A2M",
+    "ADH1A",
+    "ADH4",
+    "ALG11",
+    "ALG12",
+    "TP53",
+    "ATM",
+    "NF1",
+    "MAD2L2",
+    "AURKA",
+    "PLK1",
+    "BUB1",
+    "CDC20",
+    "MAD2L1",
+    "PLK4",
+    "ATR",
+    "CHEK1",
+    "WEE1",
+    "OR7G3",
+    "OR10AD1",
+    "OR10D3",
+    "OR10X1"
   ],
-  "seed_genes_count": 10,
-  "total_drug_target_pairs_retrieved": 709,
+  "seed_genes_count": 80,
+  "genes_queried": [
+    "BUB1B",
+    "CEP57",
+    "TRIP13",
+    "CENATAC",
+    "MAD1L1",
+    "SLF2",
+    "SMC5",
+    "HLA-A",
+    "HLA-B",
+    "HLA-DQA2",
+    "HLA-DQB1",
+    "HLA-DRB1",
+    "HLA-DRB5",
+    "KIT",
+    "MYH9",
+    "ACTG2",
+    "ACTN1",
+    "HIF1A",
+    "ACTN2",
+    "ALK",
+    "CCT3",
+    "LZTR1",
+    "MYO15A",
+    "MYO5A",
+    "PSMA4",
+    "CSRP3",
+    "CYP27A1",
+    "DDX11",
+    "FCGR3B",
+    "MYL12B",
+    "MYO15B",
+    "OAS1",
+    "PIK3C3",
+    "PSMG4",
+    "SDHD",
+    "SUMO4",
+    "TYR",
+    "VAMP2",
+    "ACADS",
+    "SNRPE",
+    "CTNNB1",
+    "RPL13",
+    "SNRNP40",
+    "ALDH1B1",
+    "CDK1",
+    "MRPS2",
+    "MRPS22",
+    "MRPS9",
+    "PPP1CA",
+    "RACK1",
+    "SNRPB",
+    "FGA",
+    "ACSS3",
+    "ALDH7A1",
+    "MRPL24",
+    "MRPL32",
+    "NDUFAF4",
+    "PARP1",
+    "A2M",
+    "ADH1A",
+    "ADH4",
+    "ALG11",
+    "ALG12",
+    "TP53",
+    "ATM",
+    "NF1",
+    "MAD2L2",
+    "AURKA",
+    "PLK1",
+    "BUB1",
+    "CDC20",
+    "MAD2L1",
+    "PLK4",
+    "ATR",
+    "CHEK1",
+    "WEE1",
+    "OR7G3",
+    "OR10AD1",
+    "OR10D3",
+    "OR10X1"
+  ],
+  "genes_with_zero_hits": [
+    "BUB1B",
+    "CEP57",
+    "TRIP13",
+    "CENATAC",
+    "SLF2",
+    "SMC5",
+    "HLA-DQA2",
+    "MYH9",
+    "ACTG2",
+    "ACTN2",
+    "MYO15A",
+    "MYO5A",
+    "CSRP3",
+    "DDX11",
+    "MYL12B",
+    "MYO15B",
+    "PSMG4",
+    "SDHD",
+    "ACADS",
+    "SNRPE",
+    "SNRNP40",
+    "ALDH1B1",
+    "MRPS2",
+    "MRPS22",
+    "MRPS9",
+    "RACK1",
+    "SNRPB",
+    "MRPL24",
+    "MRPL32",
+    "ALG11",
+    "ALG12",
+    "MAD2L2",
+    "CDC20",
+    "MAD2L1",
+    "OR7G3",
+    "OR10AD1",
+    "OR10D3",
+    "OR10X1"
+  ],
+  "total_drug_target_pairs_retrieved": 2212,
+  "per_source_row_counts": {
+    "Open Targets": 161,
+    "ChEMBL": 153,
+    "DGIdb": 1898
+  },
+  "per_gene_source_coverage": {
+    "BUB1B": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "CEP57": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "TRIP13": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "CENATAC": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MAD1L1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 2,
+      "total": 2
+    },
+    "SLF2": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "SMC5": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "HLA-A": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 37,
+      "total": 37
+    },
+    "HLA-B": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 49,
+      "total": 49
+    },
+    "HLA-DQA2": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "HLA-DQB1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 24,
+      "total": 24
+    },
+    "HLA-DRB1": {
+      "Open Targets": 3,
+      "ChEMBL": 3,
+      "DGIdb": 69,
+      "total": 75
+    },
+    "HLA-DRB5": {
+      "Open Targets": 1,
+      "ChEMBL": 1,
+      "DGIdb": 5,
+      "total": 7
+    },
+    "KIT": {
+      "Open Targets": 38,
+      "ChEMBL": 21,
+      "DGIdb": 134,
+      "total": 193
+    },
+    "MYH9": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "ACTG2": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "ACTN1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 1,
+      "total": 1
+    },
+    "HIF1A": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 148,
+      "total": 148
+    },
+    "ACTN2": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "ALK": {
+      "Open Targets": 12,
+      "ChEMBL": 18,
+      "DGIdb": 134,
+      "total": 164
+    },
+    "CCT3": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 2,
+      "total": 2
+    },
+    "LZTR1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 1,
+      "total": 1
+    },
+    "MYO15A": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MYO5A": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "PSMA4": {
+      "Open Targets": 7,
+      "ChEMBL": 7,
+      "DGIdb": 8,
+      "total": 22
+    },
+    "CSRP3": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "CYP27A1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 8,
+      "total": 8
+    },
+    "DDX11": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "FCGR3B": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 33,
+      "total": 33
+    },
+    "MYL12B": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MYO15B": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "OAS1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 3,
+      "total": 3
+    },
+    "PIK3C3": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 26,
+      "total": 26
+    },
+    "PSMG4": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "SDHD": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "SUMO4": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 1,
+      "total": 1
+    },
+    "TYR": {
+      "Open Targets": 2,
+      "ChEMBL": 3,
+      "DGIdb": 12,
+      "total": 17
+    },
+    "VAMP2": {
+      "Open Targets": 1,
+      "ChEMBL": 1,
+      "DGIdb": 3,
+      "total": 5
+    },
+    "ACADS": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "SNRPE": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "CTNNB1": {
+      "Open Targets": 1,
+      "ChEMBL": 1,
+      "DGIdb": 36,
+      "total": 38
+    },
+    "RPL13": {
+      "Open Targets": 5,
+      "ChEMBL": 9,
+      "DGIdb": 11,
+      "total": 25
+    },
+    "SNRNP40": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "ALDH1B1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "CDK1": {
+      "Open Targets": 12,
+      "ChEMBL": 13,
+      "DGIdb": 88,
+      "total": 113
+    },
+    "MRPS2": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MRPS22": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MRPS9": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "PPP1CA": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 6,
+      "total": 6
+    },
+    "RACK1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "SNRPB": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "FGA": {
+      "Open Targets": 5,
+      "ChEMBL": 5,
+      "DGIdb": 12,
+      "total": 22
+    },
+    "ACSS3": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 1,
+      "total": 1
+    },
+    "ALDH7A1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 2,
+      "total": 2
+    },
+    "MRPL24": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MRPL32": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "NDUFAF4": {
+      "Open Targets": 3,
+      "ChEMBL": 3,
+      "DGIdb": 3,
+      "total": 9
+    },
+    "PARP1": {
+      "Open Targets": 13,
+      "ChEMBL": 13,
+      "DGIdb": 43,
+      "total": 69
+    },
+    "A2M": {
+      "Open Targets": 1,
+      "ChEMBL": 1,
+      "DGIdb": 4,
+      "total": 6
+    },
+    "ADH1A": {
+      "Open Targets": 2,
+      "ChEMBL": 2,
+      "DGIdb": 8,
+      "total": 12
+    },
+    "ADH4": {
+      "Open Targets": 1,
+      "ChEMBL": 1,
+      "DGIdb": 2,
+      "total": 4
+    },
+    "ALG11": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "ALG12": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "TP53": {
+      "Open Targets": 9,
+      "ChEMBL": 6,
+      "DGIdb": 460,
+      "total": 475
+    },
+    "ATM": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 84,
+      "total": 84
+    },
+    "NF1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 25,
+      "total": 25
+    },
+    "MAD2L2": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "AURKA": {
+      "Open Targets": 19,
+      "ChEMBL": 19,
+      "DGIdb": 85,
+      "total": 123
+    },
+    "PLK1": {
+      "Open Targets": 8,
+      "ChEMBL": 8,
+      "DGIdb": 190,
+      "total": 206
+    },
+    "BUB1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 6,
+      "total": 6
+    },
+    "CDC20": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "MAD2L1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "PLK4": {
+      "Open Targets": 3,
+      "ChEMBL": 3,
+      "DGIdb": 35,
+      "total": 41
+    },
+    "ATR": {
+      "Open Targets": 4,
+      "ChEMBL": 4,
+      "DGIdb": 29,
+      "total": 37
+    },
+    "CHEK1": {
+      "Open Targets": 9,
+      "ChEMBL": 9,
+      "DGIdb": 52,
+      "total": 70
+    },
+    "WEE1": {
+      "Open Targets": 2,
+      "ChEMBL": 2,
+      "DGIdb": 16,
+      "total": 20
+    },
+    "OR7G3": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "OR10AD1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "OR10D3": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    },
+    "OR10X1": {
+      "Open Targets": 0,
+      "ChEMBL": 0,
+      "DGIdb": 0,
+      "total": 0
+    }
+  },
+  "positive_control_sanity": {
+    "AURKA": {
+      "drug_rows": 123,
+      "status": "PASS_HITS_FOUND"
+    },
+    "PLK1": {
+      "drug_rows": 206,
+      "status": "PASS_HITS_FOUND"
+    },
+    "BUB1": {
+      "drug_rows": 6,
+      "status": "PASS_HITS_FOUND"
+    },
+    "CDC20": {
+      "drug_rows": 0,
+      "status": "WARNING_ZERO_HITS"
+    },
+    "MAD2L1": {
+      "drug_rows": 0,
+      "status": "WARNING_ZERO_HITS"
+    },
+    "PLK4": {
+      "drug_rows": 41,
+      "status": "PASS_HITS_FOUND"
+    },
+    "ATR": {
+      "drug_rows": 37,
+      "status": "PASS_HITS_FOUND"
+    },
+    "CHEK1": {
+      "drug_rows": 70,
+      "status": "PASS_HITS_FOUND"
+    },
+    "WEE1": {
+      "drug_rows": 20,
+      "status": "PASS_HITS_FOUND"
+    }
+  },
+  "negative_control_sanity": {
+    "OR7G3": {
+      "drug_rows": 0,
+      "status": "PASS_ZERO_HITS"
+    },
+    "OR10AD1": {
+      "drug_rows": 0,
+      "status": "PASS_ZERO_HITS"
+    },
+    "OR10D3": {
+      "drug_rows": 0,
+      "status": "PASS_ZERO_HITS"
+    },
+    "OR10X1": {
+      "drug_rows": 0,
+      "status": "PASS_ZERO_HITS"
+    }
+  },
   "sources_contacted": {
     "open_targets": {
       "queried": true,
       "status": "active",
-      "drug_candidates_retrieved": 28
+      "drug_candidates_retrieved": 161
     },
     "chembl": {
       "queried": true,
       "status": "active",
-      "mechanisms_retrieved": 25
+      "mechanisms_retrieved": 153
     },
     "dgidb": {
       "queried": true,
       "status": "active",
-      "interactions_retrieved": 656
+      "interactions_retrieved": 1898
     }
   },
   "contradiction_count": 15,
   "mechanistic_hazard_count": 15,
   "offline_mode": false,
-  "execution_duration_seconds": 39.678906,
+  "execution_duration_seconds": 237.261677,
   "ethical_and_regulatory_notice": {
     "disclaimer": "RESEARCH EXPLORATION ONLY \u2014 STRICTLY NOT CLINICAL OR TREATMENT ADVICE. Hypotheses generated computationally from public databases for mechanistic inquiry.",
     "regulatory_status": "Strictly research exploration; no drug evaluated in this pipeline is approved or recommended for clinical use in this patient."

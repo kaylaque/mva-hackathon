@@ -132,6 +132,48 @@ TRACK2_ARTIFACT_MAPPINGS: list[ArtifactMapping] = [
         description="Phase 2 interactive pathway enrichment bubble chart",
         optional=True,
     ),
+    ArtifactMapping(
+        source_rel="phase3/drug_evidence_matrix.csv",
+        target_rel="14_phase3_drug_evidence_matrix.csv",
+        description="Phase 3 normalized multi-source drug-target evidence matrix",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase3/safety_ranking.csv",
+        target_rel="15_phase3_safety_ranking.csv",
+        description="Phase 3 drug safety, directionality tier, and research ranking",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase3/mechanism_action_map.csv",
+        target_rel="16_phase3_mechanism_action_map.csv",
+        description="Phase 3 gene-level mechanism-to-action summary map",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase3/phase3_repurposing_provenance.json",
+        target_rel="17_phase3_repurposing_provenance.json",
+        description="Phase 3 provenance metadata, API endpoints, and disclaimers",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase3/query_gene_panel.csv",
+        target_rel="18_phase3_query_gene_panel.csv",
+        description="Phase 3 graph-derived query gene panel across 4 evidence gates",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase3/query_panel_provenance.json",
+        target_rel="18_phase3_query_panel_provenance.json",
+        description="Phase 3 query gene panel provenance, gate counts, and component metrics",
+        optional=True,
+    ),
+    ArtifactMapping(
+        source_rel="phase3/query_panel_citations.csv",
+        target_rel="19_phase3_query_panel_citations.csv",
+        description="Phase 3 normalized long-format citations table with verified PMIDs/DOIs",
+        optional=True,
+    ),
 ]
 
 

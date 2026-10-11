@@ -42,32 +42,10 @@ RESEARCH_ONLY_DISCLAIMER = (
     "Hypotheses generated computationally from public databases for mechanistic inquiry."
 )
 
-# Canonical MVA and core mitotic genes for seed selection defaults
-CANONICAL_MVA_SEEDS: list[str] = [
-    "BUB1B",
-    "CEP57",
-    "TRIP13",
-    "MAD1L1",
-    "CENATAC",
-    "SLF2",
-    "SMC5",
-]
-
-EXPANDED_MVA_NETWORK_SEEDS: list[str] = [
-    "BUB1B",
-    "CEP57",
-    "TRIP13",
-    "MAD1L1",
-    "CENATAC",
-    "SLF2",
-    "SMC5",
-    "TP53",
-    "ATM",
-    "NF1",
-    "MAD2L2",
-    "AURKA",
-    "PLK1",
-]
+from mva_hackathon.mva_gene_sets import (
+    CANONICAL_MVA_SEEDS,
+    EXPANDED_MVA_NETWORK_SEEDS,
+)
 
 
 @dataclass
@@ -75,12 +53,14 @@ class DrugEvidenceConfig:
     """Configuration for Phase 3 drug-repurposing evidence engine."""
 
     # Candidate seed selection mode:
-    # "mva_core": canonical MVA genes only
-    # "mva_network": canonical MVA + interactome component partners (TP53, ATM, NF1, MAD2L2, etc.)
+    # "query_panel": graph-derived Phase 3 query gene panel CSV (18_phase3_query_gene_panel.csv)
+    # "mva_core": canonical MVA genes (7 core genes)
+    # "mva_network": expert-curated reference panel of 13 genes (7 core + TP53, ATM, NF1, MAD2L2, AURKA, PLK1)
     # "passing_candidates": all genes with >= min_passing_variants
     # "custom": user-specified gene list
     seed_mode: str = "mva_network"
     custom_genes: list[str] = field(default_factory=list)
+    query_panel_path: Path | None = None
     min_passing_variants: int = 1
 
     # HTTP client behavior
@@ -103,6 +83,12 @@ class DrugEvidenceConfig:
     # Offline / Fixture mode
     offline_mode: bool = False
     fixtures_dir: Path | None = None
+
+    def __post_init__(self) -> None:
+        if self.offline_mode:
+            self.enable_open_targets = False
+            self.enable_chembl = False
+            self.enable_dgidb = False
 
 
 class PoliteHttpClient:
@@ -518,6 +504,7 @@ class DrugEvidencePipeline:
         self.ot_client = OpenTargetsClient(self.http_client, config)
         self.chembl_client = ChEMBLClient(self.http_client, config)
         self.dgidb_client = DGIdbClient(self.http_client, config)
+        self.panel_metadata: dict[str, dict[str, Any]] = {}
 
     def select_seed_genes(
         self,
@@ -525,7 +512,33 @@ class DrugEvidencePipeline:
         network_context_df: pd.DataFrame | None = None,
     ) -> list[str]:
         """Select controlled seed genes according to configured strategy."""
-        all_matrix_genes = set(gene_matrix_df["SYMBOL"].dropna().astype(str).str.strip())
+        all_matrix_genes = set(gene_matrix_df["SYMBOL"].dropna().astype(str).str.strip()) if not gene_matrix_df.empty else set()
+
+        if self.config.seed_mode == "query_panel" and self.config.query_panel_path:
+            p_path = Path(self.config.query_panel_path)
+            if p_path.is_file():
+                panel_df = pd.read_csv(p_path)
+                query_genes: list[str] = []
+                for _, r in panel_df.iterrows():
+                    sym = str(r.get("QUERY_GENE", "")).strip()
+                    if sym:
+                        query_genes.append(sym)
+                        self.panel_metadata[sym] = {
+                            "GENE_CATEGORY": str(r.get("GENE_CATEGORY", "CANDIDATE")),
+                            "SELECTION_SOURCE": str(r.get("SELECTION_SOURCE", "QUERY_PANEL")),
+                            "EVIDENCE_NATURE": str(r.get("EVIDENCE_NATURE", "GRAPH_INDIRECT")),
+                            "CONTROL_ROLE": str(r.get("CONTROL_ROLE", "NONE")),
+                            "CONTROL_EXPECTATION": str(r.get("CONTROL_EXPECTATION", "NA")),
+                            "IN_MVA_FOCUS_COMPONENT": bool(r.get("IN_MVA_FOCUS_COMPONENT") == True),
+                            "MVA_GENE_CLASS": str(r.get("MVA_GENE_CLASS", "NONE")),
+                            "GENE_NAME": str(r.get("GENE_NAME", "")),
+                            "PATHWAY": str(r.get("PATHWAY", "")),
+                            "BIOLOGICAL_ROLE": str(r.get("BIOLOGICAL_ROLE", "")),
+                            "MVA_MECHANISM_LINK": str(r.get("MVA_MECHANISM_LINK", "")),
+                            "CANONICAL_PATHWAY_DIRECTION": str(r.get("CANONICAL_PATHWAY_DIRECTION", "")),
+                            "THERAPEUTIC_DIRECTIONALITY": str(r.get("THERAPEUTIC_DIRECTIONALITY", "")),
+                        }
+                return query_genes
 
         if self.config.seed_mode == "custom" and self.config.custom_genes:
             seeds = [g for g in self.config.custom_genes if g in all_matrix_genes or not all_matrix_genes]
@@ -539,16 +552,15 @@ class DrugEvidencePipeline:
             return sorted(set(seeds))
 
         if self.config.seed_mode == "mva_network":
-            # Look for MVA canonical + interactome partners
+            # Uses expert-curated reference panel of 13 seeds (7 core MVA + TP53, ATM, NF1, MAD2L2, AURKA, PLK1)
+            # intersected with Phase 1 candidates
             available = [g for g in EXPANDED_MVA_NETWORK_SEEDS if g in all_matrix_genes]
             if network_context_df is not None and "HGNC_SYMBOL" in network_context_df.columns:
-                net_genes = set(network_context_df["HGNC_SYMBOL"].dropna().astype(str).str.strip())
-                # Add top network genes with passing variants
                 passing_net = network_context_df[
                     network_context_df["TOTAL_PASSING_CANDIDATE_VARIANTS"] >= self.config.min_passing_variants
                 ]["HGNC_SYMBOL"].tolist()
                 for g in passing_net:
-                    if g in EXPANDED_MVA_NETWORK_SEEDS:
+                    if g in EXPANDED_MVA_NETWORK_SEEDS and g not in available:
                         available.append(g)
             if not available:
                 available = EXPANDED_MVA_NETWORK_SEEDS.copy()
@@ -576,7 +588,7 @@ class DrugEvidencePipeline:
             "dgidb": {"queried": False, "status": "disabled"},
         }
 
-        # Build gene context lookup from Phase 1 matrix
+        # Build gene context lookup from Phase 1 matrix and panel metadata
         gene_context: dict[str, dict[str, Any]] = {}
         for _, row in gene_matrix_df.iterrows():
             sym = str(row.get("SYMBOL", "")).strip()
@@ -591,6 +603,21 @@ class DrugEvidencePipeline:
                     "passing_variants": int(row.get("TOTAL_PASSING_CANDIDATE_VARIANTS", 0)),
                     "compound_het_fit": bool(row.get("COMPOUND_HET_ARCHETYPE_FIT", False)),
                     "phase_gate_status": str(row.get("PHASE_GATE_STATUS", "")),
+                }
+
+        # Supplement context for genes absent from Phase 1 using panel metadata
+        for sym, p_meta in self.panel_metadata.items():
+            if sym not in gene_context:
+                gene_context[sym] = {
+                    "gene_name": p_meta.get("GENE_NAME", sym),
+                    "pathway": p_meta.get("PATHWAY", "Spindle Assembly Checkpoint / Mitotic Cell Cycle"),
+                    "biological_role": p_meta.get("BIOLOGICAL_ROLE", "MVA Causal Component"),
+                    "mva_mechanism_link": p_meta.get("MVA_MECHANISM_LINK", "Canonical MVA"),
+                    "canonical_direction": p_meta.get("CANONICAL_PATHWAY_DIRECTION", "DOWN (Checkpoint arrest failure)"),
+                    "therapeutic_direction": p_meta.get("THERAPEUTIC_DIRECTIONALITY", "Compensate impaired checkpoint / promote chromosome stability"),
+                    "passing_variants": 0,
+                    "compound_het_fit": False,
+                    "phase_gate_status": "PHASE1_ABSENT",
                 }
 
         raw_records: list[dict[str, Any]] = []
@@ -760,6 +787,11 @@ class DrugEvidencePipeline:
                 "TRACTABILITY": r["TRACTABILITY_SUMMARY"],
                 "SOURCE_CONFIDENCE_SCORE": r["CONFIDENCE_SCORE"],
                 "RESEARCH_ONLY_DISCLAIMER": RESEARCH_ONLY_DISCLAIMER,
+                "GENE_CATEGORY": self.panel_metadata.get(sym, {}).get("GENE_CATEGORY", "CORE_MVA_CAUSAL" if is_mva else "CANDIDATE"),
+                "SELECTION_SOURCE": self.panel_metadata.get(sym, {}).get("SELECTION_SOURCE", "EXPERT_SEED" if is_mva else "PHASE1"),
+                "EVIDENCE_NATURE": self.panel_metadata.get(sym, {}).get("EVIDENCE_NATURE", "KNOWN_GENE" if is_mva else "CANDIDATE"),
+                "CONTROL_ROLE": self.panel_metadata.get(sym, {}).get("CONTROL_ROLE", "NONE"),
+                "IN_MVA_FOCUS_COMPONENT": self.panel_metadata.get(sym, {}).get("IN_MVA_FOCUS_COMPONENT", False),
             })
 
         evidence_matrix_df = pd.DataFrame(matrix_rows)
@@ -771,7 +803,9 @@ class DrugEvidencePipeline:
                 "CANONICAL_PATHWAY_DIRECTION", "THERAPEUTIC_DIRECTIONALITY",
                 "DIRECTIONALITY_FIT", "CONTRADICTION_FLAG", "DIRECTIONALITY_EXPLANATION",
                 "SAFETY_LIABILITIES", "DRUG_WARNINGS", "PEDIATRIC_HAZARD_NOTE",
-                "TRACTABILITY", "SOURCE_CONFIDENCE_SCORE", "RESEARCH_ONLY_DISCLAIMER"
+                "TRACTABILITY", "SOURCE_CONFIDENCE_SCORE", "RESEARCH_ONLY_DISCLAIMER",
+                "GENE_CATEGORY", "SELECTION_SOURCE", "EVIDENCE_NATURE",
+                "CONTROL_ROLE", "IN_MVA_FOCUS_COMPONENT"
             ])
 
         # Build Safety & Directionality Ranking
@@ -781,13 +815,70 @@ class DrugEvidencePipeline:
         action_map_df = self._build_mechanism_action_map(seed_genes, gene_context, evidence_matrix_df)
 
         end_time = datetime.now(timezone.utc)
+
+        ot_tot = len(evidence_matrix_df[evidence_matrix_df["EVIDENCE_SOURCE"] == "Open Targets"]) if not evidence_matrix_df.empty else 0
+        chembl_tot = len(evidence_matrix_df[evidence_matrix_df["EVIDENCE_SOURCE"] == "ChEMBL"]) if not evidence_matrix_df.empty else 0
+        dgidb_tot = len(evidence_matrix_df[evidence_matrix_df["EVIDENCE_SOURCE"] == "DGIdb"]) if not evidence_matrix_df.empty else 0
+
+        genes_with_hits = sorted(evidence_matrix_df["TARGET_SYMBOL"].unique()) if not evidence_matrix_df.empty else []
+        genes_zero_hits = [g for g in seed_genes if g not in genes_with_hits]
+
+        per_gene_cov: dict[str, dict[str, int]] = {}
+        for g in seed_genes:
+            gsub = evidence_matrix_df[evidence_matrix_df["TARGET_SYMBOL"] == g] if not evidence_matrix_df.empty else pd.DataFrame()
+            per_gene_cov[g] = {
+                "Open Targets": len(gsub[gsub["EVIDENCE_SOURCE"] == "Open Targets"]) if not gsub.empty else 0,
+                "ChEMBL": len(gsub[gsub["EVIDENCE_SOURCE"] == "ChEMBL"]) if not gsub.empty else 0,
+                "DGIdb": len(gsub[gsub["EVIDENCE_SOURCE"] == "DGIdb"]) if not gsub.empty else 0,
+                "total": len(gsub),
+            }
+
+        pos_sanity: dict[str, Any] = {}
+        neg_sanity: dict[str, Any] = {}
+        for g, meta in self.panel_metadata.items():
+            role = meta.get("CONTROL_ROLE", "NONE")
+            hits_count = per_gene_cov.get(g, {}).get("total", 0)
+            if role == "POSITIVE":
+                pos_sanity[g] = {
+                    "drug_rows": hits_count,
+                    "status": "PASS_HITS_FOUND" if hits_count > 0 else "WARNING_ZERO_HITS",
+                }
+            elif role == "NEGATIVE":
+                neg_sanity[g] = {
+                    "drug_rows": hits_count,
+                    "status": "PASS_ZERO_HITS" if hits_count == 0 else "WARNING_UNEXPECTED_HITS",
+                }
+
+        seed_prov_desc = (
+            f"Dynamically derived from query panel at {self.config.query_panel_path} ({len(seed_genes)} genes across multiple functional tiers)"
+            if self.config.seed_mode == "query_panel"
+            else (
+                "Expert-curated 13-seed panel (7 core MVA + TP53, ATM, NF1, MAD2L2, AURKA, PLK1) intersected with Phase 1 candidates"
+                if self.config.seed_mode == "mva_network"
+                else f"Seed selection mode: {self.config.seed_mode}"
+            )
+        )
+
         provenance: dict[str, Any] = {
             "execution_timestamp_utc": end_time.isoformat(),
             "pipeline_version": "0.3.0",
             "seed_mode": self.config.seed_mode,
+            "seed_provenance": seed_prov_desc,
+            "query_panel_path": str(self.config.query_panel_path) if self.config.query_panel_path else "",
+            "panel_category_counts": pd.Series([m.get("GENE_CATEGORY") for m in self.panel_metadata.values()]).value_counts().to_dict() if self.panel_metadata else {},
             "seed_genes_evaluated": seed_genes,
             "seed_genes_count": len(seed_genes),
+            "genes_queried": seed_genes,
+            "genes_with_zero_hits": genes_zero_hits,
             "total_drug_target_pairs_retrieved": len(evidence_matrix_df),
+            "per_source_row_counts": {
+                "Open Targets": ot_tot,
+                "ChEMBL": chembl_tot,
+                "DGIdb": dgidb_tot,
+            },
+            "per_gene_source_coverage": per_gene_cov,
+            "positive_control_sanity": pos_sanity,
+            "negative_control_sanity": neg_sanity,
             "sources_contacted": provenance_sources,
             "contradiction_count": int(evidence_matrix_df["CONTRADICTION_FLAG"].sum()) if not evidence_matrix_df.empty else 0,
             "mechanistic_hazard_count": int((evidence_matrix_df["DIRECTIONALITY_FIT"] == "MECHANISTIC_HAZARD").sum()) if not evidence_matrix_df.empty else 0,
@@ -813,7 +904,8 @@ class DrugEvidencePipeline:
                 "APPROVED_ANY", "DIRECTIONALITY_FIT", "CONTRADICTION_FLAG",
                 "SAFETY_TIER", "RESEARCH_PRIORITY_RANK", "DIRECTIONALITY_EXPLANATION",
                 "PEDIATRIC_HAZARD_NOTE", "CLINICAL_RECOMMENDATION_STATUS",
-                "RESEARCH_ONLY_DISCLAIMER"
+                "RESEARCH_ONLY_DISCLAIMER", "GENE_CATEGORY", "SELECTION_SOURCE",
+                "EVIDENCE_NATURE", "CONTROL_ROLE", "IN_MVA_FOCUS_COMPONENT"
             ])
 
         grouped = matrix_df.groupby(["TARGET_SYMBOL", "DRUG_NAME"], as_index=False)
@@ -848,6 +940,13 @@ class DrugEvidencePipeline:
                 safety_tier = "TIER_3_UNCERTAIN_DIRECTIONALITY"
                 score = 10.0 + (10.0 if approved_any else 0.0)
 
+            p_meta = self.panel_metadata.get(sym, {})
+            cat = p_meta.get("GENE_CATEGORY") or (group["GENE_CATEGORY"].iloc[0] if "GENE_CATEGORY" in group.columns else "")
+            src = p_meta.get("SELECTION_SOURCE") or (group["SELECTION_SOURCE"].iloc[0] if "SELECTION_SOURCE" in group.columns else "")
+            nature = p_meta.get("EVIDENCE_NATURE") or (group["EVIDENCE_NATURE"].iloc[0] if "EVIDENCE_NATURE" in group.columns else "")
+            ctrl_role = p_meta.get("CONTROL_ROLE") or (group["CONTROL_ROLE"].iloc[0] if "CONTROL_ROLE" in group.columns else "NONE")
+            in_focus = p_meta.get("IN_MVA_FOCUS_COMPONENT") if "IN_MVA_FOCUS_COMPONENT" in p_meta else (group["IN_MVA_FOCUS_COMPONENT"].iloc[0] if "IN_MVA_FOCUS_COMPONENT" in group.columns else False)
+
             ranked_rows.append({
                 "TARGET_SYMBOL": sym,
                 "DRUG_NAME": drug_name,
@@ -863,6 +962,11 @@ class DrugEvidencePipeline:
                 "PEDIATRIC_HAZARD_NOTE": group["PEDIATRIC_HAZARD_NOTE"].iloc[0],
                 "CLINICAL_RECOMMENDATION_STATUS": "PROHIBITED / INVESTIGATIONAL ONLY",
                 "RESEARCH_ONLY_DISCLAIMER": RESEARCH_ONLY_DISCLAIMER,
+                "GENE_CATEGORY": cat,
+                "SELECTION_SOURCE": src,
+                "EVIDENCE_NATURE": nature,
+                "CONTROL_ROLE": ctrl_role,
+                "IN_MVA_FOCUS_COMPONENT": in_focus,
             })
 
         ranking_df = pd.DataFrame(ranked_rows)
@@ -885,29 +989,46 @@ class DrugEvidencePipeline:
         map_rows: list[dict[str, Any]] = []
         for gene in seed_genes:
             ctx = gene_context.get(gene, {})
+            p_meta = self.panel_metadata.get(gene, {})
             sub = matrix_df[matrix_df["TARGET_SYMBOL"] == gene] if not matrix_df.empty else pd.DataFrame()
             total_drugs = len(sub["DRUG_NAME"].unique()) if not sub.empty else 0
             approved_drugs = len(sub[sub["IS_APPROVED"]]["DRUG_NAME"].unique()) if not sub.empty else 0
             hazards = int((sub["DIRECTIONALITY_FIT"] == "MECHANISTIC_HAZARD").sum()) if not sub.empty else 0
 
+            ot_rows = len(sub[sub["EVIDENCE_SOURCE"] == "Open Targets"]) if not sub.empty else 0
+            chembl_rows = len(sub[sub["EVIDENCE_SOURCE"] == "ChEMBL"]) if not sub.empty else 0
+            dgidb_rows = len(sub[sub["EVIDENCE_SOURCE"] == "DGIdb"]) if not sub.empty else 0
+            rows_by_source = f"OPEN_TARGETS:{ot_rows};CHEMBL:{chembl_rows};DGIDB:{dgidb_rows}"
+
+            if sub.empty:
+                research_status = "NO_DRUG_EVIDENCE"
+                primary_hazard = "No drug evidence retrieved across queried databases for this target."
+            elif hazards > 0:
+                research_status = "CONTRAINDICATED_PATHWAY_INHIBITORS_PRESENT"
+                primary_hazard = f"Direct inhibition of {gene} worsens baseline checkpoint failure/instability."
+            else:
+                research_status = "NO_IMMEDIATE_DIRECTIONAL_HAZARDS"
+                primary_hazard = "None identified in current database queries."
+
+            cat = p_meta.get("GENE_CATEGORY") or ("CORE_MVA_CAUSAL" if gene in CANONICAL_MVA_SEEDS else "CANDIDATE")
+            src = p_meta.get("SELECTION_SOURCE") or ("EXPERT_SEED" if gene in CANONICAL_MVA_SEEDS else "PHASE1")
+
             map_rows.append({
                 "SEED_GENE": gene,
-                "GENE_NAME": ctx.get("gene_name", "Unassigned"),
-                "PATHWAY": ctx.get("pathway", "Unassigned"),
-                "BIOLOGICAL_ROLE": ctx.get("biological_role", "Unassigned"),
-                "MVA_MECHANISM_LINK": ctx.get("mva_mechanism_link", "Secondary"),
-                "CANONICAL_PATHWAY_DIRECTION": ctx.get("canonical_direction", "UNKNOWN"),
-                "DESIRED_THERAPEUTIC_DIRECTION": ctx.get("therapeutic_direction", "UNKNOWN"),
+                "GENE_CATEGORY": cat,
+                "SELECTION_SOURCE": src,
+                "GENE_NAME": ctx.get("gene_name", p_meta.get("GENE_NAME", "Unassigned")),
+                "PATHWAY": ctx.get("pathway", p_meta.get("PATHWAY", "Unassigned")),
+                "BIOLOGICAL_ROLE": ctx.get("biological_role", p_meta.get("BIOLOGICAL_ROLE", "Unassigned")),
+                "MVA_MECHANISM_LINK": ctx.get("mva_mechanism_link", p_meta.get("MVA_MECHANISM_LINK", "Secondary")),
+                "CANONICAL_PATHWAY_DIRECTION": ctx.get("canonical_direction", p_meta.get("CANONICAL_PATHWAY_DIRECTION", "UNKNOWN")),
+                "DESIRED_THERAPEUTIC_DIRECTION": ctx.get("therapeutic_direction", p_meta.get("THERAPEUTIC_DIRECTIONALITY", "UNKNOWN")),
                 "TOTAL_DRUGS_IDENTIFIED": total_drugs,
                 "APPROVED_DRUGS_COUNT": approved_drugs,
                 "DIRECTIONAL_HAZARDS_COUNT": hazards,
-                "PRIMARY_MECHANISTIC_HAZARD": (
-                    f"Direct inhibition of {gene} worsens baseline checkpoint failure/instability."
-                    if hazards > 0 else "None identified in current database queries."
-                ),
-                "RESEARCH_STATUS": (
-                    "CONTRAINDICATED_PATHWAY_INHIBITORS_PRESENT" if hazards > 0 else "NO_IMMEDIATE_DIRECTIONAL_HAZARDS"
-                ),
+                "PRIMARY_MECHANISTIC_HAZARD": primary_hazard,
+                "DRUG_ROWS_BY_SOURCE": rows_by_source,
+                "RESEARCH_STATUS": research_status,
             })
         return pd.DataFrame(map_rows)
 
