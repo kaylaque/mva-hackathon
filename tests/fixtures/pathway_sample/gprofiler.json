@@ -1,0 +1,18 @@
+{
+  "meta": {"query_metadata": {"queries": {"query_1": {"mapping": {
+    "ENSG000001": ["BUB1B"],
+    "ENSG000002": ["MAD1L1"],
+    "ENSG000003": ["TRIP13"]
+  }}}}},
+  "result": [{
+    "source": "REAC",
+    "native": "R-HSA-141444",
+    "name": "Mitotic Spindle Checkpoint",
+    "term_size": 28,
+    "query_size": 3,
+    "intersection_size": 3,
+    "effective_domain_size": 12,
+    "intersections": ["ENSG000001", "ENSG000002", "ENSG000003"],
+    "p_value": 0.01
+  }]
+}
