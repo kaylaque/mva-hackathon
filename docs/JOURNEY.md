@@ -853,3 +853,66 @@ graph TD
 2. **Deterministic Synthetic Testing**: All unit and integration test fixtures are synthetic, deterministic, and non-patient derived. External APIs are mocked in unit test suites.
 3. **Responsible API Consumption**: External API clients use polite request throttles (`polite_delay`), clear `User-Agent` headers, exponential backoff retries, and comprehensive error fallback modes.
 4. **Provenance Tracking**: Every execution step logs a comprehensive JSON provenance document capturing tool versions, endpoint URLs, query timestamps, parameter thresholds, and explicit interpretation disclaimers.
+
+---
+
+## 11. Independent pathway workflow (P0–P7)
+
+Phase 1 now forks into an independent pathway branch. It does not modify or
+reinterpret the existing STRING Phase 2 / drug-evidence Phase 3 outputs; P6
+consumes their query panel only for a descriptive comparison.
+
+```mermaid
+flowchart LR
+    P1["Phase 1 gene matrix"] --> Existing["Existing STRING Phase 2 → drug Phase 3"]
+    P1 --> P0["P0 gene-only QC"]
+    P0 --> P1E["P1 custom-background enrichment"]
+    P1E --> P2P["P2 prioritization"]
+    P2P --> P3M["P3 mechanism evidence"]
+    P3M --> P4T["P4 full pathway members"]
+    P4T --> P5D["P5 drug evidence"]
+    Existing --> P6["P6 descriptive comparison"]
+    P5D --> P6 --> P7["P7 Markdown report"]
+```
+
+P0 foreground is genes with at least one passing Phase 1 candidate; background
+is every evaluated Phase 1 gene. This is a background-bias limitation, not a
+whole-exome callable universe. P1 retains g:Profiler BH-adjusted values as
+`BH_Q`/`PROVIDER_ADJUSTED_P`, separately stores raw hypergeometric values only
+when provider effective-domain counts are valid, and does not double-correct
+returned hit terms. HP results are **observational gene-annotation enrichment**,
+not observed patient phenotype. P2 prioritizes MVA relevance, q value, fold
+enrichment, and intersection size without an uncalibrated efficacy score. P5
+labels inhibitor-like actions against restoration-required genes as
+contradictions; pharmacological action evidence never proves biological rescue.
+
+### Source comparison and selected interfaces
+
+| Source | Official documentation | Custom background / correction | Credentials | Evidence limit | Decision |
+| --- | --- | --- | --- | --- | --- |
+| g:Profiler | https://biit.cs.ut.ee/gprofiler/page/apis | Yes; provider BH retained | None | Annotation enrichment, not efficacy | Selected REST primary |
+| DAVID | https://davidbioinformatics.nih.gov/help.jsp | User population; Fisher/EASE/Benjamini | Registered email | Session/state semantics and coverage differ | Optional comparison; `DAVID_EMAIL` only |
+| Reactome | https://reactome.org/dev/analysis | Default universe; FDR | None | No custom background in projection | Selected secondary + content |
+| WikiPathways | https://www.wikipathways.org/index.php/Help:WikiPathways_Webservice/API | Provider dependent | None | Curation/version dependent | Evaluated; g:Profiler WP source selected |
+| HGNC | https://www.genenames.org/help/rest/ | N/A | None | Identifier mapping only | Selected exact REST mapping |
+| QuickGO | https://www.ebi.ac.uk/QuickGO/api/index.html | N/A | None | Evidence codes do not prove mechanism | Selected REST annotation |
+| UniProt | https://www.uniprot.org/help/api | N/A | None | Functional annotations are curated summaries | Selected REST function lookup |
+| Open Targets | https://platform-docs.opentargets.org/ | N/A | None | Drug/target associations are not rescue evidence | Selected GraphQL |
+| ChEMBL | https://chembl.gitbook.io/chembl-interface-documentation | N/A | None | Assay values cannot be pooled across types/units | Selected REST |
+| DGIdb | https://dgidb.org/api | N/A | None | Aggregated interactions require provenance review | Selected GraphQL |
+| Europe PMC / NCBI | https://europepmc.org/RestfulWebService / https://www.ncbi.nlm.nih.gov/home/develop/api/ | N/A | API key optional | Literature indexing, not validation | Evaluated for manual follow-up |
+| STRING / BioGRID | https://string-db.org/help/api / https://wiki.thebiogrid.org/doku.php/biogridrest | N/A | BioGRID key may apply | Network overlap is descriptive | Existing STRING selected; BioGRID evaluated |
+| Enrichr | https://maayanlab.cloud/Enrichr/#api | Library-specific correction | None | Alternative library universe | Evaluated, not implemented |
+
+All external requests disclose normalized symbols, ENSG identifiers, or
+source-native target/accession identifiers only. They never include variants,
+genotypes, HGVS, coordinates, clinical text, internal prioritization scores, or
+patient identifiers. Reports remain ignored local artifacts and contain
+aggregate stage counts rather than patient-derived tables.
+
+### Execution status
+
+Synthetic fixture execution is the reproducible verification baseline. A live
+run records only aggregate P0–P7 statuses, source gaps, and local report paths;
+it never treats an unavailable provider as zero findings. See
+`scripts/README.md` for commands and `data/README.md` for output schemas.

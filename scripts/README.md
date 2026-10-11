@@ -139,3 +139,34 @@ uv run python scripts/migrate_track2_layout.py --validate-only
 | `phase3/query_gene_panel.csv` | `18_phase3_query_gene_panel.csv` | Graph-derived multi-tiered query gene panel across 4 evidence gates |
 | `phase3/query_panel_provenance.json` | `18_phase3_query_panel_provenance.json` | Query gene panel provenance, gate counts, and component metrics |
 | `phase3/query_panel_citations.csv` | `19_phase3_query_panel_citations.csv` | Normalized long-format citations table with verified PMIDs/DOIs |
+
+## Independent pathway workflow (P0–P7)
+
+`run_pathway_workflow.py` is independent from the existing STRING/drug branch.
+It accepts only the Phase 1 gene-level allowlist; P0 rejects missing required
+counts and never loads `TOP_VARIANT_KEYS` or other variant fields.
+
+```bash
+# Required smoke test: fixture-only, no live fallback.
+uv run python scripts/run_pathway_workflow.py \
+  --gene-mechanism tests/fixtures/pathway_sample/genes.csv \
+  --offline-fixture tests/fixtures/pathway_sample \
+  --output-dir /tmp/mva-pathway-sample
+
+# Live gene-only workflow defaults.
+bash scripts/run_pathway_workflow.sh
+```
+
+Implemented options: `--gene-mechanism`, `--network-context`,
+`--network-panel`, `--network-drugs`, `--min-passing`, `--q-threshold`,
+`--top-pathways`, `--stage`, `--offline-fixture`, `--no-chembl`,
+`--no-open-targets`, `--no-dgidb`, `--david`, `--output-dir`, and `--force`.
+`--david` requires `DAVID_EMAIL` from the environment; credentials are never a
+CLI argument, cache key, report field, or log value.
+
+P0→P7 execute in dependency order and write atomically. A completed report does
+not convert source gaps to zero evidence: exit `0` means all selected stages
+completed, `2` means partial coverage (for example, missing STRING baseline or
+external source), and `1` means an invalid input or required-stage failure.
+Offline mode accepts only declared fixture responses; a missing fixture fails
+instead of using the network.
