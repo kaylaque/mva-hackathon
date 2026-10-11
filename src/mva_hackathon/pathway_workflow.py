@@ -105,6 +105,13 @@ class PathwayWorkflow:
                 digest.update(block)
         return digest.hexdigest()
 
+    @staticmethod
+    def stage_summary(frame: pd.DataFrame, empty_outcome: str) -> dict[str, Any]:
+        """Describe completed stage output without treating scientific nulls as failures."""
+        if frame.empty:
+            return {"status": "completed", "outcome": empty_outcome, "count": 0}
+        return {"status": "completed", "count": len(frame)}
+
     def map_hgnc(self, symbols: Iterable[str], client: Any) -> pd.DataFrame:
         """Resolve exact HGNC symbols; ambiguous results are deliberately unmapped."""
         records: list[dict[str, Any]] = []
@@ -196,7 +203,12 @@ class PathwayWorkflow:
             )
         return pd.DataFrame(records)
 
-    def gprofiler_payload(self, mapped_genes: pd.DataFrame, domain_scope: str = "custom") -> dict[str, Any]:
+    def gprofiler_payload(
+        self,
+        mapped_genes: pd.DataFrame,
+        domain_scope: str = "custom",
+        sources: list[str] | None = None,
+    ) -> dict[str, Any]:
         """Build GOSt request with gene IDs only and no patient-level data."""
         status = mapped_genes.get("STATUS", pd.Series("mapped", index=mapped_genes.index))
         resolved = mapped_genes.loc[
@@ -209,22 +221,30 @@ class PathwayWorkflow:
         return {
             "organism": "hsapiens",
             "query": query,
-            "sources": ["GO:BP", "REAC", "WP", "HP"],
             "domain_scope": domain_scope,
             "background": background,
+            "sources": sources or ["GO:BP", "REAC", "WP", "HP"],
             "significance_threshold_method": "fdr",
             "all_results": True,
             "no_evidences": False,
             "user_threshold": self.config.q_threshold,
         }
 
-    def fetch_gprofiler(self, mapped_genes: pd.DataFrame, client: Any, domain_scope: str = "custom") -> dict[str, Any]:
+    def fetch_gprofiler(
+        self,
+        mapped_genes: pd.DataFrame,
+        client: Any,
+        domain_scope: str = "custom",
+        sources: list[str] | None = None,
+    ) -> dict[str, Any]:
         """Call GOSt and reject transport failures rather than treating them as zero terms."""
-        response = client.post(_GPROFILER_URL, json_data=self.gprofiler_payload(mapped_genes, domain_scope))
+        response = client.post(
+            _GPROFILER_URL,
+            json_data=self.gprofiler_payload(mapped_genes, domain_scope, sources),
+        )
         if response is None or response.status_code != 200:
             raise RuntimeError("gProfiler request failed")
         return response.json()
-
     def fetch_reactome_analysis(self, symbols: Iterable[str], client: Any) -> dict[str, Any]:
         """Obtain secondary Reactome method-comparison results."""
         body = "#Genes\n" + "\n".join(sorted({str(symbol).upper() for symbol in symbols})) + "\n"
@@ -456,7 +476,20 @@ class PathwayWorkflow:
                 }
             )
             records.append(record)
-        return pd.DataFrame(records)
+        required_columns = [
+            "TERM_ID",
+            "SYMBOL",
+            "ROLE",
+            "UNIPROT_ACCESSION",
+            "EVIDENCE_TIER",
+            "THERAPEUTIC_DIRECTIONALITY",
+            "VARIANT_SUPPORTED",
+        ]
+        evidence = pd.DataFrame(records)
+        for column in required_columns:
+            if column not in evidence:
+                evidence[column] = pd.NA
+        return evidence.loc[:, required_columns + [column for column in evidence if column not in required_columns]]
 
     def run_p4(self, prioritized: pd.DataFrame, memberships: dict[str, list[dict[str, Any]]], phase1: pd.DataFrame) -> pd.DataFrame:
         """Expand selected pathways to full supplied memberships, not intersections alone."""
@@ -499,7 +532,21 @@ class PathwayWorkflow:
                 }
             )
             records.append(record)
-        return pd.DataFrame(records)
+        required_columns = [
+            "SOURCE",
+            "TARGET_SYMBOL",
+            "ACTION_TYPE",
+            "DRUG_NAME",
+            "THERAPEUTIC_DIRECTIONALITY",
+            "CONTRADICTION_FLAG",
+            "DIRECTIONALITY_LABEL",
+            "RESEARCH_ONLY",
+        ]
+        evidence = pd.DataFrame(records)
+        for column in required_columns:
+            if column not in evidence:
+                evidence[column] = pd.NA
+        return evidence.loc[:, required_columns + [column for column in evidence if column not in required_columns]]
 
     def run_p6(self, pathway_targets: pd.DataFrame, network_panel: pd.DataFrame | None) -> dict[str, Any]:
         """Provide descriptive target overlap; no unjustified universe-based test."""
@@ -552,18 +599,44 @@ class PathwayWorkflow:
             "",
             "## Stage QC",
             "",
-            "| Stage | Status | Count |",
-            "| --- | --- | --- |",
+            "| Stage | Status | Outcome | Count |",
+            "| --- | --- | --- | --- |",
         ]
         for stage in ("p0", "p1", "p2", "p3", "p4", "p5", "p6"):
             report = stage_reports.get(stage, {})
-            lines.append(f"| {stage} | {report.get('status', 'UNAVAILABLE')} | {report.get('count', report.get('foreground_count', 'UNAVAILABLE'))} |")
+            lines.append(
+                f"| {stage} | {report.get('status', 'UNAVAILABLE')} | "
+                f"{report.get('outcome', report.get('reason', 'UNAVAILABLE'))} | "
+                f"{report.get('count', report.get('foreground_count', 'UNAVAILABLE'))} |"
+            )
+        no_significant_enrichment = (
+            stage_reports.get("p2", {}).get("outcome") == "NO_SIGNIFICANT_ENRICHMENT"
+        )
+
         lines.extend(["", "## Top pathways", ""])
-        lines.extend(self._markdown_table(pathways, ["TERM_ID", "TERM_NAME", "BH_Q", "FOLD_ENRICHMENT"]) if pathways is not None and not pathways.empty else ["UNAVAILABLE"])
+        lines.extend(
+            self._markdown_table(pathways, ["TERM_ID", "TERM_NAME", "BH_Q", "FOLD_ENRICHMENT"])
+            if pathways is not None and not pathways.empty
+            else ["No terms passed provider BH-FDR at configured threshold."]
+            if no_significant_enrichment
+            else ["UNAVAILABLE"]
+        )
         lines.extend(["", "## Top targets", ""])
-        lines.extend(self._markdown_table(targets, ["TERM_ID", "SYMBOL", "TARGET_SUPPORT", "THERAPEUTIC_DIRECTIONALITY"]) if targets is not None and not targets.empty else ["UNAVAILABLE"])
+        lines.extend(
+            self._markdown_table(targets, ["TERM_ID", "SYMBOL", "TARGET_SUPPORT", "THERAPEUTIC_DIRECTIONALITY"])
+            if targets is not None and not targets.empty
+            else ["No eligible pathway targets because no enrichment terms passed provider BH-FDR."]
+            if no_significant_enrichment
+            else ["UNAVAILABLE"]
+        )
         lines.extend(["", "## Top drug hypotheses", ""])
-        lines.extend(self._markdown_table(drugs, ["TARGET_SYMBOL", "DRUG_NAME", "SOURCE", "DIRECTIONALITY_LABEL"]) if drugs is not None and not drugs.empty else ["UNAVAILABLE"])
+        lines.extend(
+            self._markdown_table(drugs, ["TARGET_SYMBOL", "DRUG_NAME", "SOURCE", "DIRECTIONALITY_LABEL"])
+            if drugs is not None and not drugs.empty
+            else ["No pathway drug hypotheses because no eligible pathway targets were expanded."]
+            if no_significant_enrichment
+            else ["UNAVAILABLE"]
+        )
         lines.extend(
             [
                 "",
