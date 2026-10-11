@@ -191,7 +191,7 @@ git commit -m "fix(pathway): distinguish evidence gaps from no hits"
 - Test: `tests/test_pathway_audit.py`
 
 **Interfaces:**
-- `audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, object], str]`.
+- `audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, object], Path]`; it rejects ignored paths and binds sensitivity manifests to the current P0 SHA-256.
 - `write_validation_report(output_dir: Path, summary: dict[str, object]) -> Path`.
 - CLI exits `0` for completed/partial report; exits `1` for missing required stage artifacts.
 

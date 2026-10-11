@@ -27,6 +27,17 @@ import requests
 
 logger = logging.getLogger("mva_hackathon.drug_evidence")
 
+
+def _graphql_data(response: Any, source: str) -> dict[str, Any]:
+    """Return GraphQL data or classify provider-declared errors as source failure."""
+    payload = response.json()
+    if payload.get("errors"):
+        raise RuntimeError(f"{source} GraphQL response contained errors")
+    data = payload.get("data")
+    if not isinstance(data, dict):
+        raise RuntimeError(f"{source} GraphQL response omitted data")
+    return data
+
 # Default biomedical API endpoints
 DEFAULT_OPEN_TARGETS_GQL_URL = "https://api.platform.opentargets.org/api/v4/graphql"
 DEFAULT_CHEMBL_API_URL = "https://www.ebi.ac.uk/chembl/api/data"
@@ -187,7 +198,7 @@ class OpenTargetsClient:
             self.config.open_targets_url,
             json_data={"query": query, "variables": {"queryString": symbol}},
         )
-        data = resp.json().get("data", {}).get("search", {})
+        data = _graphql_data(resp, "Open Targets").get("search", {})
         hits = data.get("hits", [])
         for hit in hits:
             if hit.get("name") == symbol and hit.get("entity") == "target":
@@ -257,7 +268,7 @@ class OpenTargetsClient:
             self.config.open_targets_url,
             json_data={"query": query, "variables": {"ensemblId": ensembl_id}},
         )
-        target = resp.json().get("data", {}).get("target", {})
+        target = _graphql_data(resp, "Open Targets").get("target", {})
         return target or {}
 
 
@@ -339,7 +350,7 @@ class DGIdbClient:
             self.config.dgidb_url,
             json_data={"query": query, "variables": {"genes": symbols}},
         )
-        nodes = resp.json().get("data", {}).get("interactions", {}).get("nodes", [])
+        nodes = _graphql_data(resp, "DGIdb").get("interactions", {}).get("nodes", [])
         return nodes or []
 
 

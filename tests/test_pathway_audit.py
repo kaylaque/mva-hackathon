@@ -26,7 +26,7 @@ def write_sensitivity_provenance(output_dir: Path, name: str, baseline_hash: str
                 "background_count": 2,
                 "query_count": 1,
                 "sources": ["GO:BP", "REAC", "WP"],
-                "fdr_method": "g_SCS",
+                "fdr_method": "fdr",
                 "min_passing": 2,
                 "generated_at": "2026-10-11T00:00:00Z",
                 "cache_key": "synthetic",
@@ -67,7 +67,7 @@ class PathwayAuditTests(unittest.TestCase):
             write_sensitivity_provenance(output_dir, "p2_sensitivity_min_passing_2.csv", baseline_hash)
             write_sensitivity_provenance(output_dir, "p2_sensitivity_hp_excluded.csv", baseline_hash)
 
-            summary, report_path = audit_pathway_outputs(output_dir, baseline_hash)
+            summary, report_path = audit_pathway_outputs(output_dir)
             report = report_path.read_text()
 
         self.assertEqual(summary["baseline"]["provider_bh_le_0_05"], 0)
@@ -100,11 +100,40 @@ class PathwayAuditTests(unittest.TestCase):
                 output_dir / "p6_evaluation_summary.csv", index=False
             )
 
-            _, report_path = audit_pathway_outputs(output_dir, "different-baseline")
+            _, report_path = audit_pathway_outputs(output_dir)
             report = report_path.read_text()
 
         self.assertIn("UNAVAILABLE (MISSING_PROVENANCE)", report)
         self.assertNotIn("STALE-SYNTHETIC-TERM", report)
+    def test_audit_rejects_manifest_when_baseline_changes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output_dir = Path(tmp)
+            p0_path = output_dir / "p0_gene_qc.csv"
+            pd.DataFrame([{"STATUS": "mapped", "IN_FOREGROUND": True}]).to_csv(p0_path, index=False)
+            old_hash = hashlib.sha256(p0_path.read_bytes()).hexdigest()
+            write_sensitivity_provenance(output_dir, "p2_sensitivity_min_passing_2.csv", old_hash)
+            pd.DataFrame([{"TERM_ID": "STALE-SYNTHETIC-TERM", "BH_Q": 0.01}]).to_csv(
+                output_dir / "p2_sensitivity_min_passing_2.csv", index=False
+            )
+            pd.DataFrame(
+                [{"STATUS": "mapped", "IN_FOREGROUND": True}, {"STATUS": "mapped", "IN_FOREGROUND": False}]
+            ).to_csv(p0_path, index=False)
+            pd.DataFrame(columns=["SOURCE", "RAW_P", "BH_Q"]).to_csv(output_dir / "p1_enrichment_results.csv", index=False)
+            pd.DataFrame(columns=["TERM_ID", "BH_Q"]).to_csv(output_dir / "p2_prioritized_pathways.csv", index=False)
+            pd.DataFrame([{"shared_targets": 0, "pathway_only_targets": 0, "string_only_targets": 0}]).to_csv(
+                output_dir / "p6_evaluation_summary.csv", index=False
+            )
+
+            _, report_path = audit_pathway_outputs(output_dir)
+            report = report_path.read_text()
+
+        self.assertIn("UNAVAILABLE (STALE_OR_INVALID_PROVENANCE)", report)
+        self.assertNotIn("STALE-SYNTHETIC-TERM", report)
+
+
+    def test_audit_rejects_ignored_output_directory(self) -> None:
+        with self.assertRaisesRegex(ValueError, "ignored artifact path is forbidden"):
+            audit_pathway_outputs(REPO_ROOT / "data/processed/track2/pathway")
 
     def test_audit_does_not_mark_nonempty_baseline_as_not_applicable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -123,7 +152,7 @@ class PathwayAuditTests(unittest.TestCase):
             )
 
             baseline_hash = hashlib.sha256((output_dir / "p0_gene_qc.csv").read_bytes()).hexdigest()
-            _, report_path = audit_pathway_outputs(output_dir, baseline_hash)
+            _, report_path = audit_pathway_outputs(output_dir)
             report = report_path.read_text()
 
         self.assertNotIn("P3 mechanism, P4 target expansion, and P5 drug validation: NOT_APPLICABLE", report)
