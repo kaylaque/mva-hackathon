@@ -165,10 +165,10 @@ def main() -> int:
 
     p1 = workflow.run_p1(normalized, response)
     workflow.atomic_write_csv(p1, output_dir / "p1_enrichment_results.csv")
-    stages["p1"] = {"status": "completed", "count": len(p1)}
+    stages["p1"] = workflow.stage_summary(p1, "NO_ENRICHMENT_TERMS")
     p2 = workflow.run_p2(p1)
     workflow.atomic_write_csv(p2, output_dir / "p2_prioritized_pathways.csv")
-    stages["p2"] = {"status": "completed", "count": len(p2)}
+    stages["p2"] = workflow.stage_summary(p2, "NO_SIGNIFICANT_ENRICHMENT")
 
     if not args.offline_fixture:
         for term_id in p2.loc[p2["SOURCE"].eq("REAC"), "TERM_ID"].head(args.top_pathways):
@@ -178,11 +178,14 @@ def main() -> int:
                 stages.setdefault("p4", {"status": "partial", "source_failures": []})["source_failures"].append("REACTOME_CONTENT_UNAVAILABLE")
     if args.offline_fixture:
         p3_evidence = _read_fixture(args.offline_fixture, "mechanism_evidence.json", [])
-        p3_status: dict[str, Any] = {"status": "completed", "count": len(p3_evidence)}
+        p3_status: dict[str, Any] = workflow.stage_summary(pd.DataFrame(p3_evidence), "NO_ELIGIBLE_PATHWAYS")
+    elif p2.empty:
+        p3_evidence = []
+        p3_status = workflow.stage_summary(pd.DataFrame(), "NO_ELIGIBLE_PATHWAYS")
     else:
         try:
             p3_evidence = workflow.mechanism_evidence(p2, http_client)
-            p3_status = {"status": "completed", "count": len(p3_evidence)}
+            p3_status = workflow.stage_summary(pd.DataFrame(p3_evidence), "NO_MECHANISM_EVIDENCE")
         except RuntimeError:
             p3_evidence = []
             p3_status = {"status": "partial", "count": 0, "reason": "UNIPROT_OR_QUICKGO_UNAVAILABLE"}
@@ -191,15 +194,26 @@ def main() -> int:
     stages["p3"] = {**p3_status, "count": len(p3)}
     p4 = workflow.run_p4(p2, memberships, normalized)
     workflow.atomic_write_csv(p4, output_dir / "p4_expanded_targets.csv")
-    stages["p4"] = {**stages.get("p4", {}), "status": stages.get("p4", {}).get("status", "completed"), "count": len(p4)}
-    if args.offline_fixture:
+    p4_summary = workflow.stage_summary(p4, "NO_ELIGIBLE_PATHWAYS")
+    stages["p4"] = {**p4_summary, **stages.get("p4", {}), "count": len(p4)}
+    if p4.empty:
+        source_records = []
+        source_failures = []
+        p5_outcome = "NO_ELIGIBLE_TARGETS"
+    elif args.offline_fixture:
         source_records = _read_fixture(args.offline_fixture, "drug_records.json", [])
-        source_failures: list[str] = []
+        source_failures = []
+        p5_outcome = "NO_DRUG_EVIDENCE"
     else:
         source_records, source_failures = _drug_records(p4, args)
+        p5_outcome = "NO_DRUG_EVIDENCE"
     p5 = workflow.run_p5(p4, source_records)
     workflow.atomic_write_csv(p5, output_dir / "p5_drug_evidence.csv")
-    stages["p5"] = {"status": "partial" if source_failures else "completed", "count": len(p5), "source_failures": source_failures}
+    stages["p5"] = (
+        {"status": "partial", "count": len(p5), "reason": "SOURCE_UNAVAILABLE", "source_failures": source_failures}
+        if source_failures
+        else workflow.stage_summary(p5, p5_outcome)
+    )
 
     panel_path = args.network_panel or ((args.offline_fixture / "network_panel.csv") if args.offline_fixture else None)
     panel = pd.read_csv(panel_path) if panel_path and panel_path.is_file() else None

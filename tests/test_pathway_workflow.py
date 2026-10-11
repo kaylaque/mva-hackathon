@@ -112,6 +112,22 @@ class PathwayInputQcTests(unittest.TestCase):
         second = workflow.request_cache_key("https://example.test/api", {"background": ["ENSG1", "ENSG2"], "query": ["ENSG1"]})
         self.assertEqual(first, second)
 
+
+    def test_gprofiler_payload_can_exclude_hp_for_sensitivity(self) -> None:
+        """HP-excluded sensitivity must alter provider source family, not post-filter rows."""
+        genes = pd.DataFrame(
+            [
+                {"ENSEMBL_ID": "ENSG1", "IN_FOREGROUND": True},
+                {"ENSEMBL_ID": "ENSG2", "IN_FOREGROUND": False},
+            ]
+        )
+
+        payload = PathwayWorkflow(PathwayWorkflowConfig()).gprofiler_payload(
+            genes, sources=["GO:BP", "REAC", "WP"]
+        )
+
+        self.assertEqual(payload["significance_threshold_method"], "fdr")
+        self.assertNotIn("HP", payload["sources"])
 class PathwayEnrichmentTests(unittest.TestCase):
     def test_p1_preserves_provider_bh_and_decodes_intersections(self) -> None:
         """Provider-adjusted p-values remain authoritative and identifiers map by query mapping."""
@@ -276,5 +292,78 @@ class PathwayMechanismAndReportTests(unittest.TestCase):
         ):
             self.assertIn(heading, report)
 
+
+
+class PathwayEmptyResultTests(unittest.TestCase):
+    def test_empty_p2_has_explicit_no_significant_enrichment_status(self) -> None:
+        """No BH-significant terms is a scientific result, not a completed pathway panel."""
+        summary = PathwayWorkflow(PathwayWorkflowConfig(offline=True)).stage_summary(
+            pd.DataFrame(), "NO_SIGNIFICANT_ENRICHMENT"
+        )
+
+        self.assertEqual(
+            summary,
+            {
+                "status": "completed",
+                "outcome": "NO_SIGNIFICANT_ENRICHMENT",
+                "count": 0,
+            },
+        )
+
+    def test_p7_reports_completed_null_outcome(self) -> None:
+        """Scientific nulls must not be rendered as unavailable execution failures."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "p7_pathway_report.md"
+            PathwayWorkflow(PathwayWorkflowConfig(offline=True)).run_p7(
+                path,
+                {"p2": {"status": "completed", "outcome": "NO_SIGNIFICANT_ENRICHMENT", "count": 0}},
+            )
+
+            report = path.read_text()
+
+        self.assertIn("NO_SIGNIFICANT_ENRICHMENT", report)
+
+    def test_empty_downstream_evidence_has_schema(self) -> None:
+        """Zero eligible pathways must produce readable header-only evidence tables."""
+        workflow = PathwayWorkflow(PathwayWorkflowConfig(offline=True))
+
+        self.assertIn("SYMBOL", workflow.run_p3(pd.DataFrame(columns=["SYMBOL"]), []).columns)
+        targets = pd.DataFrame(columns=["SYMBOL", "THERAPEUTIC_DIRECTIONALITY"])
+        self.assertIn("TARGET_SYMBOL", workflow.run_p5(targets, []).columns)
+
+    def test_source_native_evidence_fields_survive_normalization(self) -> None:
+        """Pathway evidence must retain source-native identifiers and measurements."""
+        targets = pd.DataFrame(
+            [{"SYMBOL": "BUB1B", "THERAPEUTIC_DIRECTIONALITY": "RESTORE_CHECKPOINT_FUNCTION"}]
+        )
+        evidence = PathwayWorkflow(PathwayWorkflowConfig(offline=True)).run_p5(
+            targets,
+            [{
+                "SOURCE": "ChEMBL",
+                "TARGET_SYMBOL": "BUB1B",
+                "ACTION_TYPE": "INHIBITOR",
+                "ACTIVITY_ID": "activity-1",
+                "STANDARD_VALUE": 10,
+            }],
+        )
+
+        self.assertEqual(evidence.loc[0, "ACTIVITY_ID"], "activity-1")
+        self.assertEqual(evidence.loc[0, "STANDARD_VALUE"], 10)
+
+    def test_p7_explains_empty_downstream_sections(self) -> None:
+        """Null pathway enrichment must explain absent targets and drugs."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "p7_pathway_report.md"
+            PathwayWorkflow(PathwayWorkflowConfig(offline=True)).run_p7(
+                path,
+                {"p2": {"status": "completed", "outcome": "NO_SIGNIFICANT_ENRICHMENT", "count": 0}},
+                pd.DataFrame(),
+                pd.DataFrame(),
+                pd.DataFrame(),
+            )
+            report = path.read_text()
+
+        self.assertIn("No terms passed provider BH-FDR", report)
+        self.assertIn("No eligible pathway targets", report)
 if __name__ == "__main__":
     unittest.main()
