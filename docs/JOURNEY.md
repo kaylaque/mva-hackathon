@@ -894,7 +894,7 @@ contradictions; pharmacological action evidence never proves biological rescue.
 | DAVID | https://davidbioinformatics.nih.gov/help.jsp | User population; Fisher/EASE/Benjamini | Registered email | Session/state semantics and coverage differ | Optional comparison; `DAVID_EMAIL` only |
 | Reactome | https://reactome.org/dev/analysis | Default universe; FDR | None | No custom background in projection | Selected secondary + content |
 | WikiPathways | https://www.wikipathways.org/index.php/Help:WikiPathways_Webservice/API | Provider dependent | None | Curation/version dependent | Evaluated; g:Profiler WP source selected |
-| HGNC | https://www.genenames.org/help/rest/ | N/A | None | Identifier mapping only | Selected exact REST mapping |
+| HGNC | https://www.genenames.org/help/rest/ | N/A | None | Identifier mapping only | Evaluated exact REST mapping; batched g:Profiler ENSG conversion selected for large runs |
 | QuickGO | https://www.ebi.ac.uk/QuickGO/api/index.html | N/A | None | Evidence codes do not prove mechanism | Selected REST annotation |
 | UniProt | https://www.uniprot.org/help/api | N/A | None | Functional annotations are curated summaries | Selected REST function lookup |
 | Open Targets | https://platform-docs.opentargets.org/ | N/A | None | Drug/target associations are not rescue evidence | Selected GraphQL |
@@ -916,3 +916,8 @@ Synthetic fixture execution is the reproducible verification baseline. A live
 run records only aggregate P0–P7 statuses, source gaps, and local report paths;
 it never treats an unavailable provider as zero findings. See
 `scripts/README.md` for commands and `data/README.md` for output schemas.
+
+Verified execution: fixture run completed all nine expected artifacts; authorized
+live run completed and produced all nine local pathway artifacts. Patient-derived
+tables and report contents were not inspected. DAVID remains unavailable because
+no DAVID adapter or registered `DAVID_EMAIL` session was configured.
