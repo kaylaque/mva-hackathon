@@ -275,14 +275,17 @@ class PathwayWorkflow:
         return frame, report
 
     @staticmethod
-    def _decoded_intersection(response: dict[str, Any], identifiers: Iterable[Any]) -> list[str]:
-        mapping = (
-            response.get("meta", {})
-            .get("query_metadata", {})
-            .get("queries", {})
-            .get("query_1", {})
-            .get("mapping", {})
-        )
+    def _decoded_intersection(
+        response: dict[str, Any],
+        identifiers: Iterable[Any],
+        fallback_mapping: dict[str, list[str]] | None = None,
+    ) -> list[str]:
+        meta = response.get("meta", {})
+        metadata = meta.get("query_metadata", {}) if isinstance(meta, dict) else {}
+        queries = metadata.get("queries", {}) if isinstance(metadata, dict) else {}
+        query = queries.get("query_1", {}) if isinstance(queries, dict) else {}
+        raw_mapping = query.get("mapping", {}) if isinstance(query, dict) else {}
+        mapping = raw_mapping if isinstance(raw_mapping, dict) else fallback_mapping or {}
         return sorted(
             {
                 str(symbol)
@@ -290,11 +293,18 @@ class PathwayWorkflow:
                 for symbol in mapping.get(str(identifier), [])
             }
         )
-
     def run_p1(self, normalized: pd.DataFrame, response: dict[str, Any]) -> pd.DataFrame:
         """Normalize GOSt output, preserving provider BH values without re-correction."""
         from scipy.stats import hypergeom
 
+        fallback_mapping = (
+            normalized.dropna(subset=["ENSEMBL_ID"])
+            .groupby("ENSEMBL_ID")["SYMBOL"]
+            .agg(lambda symbols: sorted(set(symbols.astype(str))))
+            .to_dict()
+            if "ENSEMBL_ID" in normalized
+            else {}
+        )
         records: list[dict[str, Any]] = []
         for term in response.get("result", []):
             m, k, n, x = (
@@ -322,7 +332,9 @@ class PathwayWorkflow:
                     "PROVIDER_ADJUSTED_P": term.get("p_value"),
                     "PROVIDER_CORRECTION": "BH",
                     "FOLD_ENRICHMENT": fold,
-                    "CONTRIBUTING_GENES": ";".join(self._decoded_intersection(response, term.get("intersections") or [])),
+                    "CONTRIBUTING_GENES": ";".join(
+                        self._decoded_intersection(response, term.get("intersections") or [], fallback_mapping)
+                    ),
                     "BACKGROUND_LABEL": "Phase 1 evaluated genes",
                     "LOCAL_STATS_REASON": pd.NA if valid else "PROVIDER_EFFECTIVE_COUNTS_UNAVAILABLE",
                 }

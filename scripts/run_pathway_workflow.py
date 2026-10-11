@@ -151,9 +151,7 @@ def main() -> int:
     else:
         http_client = HttpClient(NetworkAnalysisConfig())
         http_client.session.headers.update({"Accept": "application/json"})
-        mapping = workflow.map_hgnc(normalized["SYMBOL"].tolist(), http_client)
-        if mapping["STATUS"].eq("hgnc_unavailable").any():
-            mapping = workflow.fetch_gprofiler_mapping(normalized, http_client)
+        mapping = workflow.fetch_gprofiler_mapping(normalized, http_client)
         merged = normalized.merge(mapping, on="SYMBOL", how="left", validate="one_to_one")
         response = workflow.fetch_gprofiler(merged, http_client)
         memberships = {}
