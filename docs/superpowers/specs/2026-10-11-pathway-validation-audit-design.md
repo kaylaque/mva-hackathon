@@ -9,8 +9,8 @@ Audit and re-analyze the independent MVA pathway-repurposing workflow (P0-P7) wi
 - Preserve the existing P0-P7 module and command boundaries.
 - Never send variants, genotypes, coordinates, phenotype narratives, internal scores, or patient identifiers externally.
 - Do not run DAVID.
-- Keep patient-derived tables, API responses, caches, and reports ignored and out of Git.
-- Agent inspection remains data-blind: only artifact presence, aggregate counts, statuses, and sanitized failures may enter agent context.
+- User-approved exception permits data-blind access only to `data/processed/track2/pathway/`, `data/interim/pathway_cache/`, and `.venv/`.
+- All other ignored paths remain immutable. Agent context may contain only aggregate counts, statuses, artifact presence, and sanitized failures.
 - Use the established HTTP clients and existing drug clients; do not add a second transport layer.
 
 ## Audit scope
@@ -33,18 +33,18 @@ Emit a provenance inventory of each external request class and allowed identifie
 
 ### Reporting
 
-Generate `pathway_validation_report.md` in the ignored pathway output directory. Include per-stage QC, aggregate counts, source coverage/failures, sensitivity status, limitations, corrected interpretation language, and prioritized corrections. The report may include local gene/pathway/drug evidence tables because it stays ignored; the agent will not inspect its rows.
+Generate `pathway_validation_report.md` in user-approved `data/processed/track2/pathway/`. It includes local aggregate tables, source coverage/failures, sensitivity status, limitations, corrected interpretation language, and prioritized corrections. The agent does not inspect patient-derived rows; its visible output remains aggregate counts, statuses, and sanitized failures.
 
 ## Implementation boundaries
 
-Add a thin audit module and script. It reads stage outputs locally, computes aggregate QC and comparison tables, writes the ignored report atomically, and returns a sanitized status summary. It does not modify existing P0-P7 result rows. Correct only defects demonstrated by the audit: source failure being conflated with no-hit output, missing required provenance fields, ignored comparison inputs, and inaccurate completed statuses.
+Add a thin audit module and script. It reads stage outputs only under the user-approved pathway directory, computes aggregate QC and comparison tables, and writes the report atomically there. It does not modify existing P0-P7 result rows. Correct only defects demonstrated by the audit: source failure being conflated with no-hit output, missing required provenance fields, ignored comparison inputs, and inaccurate completed statuses.
 
 ## Verification
 
 - Synthetic fixtures prove payload privacy, effective-domain statistics, provider BH preservation, source failure handling, threshold/HP sensitivity, comparison partitioning, and report sections.
 - Run the synthetic audit after the workflow fixture run.
 - Run the full test suite and `uv lock --check`.
-- Run the audit over authorized live local output. Confirm report existence and sanitized aggregate/stage status only.
+- Run the audit over user-approved live pathway output. Confirm report existence and sanitized aggregate/stage status only.
 
 ## Non-goals
 
