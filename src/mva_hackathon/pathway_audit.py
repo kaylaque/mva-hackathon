@@ -21,6 +21,8 @@ _SENSITIVITY_PROVENANCE_FIELDS = {
     "generated_at",
     "cache_key",
     "outcome",
+    "output_sha256",
+    "row_count",
 }
 
 
@@ -33,16 +35,22 @@ def _file_sha256(path: Path) -> str:
 
 
 def _require_nonignored_paths(paths: list[Path]) -> None:
-    repo_root = Path(__file__).parents[2]
+    repo_root = Path(__file__).parents[2].resolve()
     for path in paths:
+        resolved = path.resolve()
+        if not resolved.is_relative_to(repo_root):
+            continue
         check = subprocess.run(
-            ["git", "check-ignore", "--quiet", str(path.resolve())],
+            ["git", "check-ignore", "--quiet", str(resolved.relative_to(repo_root))],
             cwd=repo_root,
             check=False,
             capture_output=True,
+            text=True,
         )
         if check.returncode == 0:
             raise ValueError(f"ignored artifact path is forbidden: {path}")
+        if check.returncode != 1:
+            raise RuntimeError(f"cannot verify artifact ignore status: {check.stderr.strip()}")
 
 def _read_csv(path: Path) -> pd.DataFrame:
     """Read required audit table with a path-specific error."""
@@ -69,7 +77,6 @@ def _baseline_summary(output_dir: Path) -> dict[str, int]:
         "prioritized_pathways": len(p2),
     }
 
-
 def _sensitivity_summary(output_dir: Path, name: str, baseline_hash: str) -> dict[str, int | str]:
     path = output_dir / name
     manifest_path = output_dir / f"{path.stem}.provenance.json"
@@ -80,9 +87,12 @@ def _sensitivity_summary(output_dir: Path, name: str, baseline_hash: str) -> dic
         not _SENSITIVITY_PROVENANCE_FIELDS.issubset(manifest)
         or manifest["baseline_p0_sha256"] != baseline_hash
         or manifest["fdr_method"] != _FDR_METHOD
+        or manifest["output_sha256"] != _file_sha256(path)
     ):
         return {"status": "UNAVAILABLE", "reason": "STALE_OR_INVALID_PROVENANCE"}
     frame = _read_csv(path)
+    if manifest["row_count"] != len(frame):
+        return {"status": "UNAVAILABLE", "reason": "STALE_OR_INVALID_PROVENANCE"}
     return {"status": "AVAILABLE", "prioritized_pathways": len(frame), "outcome": str(manifest["outcome"])}
 
 def audit_pathway_outputs(output_dir: Path) -> tuple[dict[str, Any], Path]:
