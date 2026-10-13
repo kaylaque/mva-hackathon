@@ -409,7 +409,7 @@ Its default output and cache locations are private, ignored paths. See `docs/JOU
 
 ### Independent pathway workflow
 
-`run_pathway_workflow.py` accepts `--gene-mechanism`, `--offline-fixture`, `--output-dir`, optional `--network-panel`, and `--min-passing`. Run the synthetic fixture before any authorized real input. Offline mode never falls back to live services. The command returns `0` for a complete comparison and `2` when the STRING baseline is unavailable; a partial run is evidence of unavailable sources, not zero evidence. DAVID credentials, if later enabled, must be provided through `DAVID_EMAIL`, never command-line arguments.
+`run_pathway_workflow.py` accepts `--gene-mechanism`, `--offline-fixture`, `--output-dir`, optional `--network-panel`, and `--min-passing`, plus the DAVID addendum flags `--david`, `--reuse-pathway-dir`, `--david-exports`, `--with-david`, and `--david-output-dir`. Run the synthetic fixture before any authorized real input. Offline mode never falls back to live services. The command returns `0` for a complete comparison and `2` when the STRING baseline is unavailable; a partial run is evidence of unavailable sources, not zero evidence. The DAVID leg is registration-free: it prepares gene-only lists for the native web interface and imports the exports downloaded from it, so no API key, account, or `DAVID_EMAIL` session exists and no DAVID API is called.
 [docs/JOURNEY.md#B8CF]
 
 ---
