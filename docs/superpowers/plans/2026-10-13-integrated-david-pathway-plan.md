@@ -254,3 +254,38 @@ git commit -m "feat(pathway): integrate resumable DAVID evidence"
 ```
 
 Stage only paths actually changed; omit `README.md` if unchanged. Never stage generated artifacts, `data/`, `results/`, exports, receipts, manifests, lists, notebooks, or secrets.
+
+## Outcome (executed 2026-10-13)
+
+Steps 1–4 completed. Full suite: 91 tests plus 13 subtests passing.
+
+Native run executed through the managed browser against the real baseline, then
+imported through the DAVID-only CLI: import exited `0`, and an identical replay
+exited `0` with byte-identical imported artifacts and unchanged baseline size,
+mtime, and projection hashes. Measured counts are recorded in `docs/JOURNEY.md`.
+
+Real data exposed three defects in the first implementation, each now fixed with
+a regression test:
+
+1. Native exports carry the term identifier in `Full Term`, not `Term`, so the
+   provider comparison matched no terms at all (0 shared of 318 chart rows).
+2. g:Profiler identifiers are source-prefixed (`REAC:R-HSA-…`, `WP:WP5344`), and
+   the KEGG branch compared `"HSA"` against an already-lowercased identifier, so
+   those terms never resolved to a stable identity.
+3. Resume after a completed import reported stale provenance because the
+   top-level manifest kept outdated `result_sha256` values, and `--force` did
+   not regenerate prepared lists that had been edited.
+
+Two deliberate limits:
+
+- `--with-david` was not executed against the real baseline, because that would
+  re-run the P0–P7 network stages. Orchestration order is covered by the
+  synthetic end-to-end run and the CLI tests only.
+- The user's main checkout still holds divergent uncommitted copies of the same
+  files, so publication used the clean linked worktree. Reconciliation of that
+  checkout is left to the user.
+
+Process note for future UI automation: DAVID's upload input is hidden and its
+taxonomy/background widgets only initialize when the modal is opened through the
+site's own button handler; synthetic change events are ignored. Drive the native
+file chooser and dispatch real pointer events on the drop zone instead.
