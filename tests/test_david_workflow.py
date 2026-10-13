@@ -332,6 +332,39 @@ class DavidWorkflowTests(unittest.TestCase):
         self.assertEqual(comparison.iloc[1]["DAVID_ROWS_JSON"] != "[]", True)
         self.assertEqual(_stable_id("hsa04110~Cell cycle"), "hsa04110")
 
+    def test_comparison_matches_native_prefixed_ids_and_full_terms(self) -> None:
+        p1 = pd.DataFrame([
+            {"SOURCE": "REAC", "TERM_ID": "REAC:R-HSA-141444", "CONTRIBUTING_GENES": "GENE_A", "BH_Q": 0.01},
+            {"SOURCE": "WP", "TERM_ID": "WP:WP5344", "CONTRIBUTING_GENES": "GENE_A", "BH_Q": 0.02},
+            {"SOURCE": "GO:BP", "TERM_ID": "GO:0000012", "CONTRIBUTING_GENES": "GENE_B", "BH_Q": 0.03},
+        ])
+        chart = pd.DataFrame([
+            {"Category": "REACTOME_PATHWAY", "Term": "Mitotic Spindle Checkpoint", "Full Term": "R-HSA-141444~Mitotic Spindle Checkpoint", "User Ids": "ENSG_A", "PROVIDER": "DAVID"},
+            {"Category": "KEGG_PATHWAY", "Term": "Cell cycle", "Full Term": "hsa04110:Cell cycle", "User Ids": "ENSG_A", "PROVIDER": "DAVID"},
+            {"Category": "GOTERM_BP_DIRECT", "Term": "protein-containing complex assembly", "Full Term": "GO:0065003~protein-containing complex assembly", "User Ids": "ENSG_A", "PROVIDER": "DAVID"},
+            {"Category": "SMART", "Term": "DSRM", "Full Term": "SM00358:DSRM", "User Ids": "ENSG_A", "PROVIDER": "DAVID"},
+        ])
+
+        comparison = _comparison(p1, chart, {"GENE_A": "ENSG_A", "GENE_B": "ENSG_B"}, ["ENSG_A", "ENSG_B"])
+        status = {
+            row["TERM_ID"]: (row["MATCH_STATUS"], row["GENE_JACCARD"])
+            for _, row in comparison.iterrows()
+            if row["TERM_ID"] is not None
+        }
+
+        self.assertEqual(status["R-HSA-141444"], ("shared", 1.0))
+        self.assertEqual(status["WP5344"][0], "gprofiler_only")
+        self.assertEqual(status["GO:0000012"][0], "gprofiler_only")
+        self.assertEqual(status["GO:0065003"][0], "david_only")
+        self.assertEqual(status["hsa04110"][0], "david_only")
+        self.assertEqual(int(comparison["MATCH_STATUS"].eq("unmapped_term").sum()), 1)
+        self.assertEqual(_stable_id("REAC:R-HSA-141444"), "R-HSA-141444")
+        self.assertEqual(_stable_id("WP:WP5344"), "WP5344")
+        self.assertEqual(_stable_id("KEGG:04110"), "hsa04110")
+        self.assertIsNone(_stable_id("SM00358:DSRM"))
+        self.assertIsNone(_stable_id("KW-1274~Primary mitochondrial disease"))
+        self.assertIsNone(_stable_id("Primary mitochondrial disease"))
+
 
     def test_import_preserves_native_statistic_meanings(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
