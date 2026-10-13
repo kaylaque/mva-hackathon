@@ -891,7 +891,7 @@ contradictions; pharmacological action evidence never proves biological rescue.
 | Source | Official documentation | Custom background / correction | Credentials | Evidence limit | Decision |
 | --- | --- | --- | --- | --- | --- |
 | g:Profiler | https://biit.cs.ut.ee/gprofiler/page/apis | Yes; provider BH retained | None | Annotation enrichment, not efficacy | Selected REST primary |
-| DAVID | https://davidbioinformatics.nih.gov/help.jsp | User population; Fisher/EASE/Benjamini | Registered email | Session/state semantics and coverage differ | Optional comparison; `DAVID_EMAIL` only |
+| DAVID | https://davidbioinformatics.nih.gov/workspace.html | Uploaded custom population; Fisher/EASE/Benjamini | None; native web exports | Session/state semantics and coverage differ | Implemented supplementary addendum; no credentials or API |
 | Reactome | https://reactome.org/dev/analysis | Default universe; FDR | None | No custom background in projection | Selected secondary + content |
 | WikiPathways | https://www.wikipathways.org/index.php/Help:WikiPathways_Webservice/API | Provider dependent | None | Curation/version dependent | Evaluated; g:Profiler WP source selected |
 | HGNC | https://www.genenames.org/help/rest/ | N/A | None | Identifier mapping only | Evaluated exact REST mapping; batched g:Profiler ENSG conversion selected for large runs |
@@ -919,5 +919,31 @@ it never treats an unavailable provider as zero findings. See
 
 Verified execution: fixture run completed all nine expected artifacts; authorized
 live run completed and produced all nine local pathway artifacts. Patient-derived
-tables and report contents were not inspected. DAVID remains unavailable because
-no DAVID adapter or registered `DAVID_EMAIL` session was configured.
+tables and report contents were not inspected.
+
+### DAVID addendum: verified live result
+
+The addendum ran against the live P0/P1 baseline through DAVID's native web
+interface, then imported and compared its exports. Foreground was every Phase 1
+passing-candidate gene: 1,926 normalized Ensembl identifiers (1,926 records,
+1,591 DAVID genes), not a subset. Background was every evaluated Phase 1 gene:
+8,740 identifiers uploaded as a custom population (8,739 records, 8,371 DAVID
+genes) and confirmed as `Current Population` before any analysis. One chart at
+Count=2/EASE=0.1 returned 318 terms (2 at Benjamini ≤ 0.05) and one
+Medium-stringency clustering (EASE 1, overlap 3, kappa 50, initial/final group
+membership 3, linkage 0.50) returned 1,812 cluster rows.
+
+Import compared the DAVID chart against all 16,455 g:Profiler terms: 74 shared
+stable identifiers, 134 DAVID-only, 16,380 g:Profiler-only, and 111 rows without
+a supported stable identifier. Shared identifiers are descriptive overlap, not
+independent replication, and each provider's p-value, Benjamini, FDR, and
+cluster enrichment score stay distinct. Gene-level Jaccard is reported as null
+rather than zero: the saved P1 projection carries no contributing-gene
+membership, so no comparable contributor sets exist.
+
+The run left the baseline untouched (identical size and mtime, matching
+projection hashes) and replayed byte-identically on a second import. Only
+normalized Ensembl gene identifiers left the repository; variant, genotype,
+coordinate, clinical-text, and patient fields were never collected or
+transmitted, and every prepared list, export, receipt, and imported artifact
+stayed outside version control.
