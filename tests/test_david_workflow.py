@@ -342,6 +342,17 @@ class DavidWorkflowTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "STALE_OR_INVALID_PROVENANCE"):
                 run_david_addition(baseline, output, None)
 
+    def test_ignored_processed_destination_is_refused_without_writing(self) -> None:
+        ignored_dir = REPO_ROOT / "data" / "processed" / "track2" / "pathway_david"
+        self.assertFalse(ignored_dir.exists())
+
+        with tempfile.TemporaryDirectory() as tmp:
+            baseline = self._baseline(Path(tmp))
+            with self.assertRaisesRegex(ValueError, "ignored artifact path is forbidden"):
+                run_david_addition(baseline, ignored_dir, None)
+
+        self.assertFalse(ignored_dir.exists())
+
     def test_completed_import_resume_verifies_and_detects_tampered_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
