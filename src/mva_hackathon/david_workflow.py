@@ -32,7 +32,12 @@ _P1_COLUMNS = (
 _REQUIRED_P1_COLUMNS = {"SOURCE", "TERM_ID", "BH_Q", "CONTRIBUTING_GENES"}
 _CHART_COLUMNS = {"Category", "Term", "Count", "P-Value", "Benjamini"}
 _CLUSTER_COLUMNS = {"Cluster", "Cluster Enrichment Score", "Category", "Term", "Count", "P-Value", "Benjamini"}
-_ID_PATTERN = re.compile(r"^(GO:\d+|R-HSA-\d+|WP\d+|HP:\d+|hsa\d+)(?=~|\s|$)", re.IGNORECASE)
+_ID_PATTERN = re.compile(
+    r"^(?:(?P<plain>GO:\d+|HP:\d+|R-HSA-\d+|WP\d+|hsa\d+)"
+    r"|(?P<source>GO|HP|REAC|WP|KEGG|PATH):(?P<nested>GO:\d+|HP:\d+|R-HSA-\d+|WP\d+|hsa\d+|\d+))"
+    r"(?=~|:|\s|$)",
+    re.IGNORECASE,
+)
 
 
 def _sha256_bytes(value: bytes) -> str:
@@ -370,14 +375,19 @@ def _text(value: Any) -> str:
 
 
 def _stable_id(value: Any) -> str | None:
-    candidate = _text(value)
+    """Return a canonical stable identifier; provider titles and free text never match."""
+    candidate = _text(value).split("~")[0].strip()
     if candidate.lower().startswith("path:"):
         candidate = candidate[5:].strip()
     match = _ID_PATTERN.match(candidate)
     if match is None:
         return None
-    identifier = match.group(1)
+    identifier = match.group("plain") or match.group("nested")
+    if (match.group("source") or "").upper() == "KEGG" or identifier.isdigit():
+        return f"hsa{identifier}"
     return identifier.lower() if identifier.lower().startswith("hsa") else identifier.upper()
+
+
 def _validate_report_categories(frames: tuple[pd.DataFrame, pd.DataFrame], selected_categories: list[str]) -> None:
     selected = {category.strip() for category in selected_categories}
     for frame in frames:
@@ -385,8 +395,6 @@ def _validate_report_categories(frames: tuple[pd.DataFrame, pd.DataFrame], selec
         unexpected = categories - selected
         if unexpected:
             raise ValueError("export Category is absent from recorded selected_categories")
-
-
 
 
 def _ontology(source: Any, identifier: str | None) -> str:
@@ -399,7 +407,7 @@ def _ontology(source: Any, identifier: str | None) -> str:
         return "WIKIPATHWAYS"
     if identifier and identifier.startswith("HP:"):
         return "HP"
-    if identifier and identifier.lower().startswith("HSA"):
+    if identifier and identifier.lower().startswith("hsa"):
         return "KEGG"
     if "GO" in text:
         return "GO"
@@ -451,7 +459,9 @@ def _comparison(p1: pd.DataFrame, chart: pd.DataFrame, mapping: dict[str, str], 
         if key[1] is not None:
             gprof[key] = rows.copy()
     david: dict[tuple[str, str], pd.DataFrame] = {}
-    david_keys = chart.apply(lambda row: _term_key(row.get("Category"), row.get("Term")), axis=1)
+    # Native exports keep the identifier in "Full Term"; "Term" is the display title only.
+    david_term_column = "Full Term" if "Full Term" in chart.columns else "Term"
+    david_keys = chart.apply(lambda row: _term_key(row.get("Category"), row.get(david_term_column)), axis=1)
     for key, rows in chart.groupby(david_keys, dropna=False):
         if key[1] is not None:
             david[key] = rows.copy()
@@ -503,7 +513,10 @@ def _write_report(path: Path, receipt: dict[str, Any], chart: pd.DataFrame, clus
         f"- DAVID clusters: {len(clusters)}", f"- Shared stable-ID terms: {int(comparison['MATCH_STATUS'].eq('shared').sum())}",
         f"- DAVID-only terms: {int(comparison['MATCH_STATUS'].eq('david_only').sum())}",
         f"- g:Profiler-only terms: {int(comparison['MATCH_STATUS'].eq('gprofiler_only').sum())}", "",
-        "## Limitations", "", "- DAVID and g:Profiler statistics remain provider-specific; shared annotations are not independent replication.", "- Native FDR and cluster enrichment score are retained without treating either as Benjamini BH.", "- Existing P2–P7 artifacts remain unchanged context; this addendum does not invoke downstream target or drug selection.",
+        f"- Gene-level Jaccard reported for {int(comparison['GENE_JACCARD'].notna().sum())} shared terms", "",
+        "## Limitations", "", "- DAVID and g:Profiler statistics remain provider-specific; shared annotations are not independent replication.", "- Native FDR and cluster enrichment score are retained without treating either as Benjamini BH.",
+        "- Gene-level overlap is reported only when both providers expose comparable contributor sets; matched terms with unavailable contributors report null Jaccard, never zero.",
+        "- Existing P2–P7 artifacts remain unchanged context; this addendum does not invoke downstream target or drug selection.",
     ]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
