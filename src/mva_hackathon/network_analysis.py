@@ -665,6 +665,7 @@ class NetworkContextEngine:
             "FDR",
             "PATHWAY_SPECIES",
             "HIT_GENES",
+            "MEMBERSHIP_STATUS",
             "REACTOME_TOKEN",
             "PATHWAY_BROWSER_URL",
         ]
@@ -724,6 +725,8 @@ class NetworkContextEngine:
                     "FDR": entities.get("fdr", 1.0),
                     "PATHWAY_SPECIES": p.get("species", {}).get("name", "Homo sapiens"),
                     "HIT_GENES": "",
+                    # The projection summary reports counts only; it cannot name the contributors.
+                    "MEMBERSHIP_STATUS": "UNAVAILABLE",
                     "REACTOME_TOKEN": token,
                     "PATHWAY_BROWSER_URL": browser_url,
                 })
@@ -747,6 +750,7 @@ class NetworkContextEngine:
             "FDR",
             "PATHWAY_SPECIES",
             "HIT_GENES",
+            "MEMBERSHIP_STATUS",
         ]
         if not symbols:
             return pd.DataFrame(columns=columns), "empty_input"
@@ -770,13 +774,10 @@ class NetworkContextEngine:
 
             rows = []
             for term in data:
-                # Intersections
-                intersections = term.get("intersections", [])
-                hit_genes = []
-                for idx, is_hit in enumerate(intersections):
-                    if is_hit and idx < len(symbols):
-                        hit_genes.append(symbols[idx])
-
+                # The intersection vector is only meaningful when it aligns with the submitted
+                # query order.  A missing or mismatched vector stays UNAVAILABLE: submitted
+                # genes are never attributed to a term as a fallback.
+                hit_genes, membership_status = self._decode_intersections(term, symbols)
                 rows.append({
                     "SOURCE_DATABASE": f"g:Profiler ({term.get('source', '')})",
                     "PATHWAY_ID": term.get("native", ""),
@@ -786,7 +787,8 @@ class NetworkContextEngine:
                     "P_VALUE": term.get("p_value", 1.0),
                     "FDR": term.get("p_value", 1.0),  # g:Profiler returns multiple-testing corrected p-value
                     "PATHWAY_SPECIES": self.config.gprofiler_organism,
-                    "HIT_GENES": ";".join(hit_genes) if hit_genes else ";".join(symbols),
+                    "HIT_GENES": ";".join(hit_genes),
+                    "MEMBERSHIP_STATUS": membership_status,
                 })
 
             df = pd.DataFrame(rows, columns=columns)
@@ -795,6 +797,17 @@ class NetworkContextEngine:
         except Exception as exc:
             logger.error("Failed to parse g:Profiler g:GOSt response: %s", exc)
             return pd.DataFrame(columns=columns), f"parse_error_{type(exc).__name__}"
+
+    @staticmethod
+    def _decode_intersections(term: Mapping[str, Any], symbols: Sequence[str]) -> tuple[list[str], str]:
+        """Decode an explicit intersection vector, or report membership as unavailable."""
+        intersections = term.get("intersections")
+        if not isinstance(intersections, list) or len(intersections) != len(symbols):
+            return [], "UNAVAILABLE"
+        if any(not isinstance(flag, bool) for flag in intersections):
+            return [], "UNAVAILABLE"
+        decoded = [symbol for symbol, is_hit in zip(symbols, intersections) if is_hit]
+        return decoded, "OBSERVED_INTERSECTION" if decoded else "UNAVAILABLE"
 
     def _combine_enrichment(
         self,
@@ -815,6 +828,7 @@ class NetworkContextEngine:
                     "FDR",
                     "PATHWAY_SPECIES",
                     "HIT_GENES",
+                    "MEMBERSHIP_STATUS",
                 ]
             )
 
