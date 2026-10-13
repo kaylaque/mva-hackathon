@@ -609,6 +609,22 @@ class PathwayWorkflow:
                 f"{report.get('outcome', report.get('reason', 'UNAVAILABLE'))} | "
                 f"{report.get('count', report.get('foreground_count', 'UNAVAILABLE'))} |"
             )
+        david = stage_reports.get("david")
+        if david is not None:
+            lines.extend(
+                [
+                    "",
+                    "## DAVID addendum",
+                    "",
+                    f"- Status: {david.get('status', 'UNAVAILABLE')}",
+                    f"- Run key: {david.get('run_key', 'UNAVAILABLE')}",
+                    f"- Import version: {david.get('import_version', 'UNAVAILABLE')}",
+                    f"- External output: {david.get('external_output_dir', 'UNAVAILABLE')}",
+                ]
+            )
+            if david.get("reason"):
+                lines.append(f"- Reason: {david['reason']}")
+            lines.append("")
         no_significant_enrichment = (
             stage_reports.get("p2", {}).get("outcome") == "NO_SIGNIFICANT_ENRICHMENT"
         )
