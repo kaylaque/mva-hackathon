@@ -323,6 +323,42 @@ class DavidWorkflowTests(unittest.TestCase):
             after = {path.name: path.read_bytes() for path in version.iterdir() if path.is_file()}
             self.assertEqual(after, before)
             self.assertEqual(set(summary), {"status", "run_key", "import_version", "external_output_dir"})
+
+    def test_changed_prepared_lists_or_baseline_projection_fail_without_force(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            baseline, output, manifest = self._prepared(root)
+            (output / "foreground.txt").write_text("ENSG_TAMPERED\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "STALE_OR_INVALID_PROVENANCE"):
+                run_david_addition(baseline, output, None)
+            self.assertEqual(run_david_addition(baseline, output, None, force=True), 2)
+            self.assertEqual((output / "foreground.txt").read_text(), "ENSG_A\n")
+
+            p1_path = baseline / "p1_enrichment_results.csv"
+            added = pd.read_csv(p1_path).iloc[[0]].assign(TERM_ID="GO:0000002", TERM_NAME="Added term")
+            pd.concat([pd.read_csv(p1_path), added], ignore_index=True).to_csv(p1_path, index=False)
+
+            with self.assertRaisesRegex(ValueError, "STALE_OR_INVALID_PROVENANCE"):
+                run_david_addition(baseline, output, None)
+
+    def test_completed_import_resume_verifies_and_detects_tampered_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            baseline, output, manifest = self._prepared(root)
+            exports = self._exports(root, manifest)
+            self.assertEqual(run_david_addition(baseline, output, exports), 0)
+
+            completed = json.loads((output / "david_manifest.json").read_text())
+            self.assertEqual(completed["status"], "completed")
+            self.assertIsNotNone(completed["result_sha256"])
+            self.assertEqual(run_david_addition(baseline, output, None), 0)
+
+            version_dir = output / "imports" / completed["run_key"] / completed["import_version"]
+            (version_dir / "david_chart.csv").write_text("Category,Term\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "STALE_OR_INVALID_PROVENANCE"):
+                run_david_addition(baseline, output, None)
+
     def test_comparison_keeps_each_unrecognized_provider_term_unmapped(self) -> None:
         p1 = pd.DataFrame([{"SOURCE": "GO:BP", "TERM_ID": "not-a-stable-id", "CONTRIBUTING_GENES": "GENE_A"}])
         chart = pd.DataFrame([{"Category": "GOTERM_BP_DIRECT", "Term": "also-not-a-stable-id", "PROVIDER": "DAVID"}])
