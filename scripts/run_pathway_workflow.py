@@ -22,15 +22,17 @@ from mva_hackathon.drug_evidence import (
     OpenTargetsClient,
     PoliteHttpClient,
 )
+from mva_hackathon.david_workflow import david_run_summary, run_david_addition
 from mva_hackathon.network_analysis import HttpClient, NetworkAnalysisConfig
 from mva_hackathon.pathway_workflow import PathwayWorkflow, PathwayWorkflowConfig
 
-_STAGES = ("p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7")
+_STAGES = ("p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "david")
+_DAVID_PUBLIC_SUMMARY_FIELDS = ("status", "run_key", "import_version", "external_output_dir", "reason")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Research-only pathway workflow; accepts only gene-level Phase 1 input.")
-    parser.add_argument("--gene-mechanism", type=Path, required=True)
+    parser.add_argument("--gene-mechanism", type=Path)
     parser.add_argument("--network-context", type=Path)
     parser.add_argument("--network-panel", type=Path)
     parser.add_argument("--network-drugs", type=Path)
@@ -42,7 +44,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no-chembl", action="store_true")
     parser.add_argument("--no-open-targets", action="store_true")
     parser.add_argument("--no-dgidb", action="store_true")
-    parser.add_argument("--david", action="store_true", help="Reserved; credentials must be provided through DAVID_EMAIL.")
+    parser.add_argument("--david", action="store_true", help="Prepare or import registration-free native DAVID web exports.")
+    parser.add_argument("--reuse-pathway-dir", type=Path)
+    parser.add_argument("--david-exports", type=Path)
+    parser.add_argument("--with-david", action="store_true", help="Add the supplementary DAVID addendum after P0–P6.")
+    parser.add_argument("--david-output-dir", type=Path, help="External DAVID addendum output directory for --with-david.")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--force", action="store_true")
     return parser.parse_args()
@@ -123,6 +129,26 @@ def _drug_records(targets: pd.DataFrame, args: argparse.Namespace) -> tuple[list
 
 def main() -> int:
     args = parse_args()
+    david_mode = args.david or args.stage == "david"
+    if args.with_david:
+        if david_mode or args.stage != "all":
+            raise ValueError("--with-david accepts only --stage all and cannot be combined with --david")
+        if args.david_output_dir is None:
+            raise ValueError("--david-output-dir is required with --with-david")
+        if args.reuse_pathway_dir is not None:
+            raise ValueError("--reuse-pathway-dir is only valid for DAVID-only runs")
+    elif args.david_output_dir is not None:
+        raise ValueError("--david-output-dir requires --with-david")
+    if not david_mode and args.reuse_pathway_dir is not None:
+        raise ValueError("--reuse-pathway-dir is only valid for DAVID-only runs")
+    if david_mode:
+        if args.stage not in {"all", "david"}:
+            raise ValueError("--david accepts only --stage all or --stage david")
+        if args.reuse_pathway_dir is None:
+            raise ValueError("--reuse-pathway-dir is required for DAVID")
+        return run_david_addition(args.reuse_pathway_dir, args.output_dir, args.david_exports, force=args.force)
+    if args.gene_mechanism is None:
+        raise ValueError("--gene-mechanism is required outside DAVID mode")
     for logger_name in ("mva_hackathon.network_analysis", "mva_hackathon.drug_evidence"):
         logging.getLogger(logger_name).setLevel(logging.CRITICAL)
     output_dir = args.output_dir
@@ -220,10 +246,24 @@ def main() -> int:
     p6 = workflow.run_p6(p4, panel)
     workflow.atomic_write_csv(pd.DataFrame([p6]), output_dir / "p6_evaluation_summary.csv")
     stages["p6"] = p6
+    david_exit_code = 0
+    if args.with_david:
+        try:
+            david_exit_code = run_david_addition(output_dir, args.david_output_dir, args.david_exports, force=args.force)
+        except (FileNotFoundError, ValueError) as exc:
+            david_exit_code = 2
+            david_summary = david_run_summary(args.david_output_dir, david_exit_code, reason=str(exc))
+        else:
+            david_summary = david_run_summary(args.david_output_dir, david_exit_code)
+        stages["david"] = {
+            field: david_summary[field]
+            for field in _DAVID_PUBLIC_SUMMARY_FIELDS
+            if field in david_summary
+        }
     workflow.run_p7(output_dir / "p7_pathway_report.md", stages, p2, p4, p5)
     stages["p7"] = {"status": "completed", "count": 1}
     workflow.atomic_write_json(workflow.provenance(stages), output_dir / "pathway_provenance.json")
-    return 2 if any(report.get("status") in {"partial", "failed"} for report in stages.values()) else 0
+    return 2 if david_exit_code or any(report.get("status") in {"partial", "failed"} for report in stages.values()) else 0
 
 
 if __name__ == "__main__":
