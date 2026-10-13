@@ -242,6 +242,18 @@ def _verify_completed_manifest(output_dir: Path, manifest: dict[str, Any]) -> bo
     )
 
 
+def _write_prepared_lists(output_dir: Path, foreground: list[str], background: list[str]) -> None:
+    (output_dir / "foreground.txt").write_text("\n".join(foreground) + "\n", encoding="utf-8")
+    (output_dir / "background.txt").write_text("\n".join(background) + "\n", encoding="utf-8")
+
+
+def _prepared_list_sha256(output_dir: Path) -> str | None:
+    foreground, background = output_dir / "foreground.txt", output_dir / "background.txt"
+    if not foreground.is_file() or not background.is_file():
+        return None
+    return _sha256_bytes(foreground.read_bytes() + b"\0" + background.read_bytes())
+
+
 def _validate_mapping(receipt: dict[str, Any], expected_foreground: int) -> None:
     foreground = receipt.get("foreground_mapping")
     if not isinstance(foreground, dict):
@@ -596,19 +608,31 @@ def run_david_addition(baseline_dir: Path, output_dir: Path, exports_dir: Path |
             raise ValueError("STALE_OR_INVALID_PROVENANCE")
     if existing is None:
         output_dir.mkdir(parents=True, exist_ok=True)
-        (output_dir / "foreground.txt").write_text("\n".join(foreground) + "\n", encoding="utf-8")
-        (output_dir / "background.txt").write_text("\n".join(background) + "\n", encoding="utf-8")
+        _write_prepared_lists(output_dir, foreground, background)
         _write_json(manifest_path, expected)
         existing = expected
     else:
-        expected_lists = _sha256_bytes((output_dir / "foreground.txt").read_bytes() + b"\0" + (output_dir / "background.txt").read_bytes()) if (output_dir / "foreground.txt").is_file() and (output_dir / "background.txt").is_file() else None
+        expected_lists = _prepared_list_sha256(output_dir)
         if expected_lists != existing.get("list_sha256"):
-            raise ValueError("STALE_OR_INVALID_PROVENANCE")
+            if not force:
+                raise ValueError("STALE_OR_INVALID_PROVENANCE")
+            _write_prepared_lists(output_dir, foreground, background)
     if exports_dir is None:
         return 2
     receipt_hash, result_hashes = _import_exports(output_dir, existing, p0, p1, Path(exports_dir))
-    if existing.get("status") != "completed" or existing.get("import_version") != receipt_hash:
+    if (
+        existing.get("status") != "completed"
+        or existing.get("import_version") != receipt_hash
+        or existing.get("result_sha256") != result_hashes
+    ):
         completed = dict(existing)
-        completed.update({"status": "completed", "import_version": receipt_hash, "result_sha256": result_hashes, "completed_at": datetime.now(UTC).isoformat()})
+        completed.update(
+            {
+                "status": "completed",
+                "import_version": receipt_hash,
+                "result_sha256": result_hashes,
+                "completed_at": datetime.now(UTC).isoformat(),
+            }
+        )
         _write_json(manifest_path, completed)
     return 0
