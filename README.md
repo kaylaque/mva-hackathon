@@ -56,6 +56,11 @@ Run full Phase 0 through Phase 3 pipelines using `uv run` or dedicated shell wra
   uv run python scripts/run_drug_evidence.py --query-panel data/processed/track2/18_phase3_query_gene_panel.csv --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv --network-context data/processed/track2/07_phase2_network_gene_context.csv --output-dir data/processed/track2/ --flat-names
   # Or wrapper: bash scripts/run_drug_evidence.sh
   ```
+- **Phase 4 Signed Pathway/Reaction Adjudication & Literature Validation**:
+  ```bash
+  uv run python scripts/run_phase4_adjudication.py --output-dir data/processed/track2/ --flat-names
+  # Or wrapper: bash scripts/run_phase4_adjudication.sh
+  ```
 
 ## Compass: saved evidence to research decisions
 

@@ -21,7 +21,8 @@ flowchart TD
     classDef phase1Node fill:#fff3e0,stroke:#e65100,stroke-width:2px;
     classDef phase2Node fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
     classDef phase3Node fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px;
-    classDef phase4Node fill:#ede7f6,stroke:#512da8,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef phase4Node fill:#ede7f6,stroke:#512da8,stroke-width:2px;
+    classDef reportNode fill:#e0f2f1,stroke:#00796b,stroke-width:2px;
 
     RawWGS["Raw WGS VCF & Reads (GRCh38)"]:::rawNode
 
@@ -53,16 +54,18 @@ flowchart TD
         P3_Out["14_phase3_drug_evidence_matrix.csv (2,212 pairs)<br/>15_phase3_safety_ranking.csv (2,006 hypotheses)<br/>16_phase3_mechanism_action_map.csv (80 targets)<br/>17_phase3_repurposing_provenance.json"]:::phase3Node
     end
 
-    subgraph Phase4_Section ["Track 2 — Phase 4 (Proposed): Signed Pathway & Reaction Adjudication"]
-        P4_Engine["Phase 4 (proposed): signed pathway/reaction adjudication<br/>Reactome Reactions, SIGNOR, OmniPath<br/>20_phase4_... through 24_phase4_..."]:::phase4Node
+    subgraph Phase4_Section ["Track 2 — Phase 4: Signed Pathway & Reaction Adjudication"]
+        P4_Engine["Phase 4: Signed Pathway & Reaction Adjudication Engine<br/>Reactome v88 Reactions, SIGNOR 3.0, OmniPath 2024<br/>20_phase4_... through 24_phase4_..."]:::phase4Node
     end
+
+    FinalReport["Comprehensive Track 2 Final Report<br/>docs/FINAL_REPORT.md"]:::reportNode
 
     RawWGS --> S1 --> S2 --> S3 --> MasterTbl
     MasterTbl --> P0_Gate --> P0_Out
     P0_Out --> P1_Engine --> P1_Out
     P1_Out --> P2_Engine --> P2_Out
     P2_Out --> P3_Panel --> P3_Engine --> P3_Out
-    P3_Out --> P4_Engine
+    P3_Out --> P4_Engine --> FinalReport
 ```
 
 ---
@@ -725,46 +728,95 @@ For efficient and safe evaluation of Phase 3 results, follow this sequential rea
 
 ---
 
-## 7. Track 2 — Phase 4 (Proposed): Signed Pathway & Reaction-Level Mechanism Adjudication
+## 7. Track 2 — Phase 4: Signed Pathway & Reaction-Level Mechanism Adjudication
 
 ### Task & Purpose
-Phase 4 is proposed to resolve the core biological limitation identified in Phase 3: the scarcity of direct small-molecule drugs for impaired core MVA checkpoint genes. Phase 4 shifts the unit of analysis from **single gene targets** to **signed causal pathway cascades and biochemical reaction networks**.
+Phase 4 resolves the core biological finding identified in Phase 3: direct pharmacology for core MVA checkpoint genes is largely non-existent. Rather than terminating exploration at target-level druggability gaps, Phase 4 shifts the unit of analysis from **isolated gene targets** to **signed causal pathway cascades and biochemical reaction networks**. It tests whether candidate compounds act through upstream or parallel regulatory paths to modulate checkpoint surveillance, manage aneuploidy-driven pediatric oncologic complications, or address secondary phenotypic manifestations.
 
 ### Signed Causal & Reaction Layer Architecture
-Rather than relying on non-directional PPI edges (STRING) or static pathway gene lists, Phase 4 proposes runtime integration with signed, directed biological resources:
-- **Reactome Reaction-Level Events**: Evaluates specific biochemical reaction transitions (inputs, catalysts, positive/negative regulators, and outputs).
-- **SIGNOR (Signaling Network Open Resource)**: Directional, causal relationships specifying exact regulatory mechanisms (up-regulates, down-regulates, phosphorylates, ubiquitination, transcriptional activation).
-- **OmniPath & Pathway Commons**: Comprehensive meta-databases integrating signed, directed causal interactions across human cell signaling.
+Rather than relying on non-directional PPI edges (STRING) or static pathway gene sets, Phase 4 integrates signed, directed causal resources at runtime:
+- **Reactome ContentService v88 Biochemical Reaction Events**: Evaluates specific biochemical reaction transitions, catalytic events, and positive/negative regulatory controls with panel-gene participants.
+- **SIGNOR 3.0 (Signaling Network Open Resource)**: Directional, causal relationships specifying exact regulatory mechanisms (up-regulates, down-regulates, phosphorylates, ubiquitination, transcriptional activation).
+- **OmniPath 2024 Curated Dataset**: Comprehensive meta-database integrating signed, directed causal interactions across human cell signaling.
+- **Conflict Resolution Rule**: When cross-database regulatory signs conflict (e.g., activation in SIGNOR vs inhibition in OmniPath), edges are reconciled strictly as `AMBIGUOUS` with sign `0` (never averaged), eliminating net flux through contradictory paths.
 
 ### Separation of Three Distinct Hypothesis Classes
-Phase 4 explicitly separates candidate hypotheses into three fundamentally distinct clinical research categories:
-1. **Disease-Mechanism-Correction Hypotheses**:
-   - Aim: Restore or compensate for impaired Spindle Assembly Checkpoint surveillance, stabilize kinetochore-microtubule attachments, or prevent chromosome missegregation.
-   - Mechanism: Compensatory stimulation of parallel mitotic arrest pathways or rescue of mitotic transcript splicing.
-2. **Cancer-Complication Management Hypotheses**:
+Phase 4 categorizes all evaluated candidate pairs into three fundamentally distinct research classes:
+1. **Class H1: Disease-Mechanism-Correction Hypotheses**:
+   - Aim: Restore or stabilize impaired Spindle Assembly Checkpoint (SAC) surveillance, stabilize kinetochore-microtubule attachments, or compensate for chromosome missegregation.
+   - Mechanism: Upstream modulation of parallel mitotic arrest pathways or surveillance cascades converging on checkpoint endpoints.
+2. **Class H2: Cancer-Complication Management Hypotheses**:
    - Aim: Target specific pediatric malignancies associated with MVA (e.g., rhabdomyosarcoma, Wilms tumor, acute leukemia).
-   - Mechanism: Exploiting synthetic lethality in highly aneuploid tumor cells (e.g., selective SAC exhaustion or replication stress overload) while managing normal-tissue toxicity.
-3. **Supportive-Care & Symptom-Management Hypotheses**:
-   - Aim: Modulate secondary clinical manifestations (e.g., nephrocalcinosis, tubular ion transport defects, microcephaly-related neuroinflammation) without perturbing mitotic machinery.
+   - Mechanism: Exploiting synthetic lethality or mitotic exhaustion in aneuploid tumor cells while managing normal-tissue toxicities.
+3. **Class H3: Supportive-Care & Symptom-Management Hypotheses**:
+   - Aim: Modulate secondary clinical manifestations (e.g., nephrocalcinosis, tubular ion transport defects, neurodevelopmental supportive axes) with no direct perturbation of mitotic machinery.
+4. **Class H0: Unclassified / No Resolvable Mechanism**:
+   - Pairs lacking resolvable signed path connections to defined endpoints.
 
 ### Entry Criteria for Phase 4 Adjudication
-To ensure computational tractability and prevent noise inflation, records entering Phase 4 must satisfy at least one of the following criteria:
-1. **Tier 1 Concordant Records**: All 5 concordant hypotheses from `15_phase3_safety_ranking.csv`.
-2. **Tier 2 Multi-Source Candidates**: Tier 2 mitotic compensation hypotheses supported by $\ge 2$ independent databases (e.g. Open Targets + ChEMBL).
-3. **Tier 4 Negative Control Records**: Curated subset of contraindicated hazard records to serve as negative benchmark controls.
-4. **MVA-Focus Interactome Members**: All 37 genes comprising Component 2 of the Phase 2 interactome.
+To ensure rigorous triage and prevent computational noise inflation, records entering Phase 4 must satisfy at least one of five pre-registered criteria (E1–E5):
+1. **E1 (Tier 1 Concordant Records)**: All 5 concordant hypotheses from `15_phase3_safety_ranking.csv`.
+2. **E2 (Tier 2 Multi-Source Candidates)**: Tier 2 mitotic compensation hypotheses supported by $\ge 2$ independent databases (25 hypotheses).
+3. **E3 (Tier 4 Negative Control Records)**: Curated subset of contraindicated hazard records to serve as negative benchmark controls (11 hypotheses).
+4. **E4 (Malignancy-Indication Targets)**: Pairs whose target has an MVA-associated malignancy indication (`ALK`, `KIT`, `PARP1`, `TP53`).
+5. **E5 (MVA-Focus Interactome Members)**: Pairs targeting Component 2 interactome genes (`MAD1L1`, `BUB1B`, `ATM`, `NF1`, `HIF1A`), plus 6 core MVA causal genes with zero drug evidence emitted as `EVIDENCE_GAP` nodes (`BUB1B`, `CEP57`, `TRIP13`, `CENATAC`, `SLF2`, `SMC5`).
 
-### Proposed Phase 4 Output File Numbering
-*(Note: Because file indices 18 and 19 are allocated to the Phase 3 Query Gene Panel and Citations ledgers, proposed Phase 4 outputs are numbered starting at index 20)*:
-- `20_phase4_reaction_level_matrix.csv`: Signed biochemical reaction events and causal pathways mapping candidate drugs to downstream cellular cascades.
-- `21_phase4_hypothesis_classification.csv`: Triage into Disease-Mechanism vs Cancer-Complication vs Supportive-Care classes.
-- `22_phase4_synthetic_lethality_candidates.csv`: Predicted synthetic lethal interactions in an aneuploid / SAC-deficient cellular background.
-- `23_phase4_adjudicated_safety_report.csv`: In-depth signed pathway hazard and benefit evaluation with pediatric toxicity scoring.
-- `24_phase4_adjudication_provenance.json`: Formal machine-readable provenance recording reaction database versions, signed graph algorithms, and ethical disclaimers.
+### Execution Results: Verified Metrics
+Phase 4 was executed live (`offline_mode = False`) using the adjudicated safety and reaction engine:
+- **Candidate Pair Ingestion (1,088 pairs)**: 1,088 unique candidate pairs entered Phase 4 adjudication satisfying criteria E1–E5.
+- **Signed Interaction Reconciliation**:
+  - `SIGNOR 3.0`: **39,664** signed directed edges ingested.
+  - `OmniPath 2024 curated`: **1,746** signed directed edges ingested.
+  - Reconciled into **30,884** unique directed pairs across watch genes.
+  - **265** curated cross-database sign conflicts identified; reconciled strictly as `AMBIGUOUS` with sign `0` (never averaged), eliminating net flux through disputed paths.
+- **Biochemical Reaction Adjudication**:
+  - `Reactome ContentService v88`: **51** enriched pathways evaluated, identifying **21** biochemical reactions with watch-gene participants.
+- **Literature Adjudication & Verification (Gate 6)**:
+  - Pre-verified discovery registry: **38** entries.
+  - Literature validation results: **942** verified citations, **146** pending verification, **0** contradicted publications.
+- **Sequential Multi-Gate Adjudication (Gates G1–G7)**:
+  - **Gate 1 (Identifier Hygiene)**: **1,088** pass, **0** fail.
+  - **Gate 2 (Reachability & Evidence Gaps)**: **1,058** reachable, **30** flagged as evidence gaps (`EVIDENCE_GAP`).
+  - **Gate 3 (Directionality Concordance)**: **1,077** concordant, **11** flagged as mechanistic hazards (`SIGNED_PATH_HAZARD = True`).
+  - **Gate 4 (Hypothesis Classification)**: **1,136** classified instances across 1,088 pairs:
+    - `H2_CANCER_COMPLICATION_MANAGEMENT`: **799** instances
+    - `H0_NO_CLASS`: **278** instances
+    - `H1_DISEASE_MECHANISM_CORRECTION`: **59** instances
+    - `H3_SUPPORTIVE_CARE_SYMPTOM_MANAGEMENT`: **0** instances (coverage finding)
+  - **Gate 5 (Pediatric & Regulatory Hazard)**: **1,077** pass (hazard score $\le 60$), **11** pediatric hold (hazard score $> 60$).
+  - **Gate 6 (Literature Validation)**: **942** verified, **146** pending, **0** contradicted.
+  - **Gate 7 (Final Adjudicated Verdicts)**: **1,136** verdicts:
+    - `ACCEPTED_RESEARCH_HYPOTHESIS`: **442**
+    - `KEEP_WITH_CAVEAT`: **653**
+    - `EVIDENCE_INSUFFICIENT`: **30**
+    - `MECHANISTIC_HAZARD_REJECTED`: **11**
+    - `LITERATURE_CONTRADICTED`: **0**
+    - `NEGATIVE_NO_SAFE_INTERVENTION`: **0**
 
-### Explicit Non-Recommendation Framing & "Negative Results" Principle
-- **Strict Non-Recommendation**: Phase 4 outputs remain exploratory computational models. They must never be interpreted as therapeutic suggestions.
-- **A Negative Result is a Valid Scientific Result**: In severe rare pediatric genetic disorders driven by structural protein deficiency, concluding that **no safe, disease-modifying small-molecule intervention exists** is a scientifically rigorous and clinically valuable finding. Identifying that all proposed interventions present prohibitive pediatric toxicities appropriately redirects research toward gene replacement therapy, RNA therapeutics, or supportive clinical surveillance.
+### Best-Supported Options by Hypothesis Class
+1. **Class H1 (Disease-Mechanism-Correction) — Top Ranked: ALK Axis**:
+   - Top-ranked hypotheses: `ALK` + ALK inhibitors (`LORLATINIB` rank 1, `PLB1003`, `ALECTINIB`, `BRIGATINIB`, `CRIZOTINIB`, `ENSARTINIB`).
+   - Mechanism Confidence: `0.85`; Verdict: `ACCEPTED_RESEARCH_HYPOTHESIS`.
+   - Biological Rationale: 6 curated signed paths from 3 independent curated repositories demonstrate that ALK activity acts negatively upstream of checkpoint-surveillance endpoints (e.g., p53 surveillance axes); consequently, ALK inhibition is directionally concordant with restoring/stabilizing checkpoint surveillance.
+   - Primary Literature Context: Downstream p53 checkpoint phosphorylation endpoint mechanisms are verified by literature (DOI: 10.1186/1471-2121-2-12, DOI: 10.1038/sj.onc.1204742, DOI: 10.1002/jcb.10569).
+   - **Crucial Evidentiary Nuance**: The attached verified PMIDs/DOIs support the downstream p53 surveillance endpoint mechanism, **not** an ALK-to-MVA clinical link. The ALK hypothesis rests strictly on curated signed-path topology from SIGNOR 3.0 and OmniPath 2024; ALK is a graph-derived interactome neighbor (`GRAPH_DERIVED_NEIGHBOR`), not a patient variant carrier and not an established MVA causal gene.
+2. **Class H2 (Cancer-Complication Management) — Oncologic Modulators with Pediatric Caveats**:
+   - Candidates include ALK inhibitors in neuroblastoma/sarcoma indications, AURKA inhibitors (e.g., `ALISERTIB`), and PLK1 inhibitors (e.g., `VOLASERTIB`) (verified references: PLK1 DOI: 10.1083/jcb.129.6.1617; AURKA DOI: 10.1093/emboj/17.11.3052).
+   - **Severe Pediatric Risk Caveat**: Mitotic kinase inhibitors target aneuploid tumor cells but carry severe toxicity in developing pediatric tissues (bone marrow suppression, growth plate disruption, epithelial damage). They are assigned elevated pediatric hazard scores and classified under `KEEP_WITH_CAVEAT`.
+3. **Class H3 (Supportive-Care & Symptom-Management) — Coverage Gap Finding**:
+   - Exactly **0 qualifying records** met entry criteria for Class H3.
+   - This represents an explicit **coverage finding** (the absence of renal tubular ion transport and nephrocalcinosis targets in the evaluated panel and pharmacology databases), **not** an execution or pipeline defect.
+4. **Negative-Control Benchmark Sanity**:
+   - **11 of 11** TP53 inhibitor rows were decisively rejected with `MECHANISTIC_HAZARD_REJECTED` (`SIGNED_PATH_HAZARD = True`, hazard score 85–100, `TP53_ABROGATION_LETHAL_HAZARD`), confirming that the pipeline robustly identifies and eliminates lethal mechanistic contradictions.
+
+### Output File Structure & Non-Recommendation Governance
+Phase 4 generates 5 primary flat artifacts directly under `data/processed/track2/`:
+- `20_phase4_reaction_level_matrix.csv` (3.0 MB, 5,992 rows): Signed biochemical reaction events and causal pathways mapping candidate drugs to downstream cellular cascades.
+- `21_phase4_hypothesis_classification.csv` (582 KB, 1,136 rows): Multi-hypothesis triage into H1, H2, H3, and H0 classes with pathway justifications.
+- `22_phase4_synthetic_lethality_candidates.csv` (schema-only, 0 rows): Predicted synthetic lethal interactions in aneuploid backgrounds (SynLethDB disabled by default).
+- `23_phase4_adjudicated_safety_report.csv` (620 KB, 1,136 rows): Final prioritized safety, pediatric hazard, and verdict report.
+- `24_phase4_adjudication_provenance.json` (9.7 KB): Master machine-readable provenance recording reaction database versions, signed graph algorithms, SHA256 input fingerprints, and pre-registered scoring rules.
+- **Mandatory Governance Notice**: Every single CSV row carries `CLINICAL_RECOMMENDATION_STATUS = 'PROHIBITED / INVESTIGATIONAL ONLY'` and the mandatory research-only disclaimer.
 
 ---
 
@@ -797,6 +849,13 @@ All primary Track 2 result artifacts are organized directly under `data/processe
 | `18_phase3_query_gene_panel.csv` | Phase 3 | CSV | Rigorously derived 80-gene query panel (~122 KB, 80 rows) spanning 7 core MVA causal genes, 31 graph-derived neighbors, 29 context modifiers, and 13 drug-target controls with full rationale and genetic annotations. |
 | `18_phase3_query_panel_provenance.json` | Phase 3 | JSON | Panel builder execution audit (~1.9 KB) documenting selection gates 0–6, component rank 2 detection, category counts, gate 0 dropped ledger, and literature verification counts. |
 | `19_phase3_query_panel_citations.csv` | Phase 3 | CSV | Long-format citations and database cross-reference ledger (~29 KB) providing verified PubMed PMIDs/DOIs, OMIM disease IDs, and STRING/Reactome URLs across all 80 panel genes. |
+| `20_phase4_reaction_level_matrix.csv` | Phase 4 | CSV | Signed biochemical reaction events and causal pathways mapping candidate drugs to downstream cellular cascades (~3.0 MB, 5,992 rows). |
+| `21_phase4_hypothesis_classification.csv` | Phase 4 | CSV | Multi-hypothesis classification across H1, H2, H3, and H0 classes with pathway justifications (~582 KB, 1,136 rows). |
+| `22_phase4_synthetic_lethality_candidates.csv` | Phase 4 | CSV | Predicted synthetic lethal interactions in aneuploid backgrounds (0 rows, schema-only, SynLethDB disabled by default). |
+| `23_phase4_adjudicated_safety_report.csv` | Phase 4 | CSV | Final prioritized safety, pediatric hazard, and verdict report with research priority rankings (~620 KB, 1,136 rows). |
+| `24_phase4_adjudication_provenance.json` | Phase 4 | JSON | Master execution provenance capturing database versions, signed graph algorithms, SHA256 input fingerprints, and pre-registered rules (~9.7 KB). |
+
+*(Note: Duplicate legacy phase directories `phase0/`, `phase1/`, and `phase2/` remain preserved alongside these flat files for backward compatibility).*
 
 *(Note: Duplicate legacy phase directories `phase0/`, `phase1/`, and `phase2/` remain preserved alongside these flat files for backward compatibility).*
 
