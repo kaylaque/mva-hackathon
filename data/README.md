@@ -45,3 +45,22 @@ CADD, REVEL, AlphaMissense, SpliceAI, AlphaGenome, and other computational predi
 ## Public references
 
 Large public reference resources remain in `input/refs/`. `scripts/download_references.sh` retrieves only public resources; it never downloads patient data. Reference archives, decompressed files, indexes, and tool-specific caches remain local and must not be committed.
+
+## Independent pathway workflow artifacts
+
+The pathway branch is private and research-only. `.gitignore` prevents ordinary
+staging; it does **not** itself authorize an agent or process to inspect data.
+
+| Location | Contents |
+| --- | --- |
+| `processed/track2/pathway/` | `p0_gene_qc.csv` through `p6_evaluation_summary.csv`, Markdown-only `p7_pathway_report.md`, and stage-keyed `pathway_provenance.json`. |
+| `interim/pathway_cache/` | Endpoint-plus-gene-only-payload response cache, when enabled; no credentials. |
+
+P0 emits `SYMBOL, HGNC_ID, ENSEMBL_ID, STATUS, IN_FOREGROUND,
+PASSING_VARIANTS, TOTAL_VARIANTS`. P1 preserves provider-adjusted BH values
+separately from local raw hypergeometric values. P2 records relevance,
+redundancy, and HP observational-annotation flags. P3–P5 retain
+mechanism/target/drug source-native evidence; P6 records descriptive STRING
+comparison; P7 is a cumulative Markdown report. External services receive only
+normalized gene identifiers. Variant keys, genotypes, coordinates, phenotype
+text, internal scores, and patient identifiers never leave the local workflow.

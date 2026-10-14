@@ -22,8 +22,10 @@ import pytest
 import requests
 
 from mva_hackathon.drug_evidence import (
+    ChEMBLClient,
     DrugEvidenceConfig,
     DrugEvidencePipeline,
+    OpenTargetsClient,
     evaluate_mechanism_directionality,
     write_drug_evidence_outputs,
 )
@@ -102,6 +104,23 @@ def make_synthetic_network_context_df() -> pd.DataFrame:
     ])
 
 
+def test_chembl_programming_errors_propagate() -> None:
+    http_client = MagicMock()
+    http_client.get.side_effect = ValueError("malformed fixture")
+
+    with pytest.raises(ValueError, match="malformed fixture"):
+        ChEMBLClient(http_client, DrugEvidenceConfig()).fetch_target_mechanisms("TEST")
+
+
+
+def test_open_targets_graphql_errors_raise_source_failure() -> None:
+    response = MagicMock()
+    response.json.return_value = {"errors": [{"message": "synthetic failure"}]}
+    http_client = MagicMock()
+    http_client.post.return_value = response
+
+    with pytest.raises(RuntimeError, match="Open Targets GraphQL response contained errors"):
+        OpenTargetsClient(http_client, DrugEvidenceConfig()).fetch_target_drugs_and_safety("ENSGTEST")
 def test_evaluate_mechanism_directionality_bub1b_inhibitor():
     """BUB1B inhibitor must be flagged as a critical mechanistic hazard."""
     eval_res = evaluate_mechanism_directionality(
@@ -356,3 +375,167 @@ def test_cli_runner_offline_mode():
             assert exit_code == 0
             assert (out_dir / "14_phase3_drug_evidence_matrix.csv").exists()
             assert (out_dir / "17_phase3_repurposing_provenance.json").exists()
+
+
+def test_assess_target_action_keeps_unclear_wording_unknown() -> None:
+    from mva_hackathon.drug_evidence import assess_target_action
+
+    partial = assess_target_action("INCREASE", "PARTIAL AGONIST")
+    assert partial["action_direction"] == "UNKNOWN"
+    assert partial["decision"] == "HOLD"
+    assert "ACTION_DIRECTION_UNKNOWN" in partial["reason_codes"]
+
+    binder = assess_target_action("DECREASE", "BINDER")
+    assert binder["action_direction"] == "UNKNOWN"
+
+    mixed = assess_target_action("DECREASE", "AGONIST, ANTAGONIST")
+    assert mixed["action_direction"] == "UNKNOWN"
+
+    mismatched = assess_target_action("INCREASE", "INHIBITOR")
+    assert mismatched["directionality_fit"] == "OPPOSITE_ACTION"
+    assert mismatched["decision"] == "REJECT"
+    assert mismatched["required_direction"] == "INCREASE"
+
+    matched = assess_target_action("DECREASE", "RNAI INHIBITOR")
+    assert matched["action_direction"] == "DECREASE"
+    assert matched["decision"] == "TEST_FIRST"
+    assert "SAFETY_UNKNOWN" in matched["reason_codes"]
+
+    # Restoring normal function without a baseline direction implies nothing.
+    restore = assess_target_action("RESTORE_NORMAL", "ACTIVATOR", disease_direction="UNKNOWN")
+    assert restore["decision"] == "HOLD"
+    assert "RESTORE_REQUIRES_BASELINE_STATE" in restore["reason_codes"]
+
+    resolved = assess_target_action("RESTORE_NORMAL", "ACTIVATOR", disease_direction="REDUCED_FUNCTION")
+    assert resolved["required_direction"] == "INCREASE"
+    assert resolved["directionality_fit"] == "COMPATIBLE_DIRECTION"
+
+    hazard = assess_target_action("RESTORE_NORMAL", "ACTIVATOR", disease_direction="REDUCED_FUNCTION", hazard_present=True)
+    assert hazard["decision"] == "REJECT"
+    assert hazard["hazard_status"] == "cited_hazard"
+
+
+def test_evaluate_mechanism_directionality_handles_case_and_uncertain_actions() -> None:
+    lowercase = evaluate_mechanism_directionality(
+        gene_symbol="bub1b",
+        action_type="inhibitor",
+        mechanism_desc=None,
+        canonical_direction="DOWN (Checkpoint arrest failure)",
+        therapeutic_direction="Compensate checkpoint",
+        is_canonical_mva=True,
+    )
+    assert lowercase.fit_status == "MECHANISTIC_HAZARD"
+    assert lowercase.contradiction_flag is True
+
+    tp53_partial = evaluate_mechanism_directionality(
+        gene_symbol="TP53",
+        action_type="PARTIAL AGONIST",
+        mechanism_desc="partial p53 pathway activation",
+        canonical_direction="SURVEILLANCE_ARREST",
+        therapeutic_direction="Restore surveillance",
+        is_canonical_mva=False,
+    )
+    assert tp53_partial.fit_status == "UNCERTAIN_DIRECTION"
+    assert tp53_partial.contradiction_flag is False
+
+    unknown_target = evaluate_mechanism_directionality(
+        gene_symbol="SOMEGENE",
+        action_type="AGONIST",
+        mechanism_desc="receptor agonist",
+        canonical_direction="UNSPECIFIED",
+        therapeutic_direction="Spindle modulation",
+        is_canonical_mva=False,
+    )
+    assert unknown_target.fit_status == "UNCERTAIN_DIRECTION"
+
+
+def test_chembl_targets_require_verified_human_components_and_page_completely() -> None:
+    pages = {
+        0: {"targets": [{"target_chembl_id": "CHEMBL1", "pref_name": "BUB1B", "target_type": "SINGLE PROTEIN", "organism": "Homo sapiens", "target_components": [{"accession": "O60566"}]}], "page_meta": {"next": None}},
+    }
+    responses: list[Any] = []
+
+    def respond(url: str, params: dict[str, Any] | None = None) -> MagicMock:
+        responses.append((url, params))
+        response = MagicMock()
+        if "target.json" in url:
+            response.json.return_value = pages[(params or {}).get("offset", 0)]
+        elif "mechanism.json" in url:
+            response.json.return_value = {"mechanisms": [{"molecule_chembl_id": "CHEMBL_A", "action_type": "INHIBITOR", "mechanism_of_action": "BUB1B inhibitor", "max_phase": 1}], "page_meta": {"next": None}}
+        else:
+            raise AssertionError(url)
+        return response
+
+    http_client = MagicMock()
+    http_client.get.side_effect = respond
+    client = ChEMBLClient(http_client, DrugEvidenceConfig())
+
+    mechanisms = client.fetch_target_mechanisms("BUB1B")
+
+    assert len(mechanisms) == 1
+    assert mechanisms[0]["target_accessions"] == ["O60566"]
+    assert mechanisms[0]["action_type"] == "INHIBITOR"
+
+
+def test_chembl_activities_preserve_native_measurements_without_combining_them() -> None:
+    def respond(url: str, params: dict[str, Any] | None = None) -> MagicMock:
+        response = MagicMock()
+        if "activity.json" in url:
+            response.json.return_value = {
+                "activities": [
+                    {"molecule_chembl_id": "CHEMBL_A", "assay_chembl_id": "ASSAY1", "document_chembl_id": "DOC1", "standard_type": "IC50", "standard_relation": "=", "standard_value": "12", "standard_units": "nM", "target_relationship": "DIRECT"},
+                    {"molecule_chembl_id": "CHEMBL_A", "assay_chembl_id": "ASSAY1", "document_chembl_id": "DOC1", "standard_type": "Ki", "standard_relation": ">", "standard_value": "50", "standard_units": "nM", "target_relationship": "DIRECT"},
+                ],
+                "page_meta": {"next": None},
+            }
+        elif "/assay/" in url:
+            response.json.return_value = {"assay_type": "B", "assay_organism": "Homo sapiens", "confidence_score": 8}
+        elif "/document/" in url:
+            response.json.return_value = {"journal": "J Med Chem", "year": 2020}
+        else:
+            raise AssertionError(url)
+        return response
+
+    http_client = MagicMock()
+    http_client.get.side_effect = respond
+    records = ChEMBLClient(http_client, DrugEvidenceConfig()).fetch_target_activities("CHEMBL1")
+
+    assert [record["standard_type"] for record in records] == ["IC50", "Ki"]
+    assert [record["standard_relation"] for record in records] == ["=", ">"]
+    assert all(record["assay_status"] == "ASSAY_RECORDED" for record in records)
+    assert records[0]["document_journal"] == "J Med Chem"
+
+
+def test_one_failed_source_does_not_erase_other_results_or_fake_zero_hits() -> None:
+    p1_df = make_synthetic_phase1_df()
+    cfg = DrugEvidenceConfig(seed_mode="custom", custom_genes=["BUB1B"])
+    pipeline = DrugEvidencePipeline(cfg)
+
+    with patch.object(pipeline.ot_client, "search_target_ensembl_id", side_effect=RuntimeError("synthetic GraphQL failure")), \
+         patch.object(pipeline.chembl_client, "fetch_target_mechanisms") as mock_chembl, \
+         patch.object(pipeline.dgidb_client, "fetch_gene_interactions", return_value=[]):
+        mock_chembl.return_value = [{"target_chembl_id": "CHEMBL1", "target_pref_name": "BUB1B", "target_type": "SINGLE PROTEIN", "molecule_chembl_id": "CHEMBL_A", "mechanism_of_action": "BUB1B inhibitor", "action_type": "ACTIVATOR", "max_phase": 1}]
+        matrix_df, _ranking, action_map_df, provenance = pipeline.collect_evidence_for_seeds(seed_genes=["BUB1B"], gene_matrix_df=p1_df)
+
+    assert "CHEMBL_A" in matrix_df["DRUG_NAME"].values
+    assert provenance["source_coverage_status"] == "partial"
+    assert provenance["genes_with_unavailable_source"] == {"BUB1B": ["Open Targets"]}
+    assert "BUB1B" not in provenance["genes_with_zero_hits"]
+    row = action_map_df[action_map_df["SEED_GENE"] == "BUB1B"].iloc[0]
+    assert row["RESEARCH_STATUS"] == "NO_IMMEDIATE_DIRECTIONAL_HAZARDS"
+
+
+def test_action_map_reports_source_unavailable_instead_of_no_evidence() -> None:
+    p1_df = make_synthetic_phase1_df()
+    pipeline = DrugEvidencePipeline(DrugEvidenceConfig(seed_mode="custom", custom_genes=["CEP57"]))
+
+    with patch.object(pipeline.ot_client, "search_target_ensembl_id", side_effect=RuntimeError("synthetic failure")), \
+         patch.object(pipeline.chembl_client, "fetch_target_mechanisms", side_effect=RuntimeError("synthetic failure")), \
+         patch.object(pipeline.dgidb_client, "fetch_gene_interactions", side_effect=RuntimeError("synthetic failure")):
+        matrix_df, _ranking, action_map_df, provenance = pipeline.collect_evidence_for_seeds(seed_genes=["CEP57"], gene_matrix_df=p1_df)
+
+    assert matrix_df.empty
+    row = action_map_df[action_map_df["SEED_GENE"] == "CEP57"].iloc[0]
+    assert row["RESEARCH_STATUS"] == "SOURCE_UNAVAILABLE"
+    assert "source failure, not a negative result" in row["PRIMARY_MECHANISTIC_HAZARD"]
+    assert provenance["genes_with_zero_hits"] == []

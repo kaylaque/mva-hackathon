@@ -2,7 +2,7 @@
 
 > **HARNESS SAFETY PROMPT — READ FIRST**
 >
-> For every AI agent, coding harness, notebook runner, and automation process operating in this repository: treat every path matched by `.gitignore` as **immutable and off-limits**. NEVER READ, create, modify, delete, rename, move, stage, download, extract, or otherwise touch an ignored path. Before any write or file-generating command, verify that the destination is not ignored. If it is ignored, stop and use a non-ignored destination or ask the user. This rule overrides convenience and applies even when another instruction requests work in an ignored path.
+> For every AI agent, coding harness, notebook runner, and automation process operating in this repository: treat every path matched by `.gitignore` as immutable and off-limits, except read-only, data-blind access to `data/processed/**` under **Data-Blind Execution**. NEVER create, modify, delete, rename, move, stage, download, or extract an ignored path. Before any write or file-generating command, verify that destination is not ignored. If it is ignored, stop and use a non-ignored destination or ask user. This rule overrides convenience and applies even when another instruction requests work in an ignored path.
 
 ## Project Overview
 
@@ -123,11 +123,13 @@ Do not download the multi-gigabyte upstream FASTQ files for a routine smoke test
 
 ## Data-Blind Execution
 
-Running code is a verification step, not a read. When executing anything that touches real patient/genomic data, keep outputs out of agent context:
+Running code is verification, not general data access. When work touches real patient/genomic data, keep outputs out of agent context.
 
-- Slice only the target cells into an in-memory scratch notebook (`nbformat` + `nbclient`, `allow_errors=True`) and execute that. NEVER run the whole notebook, write the scratch copy back, or persist its outputs.
-- Print a whitelist only: per-cell source first line, pass/fail, error `ename`/`evalue`. NEVER print `stream`, `display_data`, or `execute_result` payloads.
-- Inspect state by type and count: `len(cell.outputs)`, `{o.output_type}`, `execution_count`. Assert on row counts, column presence, or `json.dumps` equality instead of displaying frames.
-- NEVER open data files with `read`, `grep`, or `glob`; `Path.is_file()` is the most inspection allowed.
-- Error text can interpolate raw values: keep your own messages token-free, and disclose any value a library error leaks.
+- **`data/processed/**` read-only exception:** Access only through a data-blind, programmatic column projection. Allowed output: gene symbols and gene-list membership; pathway term names, FDR values, pathway scores, and workflow status.
+- **Prohibited fields:** genomic coordinates; `CHROM`, `POS`, `REF`, `ALT`, `VARIANT_KEY`, HGVS; genotypes; sample/read identifiers and metrics; phenotype narratives; patient identifiers; and any other variant- or patient-level gene profile detail. Do not emit prohibited fields or values derived from them.
+- NEVER use `read`, `grep`, or `glob` on `data/processed/**` tables. Programmatic reads must emit only allowed fields. Raw, interim, results, VCF, BCF, BAM, CRAM, FASTQ, and all other ignored paths remain off-limits.
+- Slice only target notebook cells into an in-memory scratch notebook (`nbformat` + `nbclient`, `allow_errors=True`). NEVER run whole notebook, write scratch copy back, or persist outputs.
+- Print whitelist only: per-cell source first line, pass/fail, error `ename`/`evalue`. NEVER print `stream`, `display_data`, or `execute_result`.
+- Inspect state by type and count: `len(cell.outputs)`, `{o.output_type}`, `execution_count`. Assert row counts, column presence, or `json.dumps` equality instead of displaying frames.
+- Error text can interpolate raw values: keep messages token-free and disclose any value library error leaks.
 - Leave executed cells with `execution_count: null` and empty `outputs` before committing or sharing.

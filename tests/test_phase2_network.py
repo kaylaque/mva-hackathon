@@ -451,3 +451,33 @@ def test_string_batching_preserves_edges() -> None:
         }
         assert ("BUB1B", "TRIP13") in pairs
         assert ("BUB1B", "MAD1L1") in pairs
+
+
+def test_gprofiler_never_attributes_submitted_genes_without_an_intersection_vector() -> None:
+    """An empty or unusable intersection vector must not become all-input membership."""
+    engine = NetworkContextEngine()
+    captured: dict[str, Any] = {}
+
+    def respond(*args: Any, **kwargs: Any) -> Any:
+        response = MagicMock()
+        response.status_code = 200
+        response.json.return_value = {"result": captured["terms"]}
+        return response
+
+    engine.client.post = respond  # type: ignore[method-assign]
+
+    captured["terms"] = [
+        {"native": "R-HSA-69620", "name": "Cell Cycle Checkpoints", "source": "REAC", "p_value": 0.001, "term_size": 100, "intersection_size": 0, "intersections": [False, False, False]},
+        {"native": "GO:0007059", "name": "chromosome segregation", "source": "GO:BP", "p_value": 0.002, "term_size": 200, "intersection_size": 2, "intersections": [True, False, True]},
+        {"native": "hsa04110", "name": "Cell cycle", "source": "KEGG", "p_value": 0.003, "term_size": 124, "intersection_size": 1, "intersections": "malformed"},
+    ]
+    frame, status = engine.query_gprofiler(["BUB1B", "TRIP13", "MAD1L1"])
+
+    assert status == "success"
+    by_id = {row["PATHWAY_ID"]: row for _, row in frame.iterrows()}
+    assert by_id["R-HSA-69620"]["HIT_GENES"] == ""
+    assert by_id["R-HSA-69620"]["MEMBERSHIP_STATUS"] == "UNAVAILABLE"
+    assert by_id["GO:0007059"]["HIT_GENES"] == "BUB1B;MAD1L1"
+    assert by_id["GO:0007059"]["MEMBERSHIP_STATUS"] == "OBSERVED_INTERSECTION"
+    assert by_id["hsa04110"]["MEMBERSHIP_STATUS"] == "UNAVAILABLE"
+    assert "TRIP13" not in by_id["hsa04110"]["HIT_GENES"]

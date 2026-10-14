@@ -167,3 +167,76 @@ uv run python scripts/migrate_track2_layout.py --validate-only
 | `phase4/synthetic_lethality_candidates.csv` | `22_phase4_synthetic_lethality_candidates.csv` | Cell-line synthetic lethality priors and DepMap/SynLethDB candidates |
 | `phase4/adjudicated_safety_report.csv` | `23_phase4_adjudicated_safety_report.csv` | Adjudicated safety and prioritized research report sorted by best support |
 | `phase4/adjudication_provenance.json` | `24_phase4_adjudication_provenance.json` | Pre-registered endpoints, sign conventions, validation stats, and provenance |
+
+## Independent pathway workflow (P0–P7)
+
+`run_pathway_workflow.py` is independent from the existing STRING/drug branch.
+It accepts only the Phase 1 gene-level allowlist; P0 rejects missing required
+counts and never loads `TOP_VARIANT_KEYS` or other variant fields.
+
+```bash
+# Required smoke test: fixture-only, no live fallback.
+uv run python scripts/run_pathway_workflow.py \
+  --gene-mechanism tests/fixtures/pathway_sample/genes.csv \
+  --offline-fixture tests/fixtures/pathway_sample \
+  --output-dir /tmp/mva-pathway-sample
+
+# Live gene-only workflow defaults.
+bash scripts/run_pathway_workflow.sh
+```
+
+Implemented options: `--gene-mechanism`, `--network-context`,
+`--network-panel`, `--network-drugs`, `--min-passing`, `--q-threshold`,
+`--top-pathways`, `--stage`, `--offline-fixture`, `--no-chembl`,
+`--no-open-targets`, `--no-dgidb`, `--david`, `--reuse-pathway-dir`,
+`--david-exports`, `--with-david`, `--david-output-dir`, `--output-dir`, and
+`--force`.
+
+#### DAVID addendum (registration-free native exports)
+
+The DAVID leg calls no DAVID API and needs no account, email, or session of its
+own. It prepares gene-only text lists for the native web interface, then imports
+the chart/cluster exports downloaded from that interface.
+
+```bash
+# 1. Prepare lists from an existing pathway baseline (P0–P7 are not rerun).
+uv run python scripts/run_pathway_workflow.py --david \
+  --reuse-pathway-dir data/processed/track2/pathway \
+  --output-dir /path/outside/the/repo/david
+# -> exit 2: writes foreground.txt, background.txt, david_manifest.json
+
+# 2. At https://davidbioinformatics.nih.gov/workspace.html upload both lists,
+#    confirm the uploaded background as Current Population, run one chart
+#    (Count=2, EASE=0.1) and one clustering report, then save chart.csv,
+#    clusters.csv, and receipt.json into a single export directory.
+
+# 3. Import and compare. Identical replay verifies hashes and writes nothing.
+uv run python scripts/run_pathway_workflow.py --david \
+  --reuse-pathway-dir data/processed/track2/pathway \
+  --output-dir /path/outside/the/repo/david \
+  --david-exports /path/outside/the/repo/exports
+
+# 4. Attach the addendum to a fresh full run instead of running DAVID alone.
+uv run python scripts/run_pathway_workflow.py --gene-mechanism <phase1 genes> \
+  --with-david --david-output-dir /path/outside/the/repo/david \
+  --output-dir /path/outside/the/repo/pathway
+```
+
+`--reuse-pathway-dir` is DAVID-only and requires `--david` or `--stage david`;
+`--with-david` requires the default `--stage all`, rejects `--david`, and
+requires `--david-output-dir`. Exit codes: `0` verified import or identical
+replay, `2` prepared and awaiting web exports, `1` invalid input, stale
+provenance, or a rejected receipt.
+
+Every prepared list, download, manifest, receipt, and imported artifact belongs
+outside the repository; destinations inside ignored trees such as
+`data/processed/**` are refused instead of written. The baseline is read only
+through allowlisted column projections (gene-list membership and pathway
+scores). A DAVID run never rewrites P2–P7 and never expands targets or drugs.
+
+P0→P7 execute in dependency order and write atomically. A completed report does
+not convert source gaps to zero evidence: exit `0` means all selected stages
+completed, `2` means partial coverage (for example, missing STRING baseline or
+external source), and `1` means an invalid input or required-stage failure.
+Offline mode accepts only declared fixture responses; a missing fixture fails
+instead of using the network.

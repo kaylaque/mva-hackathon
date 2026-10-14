@@ -19,6 +19,7 @@ from datetime import datetime, timezone
 import json
 import logging
 from pathlib import Path
+import re
 import time
 from typing import Any, Mapping, Sequence
 
@@ -26,6 +27,22 @@ import pandas as pd
 import requests
 
 logger = logging.getLogger("mva_hackathon.drug_evidence")
+
+_CHEMBL_COLLECTION_KEYS = {"target.json": "targets", "mechanism.json": "mechanisms", "activity.json": "activities"}
+_CHEMBL_PAGE_SIZE = 100
+_CHEMBL_MAX_PAGES = 200
+_CHEMBL_MAX_LINKED_RECORDS = 200
+
+
+def _graphql_data(response: Any, source: str) -> dict[str, Any]:
+    """Return GraphQL data or classify provider-declared errors as source failure."""
+    payload = response.json()
+    if payload.get("errors"):
+        raise RuntimeError(f"{source} GraphQL response contained errors")
+    data = payload.get("data")
+    if not isinstance(data, dict):
+        raise RuntimeError(f"{source} GraphQL response omitted data")
+    return data
 
 # Default biomedical API endpoints
 DEFAULT_OPEN_TARGETS_GQL_URL = "https://api.platform.opentargets.org/api/v4/graphql"
@@ -171,7 +188,11 @@ class OpenTargetsClient:
         self.config = config
 
     def search_target_ensembl_id(self, symbol: str) -> str | None:
-        """Find the Ensembl gene ID for a given HGNC gene symbol."""
+        """Return the Ensembl gene ID only for an exact authoritative symbol match.
+
+        An inexact search hit is not an identity: target selection must not fall back to
+        the first result, so unresolved identity stays unresolved for the caller.
+        """
         query = """
         query SearchTarget($queryString: String!) {
           search(queryString: $queryString, entityNames: ["target"]) {
@@ -183,20 +204,16 @@ class OpenTargetsClient:
           }
         }
         """
-        try:
-            resp = self.http_client.post(
-                self.config.open_targets_url,
-                json_data={"query": query, "variables": {"queryString": symbol}},
-            )
-            data = resp.json().get("data", {}).get("search", {})
-            hits = data.get("hits", [])
-            for hit in hits:
-                if hit.get("name") == symbol and hit.get("entity") == "target":
-                    return hit.get("id")
-            if hits and hits[0].get("entity") == "target":
-                return hits[0].get("id")
-        except Exception as exc:
-            logger.warning("Open Targets target search failed for %s: %s", symbol, exc)
+        resp = self.http_client.post(
+            self.config.open_targets_url,
+            json_data={"query": query, "variables": {"queryString": symbol}},
+        )
+        data = _graphql_data(resp, "Open Targets").get("search", {})
+        hits = data.get("hits", [])
+        wanted = str(symbol).strip().upper()
+        for hit in hits:
+            if str(hit.get("name", "")).strip().upper() == wanted and hit.get("entity") == "target":
+                return hit.get("id")
         return None
 
     def fetch_target_drugs_and_safety(self, ensembl_id: str) -> dict[str, Any]:
@@ -256,16 +273,12 @@ class OpenTargetsClient:
           }
         }
         """
-        try:
-            resp = self.http_client.post(
-                self.config.open_targets_url,
-                json_data={"query": query, "variables": {"ensemblId": ensembl_id}},
-            )
-            target = resp.json().get("data", {}).get("target", {})
-            return target or {}
-        except Exception as exc:
-            logger.warning("Open Targets target drug query failed for %s: %s", ensembl_id, exc)
-            return {}
+        resp = self.http_client.post(
+            self.config.open_targets_url,
+            json_data={"query": query, "variables": {"ensemblId": ensembl_id}},
+        )
+        target = _graphql_data(resp, "Open Targets").get("target", {})
+        return target or {}
 
 
 class ChEMBLClient:
@@ -275,40 +288,115 @@ class ChEMBLClient:
         self.http_client = http_client
         self.config = config
 
-    def fetch_target_mechanisms(self, symbol: str) -> list[dict[str, Any]]:
-        """Fetch target records and their corresponding mechanism of action entries."""
-        results: list[dict[str, Any]] = []
-        try:
-            target_url = f"{self.config.chembl_api_url}/target.json"
-            resp = self.http_client.get(target_url, params={"target_synonym": symbol})
-            targets = resp.json().get("targets", [])
-            for target in targets:
-                tid = target.get("target_chembl_id")
-                target_type = target.get("target_type")
-                pref_name = target.get("pref_name")
-                if not tid:
-                    continue
+    def _fetch_collection(self, endpoint: str, params: Mapping[str, Any]) -> list[dict[str, Any]]:
+        """Follow ``page_meta.next`` until the collection is exhausted.
 
-                # Query mechanisms for this target
-                mech_url = f"{self.config.chembl_api_url}/mechanism.json"
-                m_resp = self.http_client.get(mech_url, params={"target_chembl_id": tid})
-                mechs = m_resp.json().get("mechanisms", [])
-                for m in mechs:
-                    results.append({
-                        "target_chembl_id": tid,
-                        "target_pref_name": pref_name,
-                        "target_type": target_type,
-                        "molecule_chembl_id": m.get("molecule_chembl_id"),
-                        "mechanism_of_action": m.get("mechanism_of_action"),
-                        "action_type": m.get("action_type"),
-                        "max_phase": m.get("max_phase"),
-                        "direct_interaction": m.get("direct_interaction"),
-                        "disease_efficacy": m.get("disease_efficacy"),
-                        "mechanism_comment": m.get("mechanism_comment"),
-                    })
-        except Exception as exc:
-            logger.warning("ChEMBL query failed for %s: %s", symbol, exc)
+        A response that omits the expected collection or page metadata is a source
+        schema failure and is raised, never treated as an empty successful page.
+        """
+        url = f"{self.config.chembl_api_url}/{endpoint}"
+        key = _CHEMBL_COLLECTION_KEYS[endpoint]
+        rows: list[dict[str, Any]] = []
+        seen: set[int] = set()
+        offset = 0
+        while offset not in seen and len(seen) < _CHEMBL_MAX_PAGES:
+            seen.add(offset)
+            resp = self.http_client.get(url, params={**params, "limit": _CHEMBL_PAGE_SIZE, "offset": offset})
+            payload = resp.json()
+            collection = payload.get(key)
+            meta = payload.get("page_meta")
+            if not isinstance(collection, list) or not isinstance(meta, dict):
+                raise RuntimeError(f"ChEMBL {endpoint} returned an unrecognized payload")
+            rows.extend(item for item in collection if isinstance(item, dict))
+            marker = meta.get("next")
+            if not marker:
+                break
+            try:
+                offset = int(str(marker).split("offset=")[-1].split("&")[0])
+            except (TypeError, ValueError) as error:
+                raise RuntimeError(f"ChEMBL {endpoint} returned an unusable next marker") from error
+        return rows
+
+    @staticmethod
+    def _is_verified_human_target(target: Mapping[str, Any]) -> bool:
+        """Human target verified by organism and a UniProt-style target-component accession."""
+        if str(target.get("organism", "")).strip().lower() not in {"homo sapiens", "human"}:
+            return False
+        for component in target.get("target_components") or []:
+            accession = str((component or {}).get("accession", "")).strip()
+            if re.fullmatch(r"[A-Z0-9][A-Z0-9\-\.]{4,14}", accession):
+                return True
+        return False
+
+    def fetch_target_mechanisms(self, symbol: str) -> list[dict[str, Any]]:
+        """Mechanism rows for one symbol, restricted to verified human targets."""
+        targets = self._fetch_collection("target.json", {"target_synonym": symbol})
+        results: list[dict[str, Any]] = []
+        for target in targets:
+            if not self._is_verified_human_target(target):
+                continue
+            tid = target.get("target_chembl_id")
+            if not tid:
+                continue
+            accessions = [
+                str((component or {}).get("accession", ""))
+                for component in target.get("target_components") or []
+                if str((component or {}).get("accession", "")).strip()
+            ]
+            for mechanism in self._fetch_collection("mechanism.json", {"target_chembl_id": tid}):
+                results.append({
+                    "target_chembl_id": tid,
+                    "target_pref_name": target.get("pref_name"),
+                    "target_type": target.get("target_type"),
+                    "target_accessions": accessions,
+                    "molecule_chembl_id": mechanism.get("molecule_chembl_id"),
+                    "mechanism_of_action": mechanism.get("mechanism_of_action"),
+                    "action_type": mechanism.get("action_type"),
+                    "max_phase": mechanism.get("max_phase"),
+                    "direct_interaction": mechanism.get("direct_interaction"),
+                    "disease_efficacy": mechanism.get("disease_efficacy"),
+                    "mechanism_comment": mechanism.get("mechanism_comment"),
+                })
         return results
+
+    def fetch_target_activities(self, target_chembl_id: str) -> list[dict[str, Any]]:
+        """Native activity records for one admitted target.
+
+        Potency types and inequality measurements are preserved verbatim; they are never
+        combined into one potency figure and an absence of assays stays ``ASSAY_UNAVAILABLE``.
+        """
+        activities = self._fetch_collection("activity.json", {"target_chembl_id": target_chembl_id})
+        assays: dict[str, dict[str, Any]] = {}
+        documents: dict[str, dict[str, Any]] = {}
+        for activity in activities:
+            assay_id = str(activity.get("assay_chembl_id") or "")
+            document_id = str(activity.get("document_chembl_id") or "")
+            if assay_id and assay_id not in assays and len(assays) < _CHEMBL_MAX_LINKED_RECORDS:
+                assays[assay_id] = self.http_client.get(f"{self.config.chembl_api_url}/assay/{assay_id}.json").json()
+            if document_id and document_id not in documents and len(documents) < _CHEMBL_MAX_LINKED_RECORDS:
+                documents[document_id] = self.http_client.get(f"{self.config.chembl_api_url}/document/{document_id}.json").json()
+        records: list[dict[str, Any]] = []
+        for activity in activities:
+            assay = assays.get(str(activity.get("assay_chembl_id") or ""), {})
+            document = documents.get(str(activity.get("document_chembl_id") or ""), {})
+            records.append({
+                "target_chembl_id": activity.get("target_chembl_id") or target_chembl_id,
+                "molecule_chembl_id": activity.get("molecule_chembl_id"),
+                "standard_type": activity.get("standard_type"),
+                "standard_relation": activity.get("standard_relation"),
+                "standard_value": activity.get("standard_value"),
+                "standard_units": activity.get("standard_units"),
+                "pchembl_value": activity.get("pchembl_value"),
+                "assay_type": assay.get("assay_type") or activity.get("assay_type"),
+                "assay_organism": assay.get("assay_organism"),
+                "assay_confidence": assay.get("confidence_score") if assay else activity.get("confidence_score"),
+                "target_relationship": activity.get("target_relationship"),
+                "document_chembl_id": activity.get("document_chembl_id"),
+                "document_journal": document.get("journal"),
+                "document_year": document.get("year"),
+                "assay_status": "ASSAY_RECORDED" if assay else "ASSAY_UNAVAILABLE",
+            })
+        return records
 
 
 class DGIdbClient:
@@ -347,16 +435,12 @@ class DGIdbClient:
           }
         }
         """
-        try:
-            resp = self.http_client.post(
-                self.config.dgidb_url,
-                json_data={"query": query, "variables": {"genes": symbols}},
-            )
-            nodes = resp.json().get("data", {}).get("interactions", {}).get("nodes", [])
-            return nodes or []
-        except Exception as exc:
-            logger.warning("DGIdb interactions query failed for genes %s: %s", symbols, exc)
-            return []
+        resp = self.http_client.post(
+            self.config.dgidb_url,
+            json_data={"query": query, "variables": {"genes": symbols}},
+        )
+        nodes = _graphql_data(resp, "DGIdb").get("interactions", {}).get("nodes", [])
+        return nodes or []
 
 
 @dataclass
@@ -369,6 +453,169 @@ class DirectionalityEvaluation:
     pediatric_hazard_note: str
 
 
+# Exact action tokens.  Free-text or mixed wording is deliberately absent so that
+# "PARTIAL AGONIST", "MODULATOR" or "AGONIST/ANTAGONIST" can never read as activation.
+_DECREASE_ACTIONS = frozenset({
+    "INHIBITOR", "ANTAGONIST", "BLOCKER", "DOWNREGULATOR", "DEGRADER", "RNAI", "SUPPRESSOR",
+    "INVERSE AGONIST", "NEGATIVE MODULATOR", "SIRNA", "ANTISENSE OLIGONUCLEOTIDE",
+    "PROTEOLYSIS TARGETING CHIMERA", "MOLECULAR GLUE",
+})
+_INCREASE_ACTIONS = frozenset({
+    "ACTIVATOR", "AGONIST", "POSITIVE ALLOSTERIC MODULATOR", "UPREGULATOR", "STABILIZER",
+    "RECOMBINANT", "EXOGENOUS GENE", "GENE REPLACEMENT", "CHAPERONE",
+})
+_AMBIGUOUS_QUALIFIERS = frozenset({
+    "PARTIAL", "MIXED", "BIDIRECTIONAL", "DUAL", "NONSELECTIVE", "CONTEXT", "UNKNOWN", "MULTIPLE",
+})
+_ACTION_SEPARATORS = re.compile(r"[,;/|]|\bAND\b")
+_WORD_SPLIT = re.compile(r"[^A-Z0-9]+")
+_RESTORE_WORDS = frozenset({"RESTORE", "RESTORING", "RESTORES", "COMPENSATE", "COMPENSATION", "RESCUE", "NORMALIZE"})
+_INCREASE_WORDS = frozenset({"INCREASE", "INCREASED", "ACTIVATE", "ACTIVATION", "ACTIVATING", "UPREGULATE", "INDUCE"})
+_DECREASE_WORDS = frozenset({"DECREASE", "DECREASED", "INHIBIT", "INHIBITION", "REDUCE", "SUPPRESS", "SILENCE", "DEGRADE", "DEPLETE"})
+
+
+def _words(value: Any) -> list[str]:
+    return [word for word in _WORD_SPLIT.split(str(value or "").upper()) if word]
+
+
+def _word_direction(word: str) -> str | None:
+    if word in _DECREASE_ACTIONS:
+        return "DECREASE"
+    if word in _INCREASE_ACTIONS:
+        return "INCREASE"
+    return None
+
+
+def _token_direction(token: str) -> str | None:
+    """Direction for one action token; every constituent word must agree."""
+    known = _word_direction(token)
+    if known is not None:
+        return known
+    words = token.split()
+    if len(words) < 2:
+        return None
+    inner = [_token_direction(word) for word in words]
+    directions = {item for item in inner if item is not None}
+    if None in inner or len(directions) != 1:
+        return None
+    return directions.pop()
+
+
+def classify_action_direction(action_type: str | None) -> str:
+    """``INCREASE``, ``DECREASE`` or ``UNKNOWN`` from exact action tokens only."""
+    text = " ".join(str(action_type or "").upper().split())
+    if not text:
+        return "UNKNOWN"
+    if any(word in _AMBIGUOUS_QUALIFIERS for word in _words(text)):
+        return "UNKNOWN"
+    tokens = [token.strip() for token in _ACTION_SEPARATORS.split(text) if token.strip()]
+    if not tokens:
+        return "UNKNOWN"
+    directions: set[str] = set()
+    for token in tokens:
+        direction = _token_direction(token)
+        if direction is None:
+            return "UNKNOWN"
+        directions.add(direction)
+    return directions.pop() if len(directions) == 1 else "UNKNOWN"
+
+
+def scan_direction(text: str | None) -> str:
+    """Direction implied by whole words in free-text mechanism prose; mixed prose stays unknown."""
+    words = _words(text)
+    if any(word in _AMBIGUOUS_QUALIFIERS for word in words):
+        return "UNKNOWN"
+    directions = {direction for word in words if (direction := _word_direction(word)) is not None}
+    return directions.pop() if len(directions) == 1 else "UNKNOWN"
+
+
+def desired_change_for(therapeutic_direction: str | None) -> str:
+    """Map a stated therapeutic direction onto INCREASE, DECREASE, RESTORE_NORMAL or UNKNOWN."""
+    words = set(_words(therapeutic_direction))
+    if words & _RESTORE_WORDS:
+        return "RESTORE_NORMAL"
+    increase = bool(words & _INCREASE_WORDS)
+    decrease = bool(words & _DECREASE_WORDS)
+    if increase and not decrease:
+        return "INCREASE"
+    if decrease and not increase:
+        return "DECREASE"
+    return "UNKNOWN"
+
+
+def disease_direction_for(canonical_direction: str | None) -> str:
+    """REDUCED_FUNCTION, INCREASED_FUNCTION, ALTERED_FUNCTION or UNKNOWN."""
+    text = " ".join(str(canonical_direction or "").upper().split())
+    words = set(_words(text))
+    if not text:
+        return "UNKNOWN"
+    reduced = any(word in {"LOSS", "LOF", "REDUCED", "DEFICIENT", "DEFICIENCY", "HYPOMORPHIC", "DOWN", "IMPAIRED"} for word in words)
+    increased = any(word in {"GAIN", "GOF", "INCREASED", "AMPLIFIED", "OVERACTIVE", "UP"} for word in words)
+    if reduced and not increased:
+        return "REDUCED_FUNCTION"
+    if increased and not reduced:
+        return "INCREASED_FUNCTION"
+    if reduced and increased:
+        return "ALTERED_FUNCTION"
+    return "UNKNOWN"
+
+
+def assess_target_action(
+    desired_change: str,
+    action_type: str | None,
+    *,
+    disease_direction: str = "UNKNOWN",
+    evidence_conflict: bool = False,
+    hazard_present: bool | None = None,
+) -> dict[str, Any]:
+    """One conservative action assessment shared by Compass and the legacy pipeline.
+
+    ``hazard_present=None`` means safety is unrecorded; it is reported as unknown and
+    never as safe.  A clinical-stage or approval status never changes this verdict.
+    """
+    desired = " ".join(str(desired_change or "").upper().split()) or "UNKNOWN"
+    disease = " ".join(str(disease_direction or "").upper().split()) or "UNKNOWN"
+    population_direction = classify_action_direction(action_type)
+    hazard_status = "unknown" if hazard_present is None else ("cited_hazard" if hazard_present else "no_cited_hazard")
+
+    def result(fit: str, decision: str, required: str, reasons: list[str]) -> dict[str, Any]:
+        return {
+            "action_direction": population_direction,
+            "required_direction": required,
+            "directionality_fit": fit,
+            "decision": decision,
+            "hazard_status": hazard_status,
+            "reason_codes": reasons,
+        }
+
+    if hazard_present:
+        return result("MECHANISTIC_HAZARD", "REJECT", "UNKNOWN", ["CITED_CONTEXTUAL_HAZARD"])
+    if evidence_conflict:
+        return result("CONFLICTING_EVIDENCE", "HOLD", "UNKNOWN", ["EVIDENCE_CONFLICT"])
+    if population_direction == "UNKNOWN":
+        return result("UNKNOWN", "HOLD", "UNKNOWN", ["ACTION_DIRECTION_UNKNOWN"])
+    if desired == "UNKNOWN":
+        return result("UNRESOLVED_DESIRED_CHANGE", "HOLD", "UNKNOWN", ["DESIRED_CHANGE_UNKNOWN"])
+    if desired == "RESTORE_NORMAL":
+        if disease == "REDUCED_FUNCTION":
+            required = "INCREASE"
+        elif disease == "INCREASED_FUNCTION":
+            required = "DECREASE"
+        else:
+            # Restoring normal function without a stated baseline direction implies nothing.
+            return result("UNRESOLVED_DESIRED_CHANGE", "HOLD", "UNKNOWN", ["RESTORE_REQUIRES_BASELINE_STATE"])
+    elif desired in {"INCREASE", "DECREASE"}:
+        required = desired
+    else:
+        return result("UNRESOLVED_DESIRED_CHANGE", "HOLD", "UNKNOWN", ["DESIRED_CHANGE_UNRECOGNIZED"])
+    if population_direction != required:
+        return result("OPPOSITE_ACTION", "REJECT", required, ["ACTION_DIRECTION_MISMATCH"])
+    reasons = ["ACTION_DIRECTION_MATCHED"]
+    if hazard_present is None:
+        reasons.append("SAFETY_UNKNOWN")
+    return result("COMPATIBLE_DIRECTION", "TEST_FIRST", required, reasons)
+
+
 def evaluate_mechanism_directionality(
     gene_symbol: str,
     action_type: str | None,
@@ -377,33 +624,34 @@ def evaluate_mechanism_directionality(
     therapeutic_direction: str | None,
     is_canonical_mva: bool,
 ) -> DirectionalityEvaluation:
-    """Determine whether a drug's mechanism of action contradicts or aligns with the variant defect."""
+    """Determine whether a drug's mechanism of action contradicts or aligns with the variant defect.
+
+    Direction of action comes from the shared exact-token classifier, so wording such as
+    "partial agonist", "modulator" or "agonist/antagonist" stays explicitly unknown.
+    """
+    symbol = str(gene_symbol or "").strip().upper()
     action = (action_type or "").strip().upper()
     mech = (mechanism_desc or "").strip().upper()
     direction = (canonical_direction or "").strip().upper()
 
-    # Normalize action types into broad functional vectors
-    is_inhibitor = any(
-        kw in action or kw in mech
-        for kw in ["INHIBITOR", "ANTAGONIST", "BLOCKER", "DOWNREGULATOR", "SUPPRESSOR", "DEGRADER", "RNAI"]
-    )
-    is_activator = any(
-        kw in action or kw in mech
-        for kw in ["ACTIVATOR", "AGONIST", "OPENER", "UPREGULATOR", "STABILIZER", "RECOMBINANT", "EXOGENOUS GENE"]
-    )
+    action_direction = classify_action_direction(action or None)
+    if action_direction == "UNKNOWN":
+        action_direction = scan_direction(mech)
+    is_inhibitor = action_direction == "DECREASE"
+    is_activator = action_direction == "INCREASE"
 
     # 1. BUB1B / MAD1L1 / SAC checkpoint failure scenario:
     # Patient has loss-of-function / hypomorphic allele -> SAC is already impaired / weakened.
     # An INHIBITOR of BUB1B, MAD1L1, or SAC proteins directly aggravates premature mitotic exit,
     # escalating chromosome missegregation and cellular aneuploidy.
-    if gene_symbol in ["BUB1B", "MAD1L1"] or "SAC" in direction or "CHECKPOINT" in direction:
+    if symbol in {"BUB1B", "MAD1L1"} or "SAC" in direction or "CHECKPOINT" in direction:
         if is_inhibitor:
             return DirectionalityEvaluation(
                 fit_status="MECHANISTIC_HAZARD",
                 contradiction_flag=True,
                 explanation=(
-                    f"Direct mechanistic contradiction: Patient has LoF/hypomorphic {gene_symbol} with impaired SAC. "
-                    f"Inhibition of {gene_symbol} ({action or 'INHIBITOR'}) accelerates premature mitotic exit "
+                    f"Direct mechanistic contradiction: Patient has LoF/hypomorphic {symbol} with impaired SAC. "
+                    f"Inhibition of {symbol} ({action or 'INHIBITOR'}) accelerates premature mitotic exit "
                     "and exacerbates chromosome missegregation/aneuploidy."
                 ),
                 pediatric_hazard_note=(
@@ -416,27 +664,27 @@ def evaluate_mechanism_directionality(
                 fit_status="CONCORDANT_DIRECTION",
                 contradiction_flag=False,
                 explanation=(
-                    f"Mechanistically aligned: {gene_symbol} activator/stabilizer could theoretically compensate "
+                    f"Mechanistically aligned: {symbol} activator/stabilizer could theoretically compensate "
                     "for hypomorphic checkpoint signaling (biological hypothesis only)."
                 ),
                 pediatric_hazard_note="Experimental/unverified: Pediatric developmental safety unknown.",
             )
 
     # 2. Centrosome / Microtubule / Cohesin genes (CEP57, TRIP13, SLF2, SMC5, CENATAC):
-    if gene_symbol in ["CEP57", "TRIP13", "SLF2", "SMC5", "CENATAC"]:
+    if symbol in {"CEP57", "TRIP13", "SLF2", "SMC5", "CENATAC"}:
         if is_inhibitor:
             return DirectionalityEvaluation(
                 fit_status="MECHANISTIC_HAZARD",
                 contradiction_flag=True,
                 explanation=(
-                    f"Mechanistic contradiction: {gene_symbol} structural/checkpoint deficiency is worsened by "
+                    f"Mechanistic contradiction: {symbol} structural/checkpoint deficiency is worsened by "
                     f"pharmacological inhibition ({action or 'INHIBITOR'}), exacerbating mitotic spindle/cohesion failure."
                 ),
                 pediatric_hazard_note="HIGH HAZARD: Disruption of mitotic spindle pole/cohesion machinery in children.",
             )
 
     # 3. TP53 / DNA Damage / Tumor Suppressor genes:
-    if gene_symbol == "TP53":
+    if symbol == "TP53":
         if is_inhibitor:
             return DirectionalityEvaluation(
                 fit_status="MECHANISTIC_HAZARD",
@@ -459,40 +707,54 @@ def evaluate_mechanism_directionality(
             )
 
     # 4. Spindle Kinases (AURKA, PLK1) - downstream or synthetic mitotic lethality
-    if gene_symbol in ["AURKA", "PLK1"]:
+    if symbol in {"AURKA", "PLK1"}:
         if is_inhibitor:
             return DirectionalityEvaluation(
                 fit_status="OFF_TARGET_COMPENSATION",
                 contradiction_flag=False,
                 explanation=(
-                    f"{gene_symbol} inhibition selectively induces mitotic catastrophe in highly aneuploid/cancer cells. "
+                    f"{symbol} inhibition selectively induces mitotic catastrophe in highly aneuploid/cancer cells. "
                     "However, in a child with systemic MVA, mitotic arrest carries severe whole-body toxicity."
                 ),
                 pediatric_hazard_note="SEVERE PEDIATRIC RISK: Bone marrow suppression, growth plate disruption, neurotoxicity.",
             )
 
-    # Default fallback
-    if is_inhibitor:
+    # Default fallback: defer to the shared action assessment.  An uncharacterized
+    # target never yields a concordant verdict merely because the drug is an agonist.
+    assessment = assess_target_action(
+        desired_change_for(therapeutic_direction),
+        action or mech or None,
+        disease_direction=disease_direction_for(direction),
+    )
+    if assessment["decision"] == "REJECT":
         return DirectionalityEvaluation(
-            fit_status="UNCERTAIN_DIRECTION",
-            contradiction_flag=False,
-            explanation=f"Target inhibition ({action}) evaluated against candidate gene {gene_symbol}.",
-            pediatric_hazard_note="Uncharacterized pediatric profile.",
+            fit_status="MECHANISTIC_HAZARD",
+            contradiction_flag=True,
+            explanation=(
+                f"Opposite target action for {symbol} in the intended context: {assessment['reason_codes']}. "
+                "No safety claim is made by this pipeline."
+            ),
+            pediatric_hazard_note="Uncharacterized pediatric profile; opposite action assumed harmful.",
         )
-    elif is_activator:
+    if assessment["directionality_fit"] == "COMPATIBLE_DIRECTION":
         return DirectionalityEvaluation(
             fit_status="CONCORDANT_DIRECTION",
             contradiction_flag=False,
-            explanation=f"Target activation ({action}) evaluated against candidate gene {gene_symbol}.",
-            pediatric_hazard_note="Uncharacterized pediatric profile.",
+            explanation=(
+                f"Action direction for {symbol} matches the stated therapeutic direction ({action or 'UNKNOWN'}). "
+                "This is a hypothesis only and carries no efficacy claim."
+            ),
+            pediatric_hazard_note="Uncharacterized pediatric profile; safety remains unresolved.",
         )
-    else:
-        return DirectionalityEvaluation(
-            fit_status="UNCERTAIN_DIRECTION",
-            contradiction_flag=False,
-            explanation=f"Action type '{action or 'UNKNOWN'}' requires empirical directionality validation.",
-            pediatric_hazard_note="Uncharacterized pediatric profile.",
-        )
+    return DirectionalityEvaluation(
+        fit_status="UNCERTAIN_DIRECTION",
+        contradiction_flag=False,
+        explanation=(
+            f"Action type '{action or 'UNKNOWN'}' for {symbol} leaves directionality unresolved "
+            f"({', '.join(assessment['reason_codes'])}); empirical validation is required."
+        ),
+        pediatric_hazard_note="Uncharacterized pediatric profile.",
+    )
 
 
 class DrugEvidencePipeline:
@@ -621,6 +883,7 @@ class DrugEvidencePipeline:
                 }
 
         raw_records: list[dict[str, Any]] = []
+        unavailable_by_gene: dict[str, list[str]] = {}
 
         # 1. Open Targets Collection
         if self.config.enable_open_targets:
@@ -628,10 +891,17 @@ class DrugEvidencePipeline:
             provenance_sources["open_targets"]["status"] = "active"
             ot_drug_count = 0
             for gene in seed_genes:
-                ens_id = self.ot_client.search_target_ensembl_id(gene)
-                if not ens_id:
+                try:
+                    ens_id = self.ot_client.search_target_ensembl_id(gene)
+                    if not ens_id:
+                        continue
+                    ot_data = self.ot_client.fetch_target_drugs_and_safety(ens_id)
+                except (requests.RequestException, RuntimeError, ValueError) as error:
+                    # One source failing must not erase the other sources for this gene.
+                    unavailable_by_gene.setdefault(gene, []).append("Open Targets")
+                    provenance_sources["open_targets"]["errors"] = provenance_sources["open_targets"].get("errors", 0) + 1
+                    logger.warning("Open Targets unavailable for %s (%s)", gene, type(error).__name__)
                     continue
-                ot_data = self.ot_client.fetch_target_drugs_and_safety(ens_id)
                 tractability_labels = [
                     t["label"] for t in ot_data.get("tractability", []) if t.get("value")
                 ]
@@ -681,7 +951,13 @@ class DrugEvidencePipeline:
             provenance_sources["chembl"]["status"] = "active"
             chembl_drug_count = 0
             for gene in seed_genes:
-                mechs = self.chembl_client.fetch_target_mechanisms(gene)
+                try:
+                    mechs = self.chembl_client.fetch_target_mechanisms(gene)
+                except (requests.RequestException, RuntimeError, ValueError) as error:
+                    unavailable_by_gene.setdefault(gene, []).append("ChEMBL")
+                    provenance_sources["chembl"]["errors"] = provenance_sources["chembl"].get("errors", 0) + 1
+                    logger.warning("ChEMBL unavailable for %s (%s)", gene, type(error).__name__)
+                    continue
                 for m in mechs:
                     mol_id = m.get("molecule_chembl_id")
                     action = m.get("action_type") or "UNKNOWN"
@@ -714,7 +990,16 @@ class DrugEvidencePipeline:
         if self.config.enable_dgidb:
             provenance_sources["dgidb"]["queried"] = True
             provenance_sources["dgidb"]["status"] = "active"
-            dgidb_nodes = self.dgidb_client.fetch_gene_interactions(seed_genes)
+            try:
+                dgidb_nodes = self.dgidb_client.fetch_gene_interactions(seed_genes)
+            except (requests.RequestException, RuntimeError, ValueError) as error:
+                # A whole-source failure is recorded as unavailable, not as zero hits for every gene.
+                for gene in seed_genes:
+                    unavailable_by_gene.setdefault(gene, []).append("DGIdb")
+                dgidb_nodes = []
+                provenance_sources["dgidb"]["status"] = "unavailable"
+                provenance_sources["dgidb"]["errors"] = 1
+                logger.warning("DGIdb unavailable (%s)", type(error).__name__)
             dgidb_count = 0
             for node in dgidb_nodes:
                 gene_sym = node.get("gene", {}).get("name")
@@ -812,7 +1097,7 @@ class DrugEvidencePipeline:
         ranking_df = self._build_safety_ranking(evidence_matrix_df, gene_context)
 
         # Build Mechanism Action Map
-        action_map_df = self._build_mechanism_action_map(seed_genes, gene_context, evidence_matrix_df)
+        action_map_df = self._build_mechanism_action_map(seed_genes, gene_context, evidence_matrix_df, unavailable_by_gene)
 
         end_time = datetime.now(timezone.utc)
 
@@ -821,7 +1106,7 @@ class DrugEvidencePipeline:
         dgidb_tot = len(evidence_matrix_df[evidence_matrix_df["EVIDENCE_SOURCE"] == "DGIdb"]) if not evidence_matrix_df.empty else 0
 
         genes_with_hits = sorted(evidence_matrix_df["TARGET_SYMBOL"].unique()) if not evidence_matrix_df.empty else []
-        genes_zero_hits = [g for g in seed_genes if g not in genes_with_hits]
+        genes_zero_hits = [g for g in seed_genes if g not in genes_with_hits and not unavailable_by_gene.get(g)]
 
         per_gene_cov: dict[str, dict[str, int]] = {}
         for g in seed_genes:
@@ -877,6 +1162,8 @@ class DrugEvidencePipeline:
                 "DGIdb": dgidb_tot,
             },
             "per_gene_source_coverage": per_gene_cov,
+            "genes_with_unavailable_source": {gene: sorted(set(names)) for gene, names in sorted(unavailable_by_gene.items())},
+            "source_coverage_status": "partial" if unavailable_by_gene else "complete",
             "positive_control_sanity": pos_sanity,
             "negative_control_sanity": neg_sanity,
             "sources_contacted": provenance_sources,
@@ -984,8 +1271,10 @@ class DrugEvidencePipeline:
         seed_genes: list[str],
         gene_context: dict[str, dict[str, Any]],
         matrix_df: pd.DataFrame,
+        unavailable_by_gene: dict[str, list[str]] | None = None,
     ) -> pd.DataFrame:
         """Build gene-level pathway mechanism to target action summary map."""
+        unavailable_by_gene = unavailable_by_gene or {}
         map_rows: list[dict[str, Any]] = []
         for gene in seed_genes:
             ctx = gene_context.get(gene, {})
@@ -1001,8 +1290,17 @@ class DrugEvidencePipeline:
             rows_by_source = f"OPEN_TARGETS:{ot_rows};CHEMBL:{chembl_rows};DGIDB:{dgidb_rows}"
 
             if sub.empty:
-                research_status = "NO_DRUG_EVIDENCE"
-                primary_hazard = "No drug evidence retrieved across queried databases for this target."
+                missing_sources = unavailable_by_gene.get(gene, [])
+                if missing_sources:
+                    research_status = "SOURCE_UNAVAILABLE"
+                    primary_hazard = (
+                        "No drug evidence retrieved because these sources were unavailable: "
+                        + ", ".join(sorted(set(missing_sources)))
+                        + ". This is a source failure, not a negative result."
+                    )
+                else:
+                    research_status = "NO_DRUG_EVIDENCE"
+                    primary_hazard = "No drug evidence retrieved across queried databases for this target."
             elif hazards > 0:
                 research_status = "CONTRAINDICATED_PATHWAY_INHIBITORS_PRESENT"
                 primary_hazard = f"Direct inhibition of {gene} worsens baseline checkpoint failure/instability."

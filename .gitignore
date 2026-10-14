@@ -222,6 +222,9 @@ data/processed/track2/01_phase1_variant_mechanism_matrix.csv
 #  18_phase3_query_gene_panel.csv, 18_phase3_query_panel_provenance.json,
 #  19_phase3_query_panel_citations.csv,
 #  20_phase4_reaction_level_matrix.csv through 24_phase4_adjudication_provenance.json)
+data/processed/track2/pathway/
+/data/processed/track2/pathway_david/
+data/interim/pathway_cache/
 
 # Size policy: no file larger than 8 MB may ever be committed.
 # Raw/interim genomic data stays out of Git; enforced by pre-commit hook (.git/hooks/pre-commit).

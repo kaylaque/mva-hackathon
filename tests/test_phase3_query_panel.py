@@ -492,3 +492,36 @@ def test_cli_runner_offline():
             assert (out_dir / "18_phase3_query_gene_panel.csv").exists()
             assert (out_dir / "18_phase3_query_panel_provenance.json").exists()
             assert (out_dir / "19_phase3_query_panel_citations.csv").exists()
+
+
+def test_verify_literature_status_distinguishes_failure_from_no_match():
+    """A failed lookup must not read as 'no such publication'."""
+    import urllib.error
+
+    with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("synthetic network failure")):
+        unavailable = verify_literature_via_pubmed(term="test term", polite_delay=0.0)
+
+    assert unavailable["verified"] is False
+    assert unavailable["status"] == "UNAVAILABLE"
+    assert "unreachable" in unavailable["reason"]
+
+    with patch("urllib.request.urlopen") as mock_url:
+        empty = MagicMock()
+        empty.read.return_value = json.dumps({"esearchresult": {"idlist": []}}).encode()
+        empty.__enter__.return_value = empty
+        mock_url.side_effect = [empty]
+
+        no_match = verify_literature_via_pubmed(term="test term", polite_delay=0.0)
+
+    assert no_match["status"] == "NO_MATCH"
+    assert no_match["verified"] is False
+
+    with patch("urllib.request.urlopen") as mock_url:
+        malformed = MagicMock()
+        malformed.read.return_value = b"<html>not json</html>"
+        malformed.__enter__.return_value = malformed
+        mock_url.side_effect = [malformed]
+
+        invalid = verify_literature_via_pubmed(term="test term", polite_delay=0.0)
+
+    assert invalid["status"] == "INVALID_RESPONSE"
