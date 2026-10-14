@@ -455,6 +455,27 @@ def _david_genes(value: Any, submitted: set[str]) -> set[str] | None:
     return values if values.issubset(submitted) else None
 
 
+def _complete_contributor_union(rows: list[dict[str, Any]], provider: str, mapping: dict[str, str], submitted: set[str]) -> set[str] | None:
+    """Union contributing identifiers only when every row resolves to a nonempty set.
+
+    ``None`` marks unknown coverage; the caller decides whether the missing side means
+    provider absence or an unresolvable contributor list.  Empty contributor rows are
+    never unioned into an apparently complete set.
+    """
+    if not rows:
+        return None
+    union: set[str] = set()
+    for row in rows:
+        if provider == "g:Profiler":
+            genes = _gprofiler_genes(row.get("CONTRIBUTING_GENES"), mapping)
+        else:
+            genes = _david_genes(row.get("User Ids"), submitted)
+        if not genes:
+            return None
+        union |= genes
+    return union
+
+
 def _term_key(source: Any, term: Any) -> tuple[str, str | None]:
     identifier = _stable_id(term)
     stated_ontology = _ontology(source, None)
@@ -486,18 +507,15 @@ def _comparison(p1: pd.DataFrame, chart: pd.DataFrame, mapping: dict[str, str], 
             status = "gprofiler_only"
         else:
             status = "david_only"
-        g_genes = _gprofiler_genes(g_rows.iloc[0].get("CONTRIBUTING_GENES"), mapping) if g_rows is not None else set()
-        d_column = "User Ids" if d_rows is not None and "User Ids" in d_rows else None
-        d_genes = _david_genes(d_rows.iloc[0][d_column], set(submitted)) if d_column else set()
+        g_genes = _complete_contributor_union(_json_rows(g_rows), "g:Profiler", mapping, set(submitted)) if g_rows is not None else None
+        d_genes = _complete_contributor_union(_json_rows(d_rows), "DAVID", mapping, set(submitted)) if d_rows is not None else None
         note = "stable identifier match; provider statistics remain separate"
         jaccard: float | None = None
         if status == "shared":
             if g_genes is None or d_genes is None:
-                note = "stable identifier match; contributor mapping unavailable"
-            elif g_genes and d_genes:
-                jaccard = len(g_genes & d_genes) / len(g_genes | d_genes)
+                note = "stable identifier match; complete contributor sets unavailable"
             else:
-                note = "stable identifier match; no nonempty comparable contributor sets"
+                jaccard = len(g_genes & d_genes) / len(g_genes | d_genes)
         records.append({
             "ONTOLOGY": key[0], "TERM_ID": key[1], "MATCH_STATUS": status,
             "GPROFILER_ROWS_JSON": json.dumps(_json_rows(g_rows) if g_rows is not None else [], sort_keys=True),
@@ -522,7 +540,7 @@ def _write_report(path: Path, receipt: dict[str, Any], chart: pd.DataFrame, clus
         f"- Confirmed selected population: {receipt['selected_population']}", "",
         "## Provider-specific results", "",
         f"- DAVID chart terms: {len(chart)}; Benjamini ≤ 0.05: {int(pd.to_numeric(chart.get('Benjamini'), errors='coerce').le(0.05).sum())}",
-        f"- DAVID clusters: {len(clusters)}", f"- Shared stable-ID terms: {int(comparison['MATCH_STATUS'].eq('shared').sum())}",
+        f"- DAVID clusters: {clusters['Cluster'].dropna().astype(str).str.strip().replace('', pd.NA).dropna().nunique()} distinct; {len(clusters)} annotation rows", f"- Shared stable-ID terms: {int(comparison['MATCH_STATUS'].eq('shared').sum())}",
         f"- DAVID-only terms: {int(comparison['MATCH_STATUS'].eq('david_only').sum())}",
         f"- g:Profiler-only terms: {int(comparison['MATCH_STATUS'].eq('gprofiler_only').sum())}", "",
         f"- Gene-level Jaccard reported for {int(comparison['GENE_JACCARD'].notna().sum())} shared terms", "",
