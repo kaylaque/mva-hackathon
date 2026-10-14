@@ -96,6 +96,29 @@ Track 2 translates multimodal variant annotations into prioritized mechanism mat
   ```
   *(Or run `bash scripts/run_drug_evidence.sh` with no arguments to use default flat paths).*
 
+### 7. Phase 4: Signed-Pathway/Reaction Adjudication & Literature Validation
+- **Script**: `scripts/run_phase4_adjudication.py` (Wrapper: `scripts/run_phase4_adjudication.sh`)
+- **Purpose**: Evaluates directional regulatory reachability and reaction flux alterations:
+  - Ingests SIGNOR and OmniPath curated signed networks with cross-database conflict resolution.
+  - Adjudicates Reactome biochemical reactions from enriched Phase 2 pathways.
+  - Classifies candidate pairs into H1 (disease mechanism correction), H2 (cancer complication), H3 (supportive care), or H0 (no class).
+  - Verifies literature evidence via Crossref REST (DOIs) and NCBI Entrez E-utilities (PMIDs).
+  - Executes multi-gate safety review, applying pediatric hazard thresholds and directionality checks.
+  - Produces prioritized, rankable reports ensuring best-supported hypotheses sort first.
+- **Direct Flat Output Usage**:
+  ```bash
+  uv run python scripts/run_phase4_adjudication.py \
+    --gene-mechanism data/processed/track2/02_phase1_gene_mechanism_matrix.csv \
+    --drug-evidence data/processed/track2/14_phase3_drug_evidence_matrix.csv \
+    --safety-ranking data/processed/track2/15_phase3_safety_ranking.csv \
+    --query-panel data/processed/track2/18_phase3_query_gene_panel.csv \
+    --pathway-enrichment data/processed/track2/06_phase2_pathway_enrichment.csv \
+    --network-context data/processed/track2/07_phase2_network_gene_context.csv \
+    --output-dir data/processed/track2/ \
+    --flat-names
+  ```
+  *(Or run `bash scripts/run_phase4_adjudication.sh` with no arguments to use default flat paths).*
+
 ---
 
 ## Safe Layout Migration Tool
@@ -139,6 +162,11 @@ uv run python scripts/migrate_track2_layout.py --validate-only
 | `phase3/query_gene_panel.csv` | `18_phase3_query_gene_panel.csv` | Graph-derived multi-tiered query gene panel across 4 evidence gates |
 | `phase3/query_panel_provenance.json` | `18_phase3_query_panel_provenance.json` | Query gene panel provenance, gate counts, and component metrics |
 | `phase3/query_panel_citations.csv` | `19_phase3_query_panel_citations.csv` | Normalized long-format citations table with verified PMIDs/DOIs |
+| `phase4/reaction_level_matrix.csv` | `20_phase4_reaction_level_matrix.csv` | Reaction-level participant roles, flux deltas, and signed regulation paths |
+| `phase4/hypothesis_classification.csv` | `21_phase4_hypothesis_classification.csv` | Multi-class hypothesis classification (H1/H2/H3/H0) and justifications |
+| `phase4/synthetic_lethality_candidates.csv` | `22_phase4_synthetic_lethality_candidates.csv` | Cell-line synthetic lethality priors and DepMap/SynLethDB candidates |
+| `phase4/adjudicated_safety_report.csv` | `23_phase4_adjudicated_safety_report.csv` | Adjudicated safety and prioritized research report sorted by best support |
+| `phase4/adjudication_provenance.json` | `24_phase4_adjudication_provenance.json` | Pre-registered endpoints, sign conventions, validation stats, and provenance |
 
 ## Independent pathway workflow (P0–P7)
 
