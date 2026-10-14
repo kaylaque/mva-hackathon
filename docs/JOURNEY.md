@@ -921,29 +921,12 @@ Verified execution: fixture run completed all nine expected artifacts; authorize
 live run completed and produced all nine local pathway artifacts. Patient-derived
 tables and report contents were not inspected.
 
-### DAVID addendum: verified live result
+### Pathway results: g:Profiler and DAVID
 
-The addendum ran against the live P0/P1 baseline through DAVID's native web
-interface, then imported and compared its exports. Foreground was every Phase 1
-passing-candidate gene: 1,926 normalized Ensembl identifiers (1,926 records,
-1,591 DAVID genes), not a subset. Background was every evaluated Phase 1 gene:
-8,740 identifiers uploaded as a custom population (8,739 records, 8,371 DAVID
-genes) and confirmed as `Current Population` before any analysis. One chart at
-Count=2/EASE=0.1 returned 318 terms (2 at Benjamini ≤ 0.05) and one
-Medium-stringency clustering (EASE 1, overlap 3, kappa 50, initial/final group
-membership 3, linkage 0.50) returned 1,812 cluster rows.
+The independent pathway branch starts with Phase 1 genes. g:Profiler tests passing-candidate genes against all evaluated genes as a custom background. Its saved comparison set contains 16,455 terms. This count includes all returned terms, not only significant terms. The repository documentation does not identify the top terms or state how many meet the adjusted-p threshold. The background is not a whole-exome callable universe.
 
-Import compared the DAVID chart against all 16,455 g:Profiler terms: 74 shared
-stable identifiers, 134 DAVID-only, 16,380 g:Profiler-only, and 111 rows without
-a supported stable identifier. Shared identifiers are descriptive overlap, not
-independent replication, and each provider's p-value, Benjamini, FDR, and
-cluster enrichment score stay distinct. Gene-level Jaccard is reported as null
-rather than zero: the saved P1 projection carries no contributing-gene
-membership, so no comparable contributor sets exist.
+DAVID used the same Phase 1 selection through its native website. The foreground contained 1,926 Ensembl identifiers, which DAVID mapped to 1,591 genes. The uploaded custom background contained 8,740 identifiers, which DAVID mapped to 8,371 genes. Its annotation chart returned 318 terms; 2 met Benjamini ≤ 0.05. Medium-stringency annotation clustering returned 1,812 rows. The saved documentation does not name the two significant terms.
 
-The run left the baseline untouched (identical size and mtime, matching
-projection hashes) and replayed byte-identically on a second import. Only
-normalized Ensembl gene identifiers left the repository; variant, genotype,
-coordinate, clinical-text, and patient fields were never collected or
-transmitted, and every prepared list, export, receipt, and imported artifact
-stayed outside version control.
+The comparison found 74 shared stable term identifiers, 134 DAVID-only identifiers, and 16,380 g:Profiler-only identifiers. Another 111 DAVID rows had no supported stable identifier for comparison. Shared identifiers show term overlap, not independent confirmation of significant pathways. Keep each provider's adjusted values separate. Gene-level overlap was not calculated because the saved g:Profiler projection lacks contributing-gene membership.
+
+The authorized live pathway run produced all nine local P0–P7 artifacts. The DAVID import left that baseline unchanged and replayed with identical output. Patient-derived tables and report contents were not inspected for this documentation. Only normalized gene identifiers were sent to external services; local artifacts remained outside version control. These results describe gene-annotation enrichment, not pathway activation, diagnosis, or drug response.
