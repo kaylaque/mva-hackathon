@@ -57,6 +57,104 @@ Run full Phase 0 through Phase 3 pipelines using `uv run` or dedicated shell wra
   # Or wrapper: bash scripts/run_drug_evidence.sh
   ```
 
+## Compass: saved evidence to research decisions
+
+Compass (`src/mva_hackathon/compass.py`, `scripts/run_compass.py`) is an evidence-to-decision
+layer over already-saved results. It does **not** run enrichment, submit DAVID jobs, query
+STRING, or rerun any Phase 1–3 pipeline. It reads verified post-analysis tables and safe
+projected network columns, retrieves public membership/protein/literature/pharmacology
+records through one content-addressed cache, and writes tables that state explicitly what is
+supported, what is only context, and what is unresolved.
+
+```bash
+# All destinations must be outside every Git repository.
+uv run python scripts/analyze_pathway_results.py \
+  --reuse-pathway-dir data/processed/track2/pathway \
+  --david-dir /external/immutable/david-import \
+  --output-dir /external/postanalysis-$(date -u +%Y%m%d-%H%M%S)
+
+uv run python scripts/run_compass.py \
+  --postanalysis-dir /external/postanalysis-<stamp> \
+  --network-dir data/processed/track2 \
+  --output-dir /external/compass-<stamp> \
+  --cache-dir /external/compass-cache
+
+# Supply source-grounded review, then finalize decisions without repeating public requests.
+uv run python scripts/run_compass.py \
+  --postanalysis-dir /external/postanalysis-<stamp> \
+  --network-dir data/processed/track2 \
+  --output-dir /external/compass-<stamp> \
+  --cache-dir /external/compass-cache \
+  --reviewed-evidence /external/reviewed_evidence.csv \
+  --resume
+
+# Replay from the cache alone: no HTTP is issued and the stable tables are identical.
+uv run python scripts/run_compass.py \
+  --postanalysis-dir /external/postanalysis-<stamp> \
+  --output-dir /external/compass-verify-<stamp> \
+  --cache-dir /external/compass-cache \
+  --reviewed-evidence /external/reviewed_evidence.csv \
+  --offline
+```
+
+Exit codes: `0` completed processing (scientific nulls and unresolved biology included),
+`2` a required public source was incomplete, `1` unsafe or invalid inputs. A new run refuses
+an existing output directory; `--resume` requires matching input projection hashes and
+selection rules, and a changed reviewed-evidence file invalidates only the decisions that
+depend on it — verified public cache records are reused.
+
+### Where each step sits, and what differs
+
+| | g:Profiler pathway | DAVID pathway | Network pathway | **Compass** |
+| --- | --- | --- | --- | --- |
+| Where it sits | step 1: ask a service about a gene list | step 2: ask DAVID the same question by hand | step 3: build PPI context for the same genes | **after all three: reads their saved files** |
+| What it reads | the gene list | the gene list | Phase 1 candidates | the saved g:Profiler, DAVID and network outputs |
+| What it does | enrichment over many sources | enrichment + clustering + chart | PPI topology, components, neighbour genes | judges each provider on its own numbers, then looks up public protein/literature/drug facts |
+| What it writes | terms, p-values, observed intersection | chart and cluster exports with native p-values | edges, components, node context | eligibility, cited rationales, decisions, hold/reject ledger, test plans |
+| What it adds | — | a second opinion, not a second test | which genes cluster together | **why a target is or is not worth testing, and what would falsify it** |
+| What it cannot claim | that a term is causal | that its numbers match g:Profiler's | that a neighbour is causal | clinical efficacy, patient direction, or experimental proof |
+
+Compass adds no enrichment of its own. It only reads what the three steps above already
+wrote, so a null enrichment result stays null: on the last real run all 16 662 significant
+candidates failed the provider threshold, 0 pathways qualified, and the work continued in
+the mechanism-prior lane instead.
+
+**Gene annotation is not therapeutic evidence.** Enrichment membership, GO annotation,
+protein function text and modification annotation describe what a gene or protein is
+annotated to do. They do not measure activity, establish a disease direction, or predict
+that modulating a target helps. Compass therefore keeps annotation in its own lane and
+requires a cited, reviewed assertion — with model context — before any target reaches
+`TEST_FIRST`, and requires recorded safety readouts before `ADVANCE_RESEARCH`.
+
+### Gap ledger
+
+Each row separates what is implemented, what actually happened on the last real run, and
+what remains biologically uncertain.
+
+| # | Gap | Implementation status | Run status (last real execution) | Remaining biological uncertainty |
+| --- | --- | --- | --- | --- |
+| 1 | DAVID stable-term recovery | Implements exact source-ID normalisation; ambiguous titles are retained unmapped with `STOP_UNMAPPED` | 111 unmapped annotations retained and reviewed, none silently matched | Unmapped DAVID titles cannot be compared with g:Profiler without manual curation |
+| 2 | Shared pathway eligibility | Per-provider gate on the provider's own corrected statistic, stable identity and observed contributors | 16 773 rows evaluated: 16 662 `STOP_NOT_SIGNIFICANT`, 111 `STOP_UNMAPPED`, 0 eligible | Current enrichment is null for every pathway, so no pathway-supported target exists yet |
+| 3 | Member retrieval with completeness | Reactome (nested entities), GO BP (paged, `NOT` excluded), KEGG (human links), WikiPathways (typed nodes) behind one cache, with `complete` flags | No eligible identifier required a fetch, so `expanded_members.csv` is header-only | Any future eligible term must re-verify these endpoints; WikiPathways moved to the assets path |
+| 4 | Unified target rationale | `build_rationales` joins eligibility, memberships, protein roles, reviewed claims and network membership per target | 34 panel rationales produced, each with cited reason codes | Panel-wide direction still needs reviewed evidence per target |
+| 5 | Disease-model direction, never patient direction | Direction comes only from cited reviewed claims; conflicting claims yield `UNKNOWN`, never a patient-specific inference | 4 targets with a cited reduced-function state, 1 altered-function association, 29 left `UNKNOWN` | Human genetics establishes causality for a syndrome, not a modulation direction |
+| 6 | Target-action matching | `assess_target_action` maps exact action tokens; partial agonists, binders and mixed labels stay `UNKNOWN` | Pharmacology queried only for the 2 `TEST_FIRST` targets; both returned no matching human target | Absence of a ChEMBL target is not absence of biology |
+| 7 | Context-specific worsening and cancer risk | Cited `HAZARD`/`WORSENS` claims force `REJECT`; unknown safety is recorded as unknown, never safe | TTK rejected on a cited induced-instability finding in tumour cells | The hazard is tumour-cell context; a constitutional risk estimate is not established |
+| 8 | Mechanistic literature claims with citations | Bounded PubMed search per candidate plus schema-validated reviewed evidence with source section and context | 291 unreviewed search hits retained for audit; 9 reviewed assertions across 7 genes | Review is abstract-only and partial: the remaining panel genes await review |
+| 9 | Evidence classes and conflict review | Evidence classes are kept separate; conflicting reviewed direction yields `HOLD` + `EVIDENCE_CONFLICT` | 1 conflict case exercised in unit tests; no conflicting reviewed pair in this run | Class-specific weightings remain a research decision, not a pipeline output |
+| 10 | Tissue, developmental, dose and duration context | Context fields default to unreported and are never invented | Reviewed rows record model/context; dose and duration are empty for every abstract-only claim | Full text is needed for dose, duration and tissue-specific effects |
+| 11 | Separate mechanism-prior lane | Finite MVA/SAC/cohesin panel researched independently of enrichment, labelled `MECHANISM_PRIOR` | 34 panel targets researched with no pathway claim (29 `MECHANISM_PRIOR`, 5 also `NETWORK_CONTEXT`) | Panel membership is a curated prior, not a discovery result |
+| 12 | Cross-source consolidation without double counting | One request cache keyed by source/endpoint/params; repeated statistics preserved; one source is never replication | 34 gene-identity, 34 protein-role and 34 literature requests plus 2 pharmacology requests, each recorded once in `source_status.csv` | A shared PMID/annotation reused by two databases is still one source |
+| 13 | Hold/rejection ledger | Every held, unsupported and rejected entity is written with stage, decision and reason codes | 18 789 ledger rows: 16 662 stopped annotations, 111 unmapped, 1 984 context-only network genes, 31 held targets, 1 rejected target | Nothing withheld is invisible, but the ledger is a status record, not evidence |
+| 14 | Proposed experimental validation | `build_test_plans` writes readouts, controls and rescue/worsening criteria; unresolved targets get an evidence-resolution plan | 2 `PROPOSED` plans; 32 `EVIDENCE_RESOLUTION_REQUIRED` plans | Concentrations, thresholds and model choice require experimental calibration |
+| 15 | Reproducible evidence-to-decision report | Report, tables and hashed provenance are generated together and published atomically | Live and offline-replay runs produced byte-identical stable tables | Reproducibility covers software and public snapshots, not the biological conclusion |
+
+Superseded artifacts: the earlier derived report directory
+`~/Documents/mva-pathway-postanalysis-20261013-143202` and the manually edited report are
+superseded by this workflow and were left in place rather than deleted. Historical
+`HIT_GENES` fields produced before the g:Profiler membership fix are untrusted and are not
+consumed anywhere.
+
 ## Project structure
 
 ```text

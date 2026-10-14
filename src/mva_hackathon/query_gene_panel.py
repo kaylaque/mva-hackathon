@@ -99,11 +99,17 @@ def verify_literature_via_pubmed(
     max_retries: int = 3,
     polite_delay: float = 0.35,
 ) -> dict[str, Any]:
-    """Look up and verify primary literature using NCBI E-utilities (esearch + esummary).
+    """Look up and verify citation metadata using NCBI E-utilities (esearch + esummary).
 
-    Only returns verified records when title and metadata match expected criteria.
-    Never fabricates IDs or guesses.
+    ``verified`` means the citation metadata was confirmed to exist and match.  It is not
+    evidence for a mechanistic claim, which is reviewed separately in Compass.  ``status``
+    distinguishes a real no-match from an unreachable or malformed source, so a failed
+    lookup is never reported as "no such publication".
     """
+
+    def blank(status: str, reason: str) -> dict[str, Any]:
+        return {"pmid": "", "doi": "", "title": "", "journal": "", "year": "", "verified": False, "status": status, "reason": reason}
+
     params = {
         "db": "pubmed",
         "term": term,
@@ -123,14 +129,16 @@ def verify_literature_via_pubmed(
                 data = json.loads(resp.read().decode("utf-8"))
             id_list = data.get("esearchresult", {}).get("idlist", [])
             break
+        except json.JSONDecodeError:
+            return blank("INVALID_RESPONSE", "esearch returned a body that is not valid JSON")
         except Exception as exc:
             if attempt == max_retries - 1:
                 logger.warning("NCBI esearch failed for query '%s': %s", term, exc)
-                return {"pmid": "", "doi": "", "title": "", "journal": "", "year": "", "verified": False}
+                return blank("UNAVAILABLE", f"esearch unreachable: {type(exc).__name__}")
             time.sleep(polite_delay * (attempt + 1))
 
     if not id_list:
-        return {"pmid": "", "doi": "", "title": "", "journal": "", "year": "", "verified": False}
+        return blank("NO_MATCH", "esearch returned no identifier for this query")
 
     time.sleep(polite_delay)
 
@@ -150,10 +158,12 @@ def verify_literature_via_pubmed(
             with urllib.request.urlopen(req, timeout=15) as resp:
                 sum_data = json.loads(resp.read().decode("utf-8"))
             break
+        except json.JSONDecodeError:
+            return blank("INVALID_RESPONSE", "esummary returned a body that is not valid JSON")
         except Exception as exc:
             if attempt == max_retries - 1:
                 logger.warning("NCBI esummary failed for IDs '%s': %s", id_list, exc)
-                return {"pmid": "", "doi": "", "title": "", "journal": "", "year": "", "verified": False}
+                return blank("UNAVAILABLE", f"esummary unreachable: {type(exc).__name__}")
             time.sleep(polite_delay * (attempt + 1))
 
     results_dict = sum_data.get("result", {})
@@ -190,9 +200,11 @@ def verify_literature_via_pubmed(
                 "journal": source,
                 "year": year,
                 "verified": True,
+                "status": "VERIFIED",
+                "reason": "citation metadata confirmed; this is not evidence for a mechanistic claim",
             }
 
-    return {"pmid": "", "doi": "", "title": "", "journal": "", "year": "", "verified": False}
+    return blank("NO_MATCH", "no retrieved record matched the expected title words")
 
 
 class QueryGenePanelBuilder:
@@ -786,6 +798,7 @@ class QueryGenePanelBuilder:
 
         verified_lit_count = 0
         pending_lit_count = 0
+        live_status: dict[str, dict[str, str]] = {}
 
         for item in panel_items:
             gene = item["gene"]
@@ -856,11 +869,15 @@ class QueryGenePanelBuilder:
                     term=reg_entry["search_query"],
                     expected_title_words=[gene, "aneuploidy", "mva", "mosaic", "syndrome", "kinase", "checkpoint", "protein"],
                 )
+                live_status[gene] = {"status": live_res.get("status", "UNKNOWN"), "reason": live_res.get("reason", "")}
                 if live_res["verified"]:
                     pmid = live_res["pmid"]
                     doi = live_res["doi"]
                     lit_mode = "PUBMED_EUTILITIES"
                     lit_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+                else:
+                    # A source failure must stay visible instead of reading as "no publication exists".
+                    lit_mode = f"PUBMED_{live_res.get('status', 'UNKNOWN')}"
 
             # URLs
             hgnc_url = f"https://www.genenames.org/data/gene-symbol-report/#!/symbol/{gene}"
@@ -1040,6 +1057,8 @@ class QueryGenePanelBuilder:
             "literature_verification": {
                 "verified_count": verified_lit_count,
                 "pending_count": pending_lit_count,
+                "live_source_status": live_status,
+                "unavailable_count": sum(1 for item in live_status.values() if item["status"] in {"UNAVAILABLE", "INVALID_RESPONSE"}),
                 "sources": ["NCBI_EUTILITIES", "OMIM", "STRING_DB", "REACTOME"],
             },
             "gate0_dropped_ledger_counts": pd.Series([d["reason"] for d in dropped_ledger]).value_counts().to_dict() if dropped_ledger else {},

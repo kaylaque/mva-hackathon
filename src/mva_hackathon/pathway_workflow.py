@@ -7,12 +7,13 @@ research exploration, not diagnostic or therapeutic guidance.
 from __future__ import annotations
 
 from collections.abc import Iterable
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 import hashlib
 import json
 from pathlib import Path
 import re
+import tempfile
 from typing import Any
 
 import pandas as pd
@@ -32,18 +33,8 @@ _NORMALIZED_COLUMNS = (*_REQUIRED_COLUMNS, *_OPTIONAL_COLUMNS, "IN_FOREGROUND")
 _GPROFILER_URL = "https://biit.cs.ut.ee/gprofiler/api/gost/profile/"
 _HGNC_URL = "https://rest.genenames.org/fetch/symbol/"
 _REACTOME_ANALYSIS_URL = "https://reactome.org/AnalysisService/identifiers/projection"
-_REACTOME_CONTENT_URL = "https://reactome.org/ContentService/data/query/"
 _UNIPROT_URL = "https://rest.uniprot.org/uniprotkb/search"
 _QUICKGO_URL = "https://www.ebi.ac.uk/QuickGO/services/annotation/search"
-_INHIBITOR_TOKENS = (
-    "INHIBITOR",
-    "ANTAGONIST",
-    "BLOCKER",
-    "DOWNREGULATOR",
-    "DEGRADER",
-    "RNAI",
-    "SUPPRESSOR",
-)
 
 
 @dataclass(frozen=True)
@@ -54,6 +45,10 @@ class PathwayWorkflowConfig:
     q_threshold: float = 0.05
     top_pathways: int = 15
     offline: bool = False
+    # External cache for public pathway-membership responses; never inside the repository.
+    membership_cache_dir: Path = field(
+        default_factory=lambda: Path(tempfile.gettempdir()) / "mva-hackathon-membership-cache"
+    )
 
     def __post_init__(self) -> None:
         if self.min_passing < 0:
@@ -401,19 +396,32 @@ class PathwayWorkflow:
         ).drop(columns="CONTRIBUTING_GENE_SET").reset_index(drop=True)
 
     def reactome_members(self, stable_id: str, client: Any) -> list[dict[str, Any]]:
-        """Retrieve complete Reactome event members, preserving only gene identifiers."""
-        response = client.get(f"{_REACTOME_CONTENT_URL}{stable_id}")
-        if response is None or response.status_code != 200:
-            raise RuntimeError("Reactome content request failed")
-        payload = response.json()
-        members: list[dict[str, Any]] = []
-        for entity in payload.get("participants", []) + payload.get("hasEvent", []):
-            reference = entity.get("referenceEntity") or entity
-            symbol = reference.get("geneName") or reference.get("displayName")
-            if symbol:
-                members.append({"SYMBOL": str(symbol).upper(), "ENSEMBL_ID": reference.get("identifier")})
-        return members
+        """Retrieve complete Reactome event members through the shared membership adapter.
 
+        The public return shape is unchanged: one record per gene product with ``SYMBOL``
+        and ``ENSEMBL_ID``.  Reactome archives reference entities by UniProt accession, so
+        that value is carried as reported rather than relabelled.  An incomplete traversal
+        raises, so callers record a source failure instead of an empty success.
+        """
+        from mva_hackathon.compass_sources import STATUS_OK, fetch_membership
+
+        def transport(method: str, url: str, *, params: Any = None) -> Any:
+            return client.get(url)
+
+        envelope = fetch_membership(
+            "REACTOME",
+            stable_id,
+            self.config.membership_cache_dir,
+            offline=self.config.offline,
+            transport=transport,
+        )
+        if envelope["status"] != STATUS_OK or not envelope["complete"]:
+            raise RuntimeError(f"Reactome membership unavailable or incomplete: {envelope['status']}")
+        return [
+            {"SYMBOL": record["SYMBOL"].upper(), "ENSEMBL_ID": record["UNIPROT_ACCESSION"]}
+            for record in envelope["records"]
+            if record["SYMBOL"]
+        ]
 
     def mechanism_evidence(self, prioritized: pd.DataFrame, client: Any) -> list[dict[str, Any]]:
         """Fetch lightweight function/GO evidence for top Reactome intersections."""
@@ -513,7 +521,13 @@ class PathwayWorkflow:
         return pd.DataFrame(records, columns=columns).drop_duplicates(["TERM_ID", "SYMBOL"]).sort_values(["TERM_ID", "SYMBOL"]).reset_index(drop=True)
 
     def run_p5(self, targets: pd.DataFrame, source_records: list[dict[str, Any]]) -> pd.DataFrame:
-        """Preserve source records and label contradiction hazards independently of efficacy."""
+        """Preserve source records and label contradiction hazards independently of efficacy.
+
+        Direction semantics come from the shared action assessment, so a BINDER, a partial
+        agonist or a mixed label stays unresolved rather than reading as alignment.
+        """
+        from mva_hackathon.drug_evidence import assess_target_action, desired_change_for
+
         directions = targets.drop_duplicates("SYMBOL").set_index("SYMBOL")["THERAPEUTIC_DIRECTIONALITY"]
         records: list[dict[str, Any]] = []
         for source_record in source_records:
@@ -521,13 +535,26 @@ class PathwayWorkflow:
             symbol = str(record.get("TARGET_SYMBOL", "")).upper()
             action = str(record.get("ACTION_TYPE", "")).upper()
             direction = str(directions.get(symbol, "UNRESOLVED_DIRECTION")).upper()
-            contradiction = "RESTOR" in direction and any(token in action for token in _INHIBITOR_TOKENS)
+            desired = desired_change_for(direction)
+            # A stated restoration direction encodes a reduced-function defect in this table.
+            disease_direction = "REDUCED_FUNCTION" if desired == "RESTORE_NORMAL" else "UNKNOWN"
+            assessment = assess_target_action(desired, action or None, disease_direction=disease_direction)
+            contradiction = assessment["decision"] == "REJECT"
+            if contradiction:
+                label = "CONTRADICTION"
+            elif assessment["directionality_fit"] == "COMPATIBLE_DIRECTION":
+                label = "COMPATIBLE_HYPOTHESIS"
+            else:
+                label = "UNKNOWN"
             record.update(
                 {
                     "TARGET_SYMBOL": symbol,
                     "THERAPEUTIC_DIRECTIONALITY": direction,
                     "CONTRADICTION_FLAG": contradiction,
-                    "DIRECTIONALITY_LABEL": "CONTRADICTION" if contradiction else "UNKNOWN",
+                    "DIRECTIONALITY_LABEL": label,
+                    "DIRECTIONALITY_REASON_CODES": ";".join(assessment["reason_codes"]),
+                    "DESIRED_TARGET_CHANGE": desired,
+                    "ACTION_DIRECTION": assessment["action_direction"],
                     "RESEARCH_ONLY": True,
                 }
             )
@@ -540,6 +567,9 @@ class PathwayWorkflow:
             "THERAPEUTIC_DIRECTIONALITY",
             "CONTRADICTION_FLAG",
             "DIRECTIONALITY_LABEL",
+            "DIRECTIONALITY_REASON_CODES",
+            "DESIRED_TARGET_CHANGE",
+            "ACTION_DIRECTION",
             "RESEARCH_ONLY",
         ]
         evidence = pd.DataFrame(records)

@@ -152,6 +152,15 @@ class NetworkVisualizer:
                             q.append(nbr)
                 components.append(comp)
 
+        # Nodes that carry context but no edge are still nodes: each becomes a singleton
+        # component so the ranked component list covers every evaluated gene.
+        declared_nodes: set[str] = set()
+        if not nodes_df.empty and "HGNC_SYMBOL" in nodes_df.columns:
+            declared_nodes = {str(value).strip().upper() for value in nodes_df["HGNC_SYMBOL"].dropna() if str(value).strip()}
+        for node in sorted(declared_nodes - visited):
+            components.append({node})
+            visited.add(node)
+
         # Sort components descending by size, then by smallest node name
         components.sort(key=lambda c: (len(c), sorted(list(c))[0]), reverse=True)
 

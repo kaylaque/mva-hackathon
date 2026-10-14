@@ -264,13 +264,15 @@ def test_build_network_node_table_and_components() -> None:
         nodes_df, edges_df
     )
 
-    # Component count: Component 1 (size 3: BUB1B, MAD1L1, TRIP13), Component 2 (size 2: RPL13, RPS16)
-    assert len(components) == 2
+    # Component 1 (size 3: BUB1B, MAD1L1, TRIP13), component 2 (size 2: RPL13, RPS16),
+    # and a singleton component for the node that carries context but no edge.
+    assert len(components) == 3
     assert len(components[0]) == 3
     assert len(components[1]) == 2
+    assert components[2] == {"GENE_ISOLATED"}
 
     # Verify component summary table
-    assert len(comp_summary_df) == 2
+    assert len(comp_summary_df) == 3
     c1 = comp_summary_df.iloc[0]
     assert c1["COMPONENT_RANK"] == 1
     assert c1["COMPONENT_SIZE"] == 3
@@ -284,6 +286,11 @@ def test_build_network_node_table_and_components() -> None:
     assert c2["EDGE_COUNT"] == 1
     assert bool(c2["HAS_MVA_KNOWN_GENE"]) is False
 
+    c3 = comp_summary_df.iloc[2]
+    assert c3["COMPONENT_RANK"] == 3
+    assert c3["COMPONENT_SIZE"] == 1
+    assert c3["EDGE_COUNT"] == 0
+
     # Verify network nodes table contains all 6 input genes
     assert len(network_nodes_df) == 6
     bub1b_row = network_nodes_df[network_nodes_df["HGNC_SYMBOL"] == "BUB1B"].iloc[0]
@@ -294,7 +301,8 @@ def test_build_network_node_table_and_components() -> None:
 
     iso_row = network_nodes_df[network_nodes_df["HGNC_SYMBOL"] == "GENE_ISOLATED"].iloc[0]
     assert iso_row["NETWORK_DEGREE"] == 0
-    assert iso_row["COMPONENT_RANK"] == 0
+    # An isolated node now carries its own component rank; the rank is not a node rank.
+    assert iso_row["COMPONENT_RANK"] == 3
     assert bool(iso_row["IS_ISOLATED"]) is True
 
 
