@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MVA research report | Methods, results, and limits</title>
+<style>
+:root{--ink:#172033;--muted:#58677d;--paper:#ffffff;--canvas:#eef2f7;--line:#c8d2df;--soft:#f5f8fb;--accent:#146c72;--accent-soft:#e7f4f2;--blue:#1d4e89;--blue-soft:#edf4fc;--warn:#8b3b27;--warn-soft:#fff1ed;--ok:#185f43;--ok-soft:#ebf7f0}*{box-sizing:border-box}html{background:var(--canvas)}body{margin:0;color:var(--ink);background:var(--canvas);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5}.document{max-width:960px;margin:28px auto;padding:0 24px 56px}.page{position:relative;margin:0 0 28px;padding:56px 64px 62px;background:var(--paper);border:1px solid var(--line);box-shadow:0 3px 12px #23354a16;min-height:660px;display:flex;flex-direction:column}.cover{border-top:10px solid var(--accent)}.kicker{margin:0 0 15px;color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.page h1{max-width:740px;margin:0 0 20px;font-size:43px;line-height:1.1;letter-spacing:-.035em}.page h2{margin:0 0 13px;font-size:29px;line-height:1.2;letter-spacing:-.02em}.page h3{margin:0 0 8px;color:var(--blue);font-size:18px;line-height:1.25}.page p{margin:0 0 13px}.lede{max-width:720px;color:#334258;font-size:22px;line-height:1.42}.purpose{margin-top:34px;padding:20px 22px;border-left:5px solid var(--accent);background:var(--accent-soft);font-size:18px}.status{display:inline-block;margin:20px 8px 0 0;padding:6px 10px;border:1px solid var(--line);border-radius:4px;color:#41516a;font-size:13px}.summary{margin:0 0 22px;padding:15px 18px;border:1px solid #b6d5cf;border-left:5px solid var(--accent);background:var(--accent-soft)}.warning{margin:18px 0;padding:14px 17px;border:1px solid #edc5b9;border-left:5px solid var(--warn);background:var(--warn-soft)}.note{margin:18px 0;padding:14px 17px;border:1px solid #bfd2e9;border-left:5px solid var(--blue);background:var(--blue-soft)}.grid{display:grid;gap:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.card{min-width:0;padding:18px;border:1px solid var(--line);background:var(--soft)}.card p,.card li{font-size:15px}.metric{display:block;margin-bottom:7px;color:var(--accent);font-size:31px;font-weight:700;letter-spacing:-.04em;line-height:1}.label{font-size:14px;line-height:1.35}.table-wrap{overflow:hidden;border:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#edf3f7;color:#30445d;font-size:13px}tr:last-child td{border-bottom:0}ul,ol{margin:8px 0 14px;padding-left:23px}li{margin:0 0 7px}.definition{font-weight:700;color:var(--blue)}.diagram{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch;margin:18px 0 12px}.diagram.three-step{grid-template-columns:repeat(3,minmax(0,1fr))}.node{position:relative;padding:15px 14px;border:1px solid #89b9b4;background:var(--accent-soft);font-size:14px;line-height:1.32}.node strong{display:block;margin-bottom:4px;color:#12565b}.node:after{position:absolute;z-index:2;top:50%;right:-13px;content:"";width:12px;height:2px;background:var(--accent)}.node:before{position:absolute;z-index:3;top:calc(50% - 4px);right:-13px;content:"";border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:6px solid var(--accent)}.node:last-child:after,.node:last-child:before{display:none}.branch{display:grid;grid-template-columns:1fr 36px 1fr;margin:18px 0 12px;align-items:center}.branch-center{height:100%;min-height:100px;border-left:2px solid var(--accent);position:relative}.branch-center:before,.branch-center:after{position:absolute;left:-2px;content:"";width:20px;border-top:2px solid var(--accent)}.branch-center:before{top:26%}.branch-center:after{bottom:26%}.branch-node{padding:16px;border:1px solid #89b9b4;background:var(--accent-soft);font-size:14px}.branch-node:last-child{background:var(--blue-soft);border-color:#b8cde6}.legend{margin-top:9px;color:var(--muted);font-size:13px}.bar-row{display:grid;grid-template-columns:180px 1fr 42px;gap:10px;align-items:center;margin:11px 0;font-size:14px}.track{height:18px;background:#dbe4ed}.bar{height:18px;background:var(--accent)}.bar.blue{background:var(--blue)}.bar.gray{background:#91a0af}.source{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.35}.source a{color:inherit}.page-number{float:right;font-variant-numeric:tabular-nums}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#7b3f10;font-size:.92em}.sources p{font-size:14px}.sources a{color:var(--blue);overflow-wrap:anywhere}.references{columns:2;gap:28px}.references p{break-inside:avoid}@media(max-width:720px){.document{margin:0;padding:0}.page{min-height:100vh;margin:0 0 12px;padding:34px 24px 44px;border-left:0;border-right:0}.page h1{font-size:34px}.page h2{font-size:25px}.two,.three,.four,.diagram,.diagram.three-step{grid-template-columns:1fr}.node:after,.node:before{display:none}.branch{grid-template-columns:1fr}.branch-center{display:none}.references{columns:1}.bar-row{grid-template-columns:100px 1fr 34px}}@media print{@page{size:13.333in 7.5in;margin:0}html,body{background:#fff;print-color-adjust:exact;-webkit-print-color-adjust:exact}.document{max-width:none;margin:0;padding:0}.page{width:13.333in;height:7.5in;min-height:0;margin:0;padding:.58in .72in .55in;border:0;box-shadow:none;break-after:page;page-break-after:always}.page:last-child{break-after:auto;page-break-after:auto}.cover{border-top-width:8px}.page h1{font-size:35pt}.page h2{font-size:25pt}.lede{font-size:18pt}.grid{gap:11px}.card{padding:14px}.metric{font-size:26pt}.warning,.note,.summary{margin:13px 0;padding:11px 14px}.diagram{margin:12px 0 7px}.node{padding:11px;font-size:12pt}.source{font-size:9pt}.references p{font-size:10pt}}
+</style>
+</head>
+<body>
+<main class="document" aria-label="Mosaic variegated aneuploidy research report">
+<section class="page cover" id="cover">
+<p class="kicker">Research documentation · four-method evidence review</p>
+<h1>Mosaic variegated aneuploidy: candidate-gene, network, and pathway analysis</h1>
+<p class="lede">This document explains what each pipeline does, what its outputs mean, and which conclusions remain unsupported.</p>
+<div class="purpose"><strong>Purpose.</strong> Organize literature, VCF-derived candidate genes, STRING network context, and pathway enrichment into one auditable research narrative.</div>
+<div><span class="status">Research only</span><span class="status">Not a diagnosis</span><span class="status">No treatment recommendation</span><span class="status">No patient-level fields shown</span></div>
+<div class="source">Prepared from checked-in documentation, source code, and data-blind pathway-score projections.<span class="page-number">1 / 12</span></div>
+</section>
+
+<section class="page" id="reading-guide">
+<p class="kicker">1. Reading guide</p>
+<h2>Use each output for its stated purpose</h2>
+<p class="summary"><strong>Core rule.</strong> A candidate-gene list is a prioritization output. It does not establish causality, allele phase, pathway activity, or clinical relevance.</p>
+<div class="grid two">
+<div class="card"><h3>Candidate seed gene</h3><p>A gene with at least one variant that passes Phase 0 research gates. This label selects genes for downstream analysis.</p></div>
+<div class="card"><h3>Network edge</h3><p>A STRING association above the selected confidence threshold. An edge does not show causal direction or a direct physical interaction.</p></div>
+<div class="card"><h3>Enriched term</h3><p>An annotation term that is over-represented against a specific background. It does not demonstrate pathway activity.</p></div>
+<div class="card"><h3>Adjusted value</h3><p>An FDR or Benjamini-Hochberg value from one provider. Do not pool adjusted values across providers.</p></div>
+</div>
+<div class="warning"><strong>Interpretation boundary.</strong> This report discusses aggregate research outputs. It does not expose genomic coordinates, alleles, genotypes, sample identifiers, or phenotype narratives.</div>
+<div class="source">Definitions and scope: <a href="../JOURNEY.md">JOURNEY.md</a>. <a href="../DAVID_PATHWAY_REPORT.md">DAVID pathway report</a>.<span class="page-number">2 / 12</span></div>
+</section>
+
+<section class="page" id="overview">
+<p class="kicker">2. Methodology overview</p>
+<h2>Four methods answer different questions</h2>
+<div class="diagram" role="img" aria-label="Flowchart from literature review to candidate gene triage to network analysis to pathway analysis">
+<div class="node"><strong>Literature review</strong>Defines known MVA and chromosome-stability mechanisms.</div>
+<div class="node"><strong>VCF gene analysis</strong>Selects filter-qualified candidate seed genes.</div>
+<div class="node"><strong>Network pipeline</strong>Places seed genes in a high-confidence interaction graph.</div>
+<div class="node"><strong>Pathway pipeline</strong>Tests annotation over-representation with explicit backgrounds.</div>
+</div>
+<p class="legend">Workflow diagram. Each stage changes the evidence type. No stage converts an association into functional proof.</p>
+<div class="table-wrap"><table><thead><tr><th>Method</th><th>Primary question</th><th>Output</th><th>Cannot establish</th></tr></thead><tbody><tr><td>Literature review</td><td>Which genes and mechanisms do published studies support?</td><td>Curated references and historical article-screening counts</td><td>Completeness of a systematic review</td></tr><tr><td>VCF triage</td><td>Which genes carry variants that meet research gates?</td><td>Candidate seed-gene list</td><td>Clinical causality or allele phase</td></tr><tr><td>STRING network</td><td>Which seed proteins show high-confidence STRING associations?</td><td>Edges and connected components</td><td>Directional mechanism</td></tr><tr><td>Pathway enrichment</td><td>Which annotations are over-represented?</td><td>Provider-specific term lists and adjusted values</td><td>Pathway activation or disease mechanism</td></tr></tbody></table></div>
+<div class="source">Method sources: <a href="../JOURNEY.md">JOURNEY.md</a>. <a href="../literature_review_HPO_PATHWAY_REPRODUCTION.md">literature workflow reproduction</a>.<span class="page-number">3 / 12</span></div>
+</section>
+
+<section class="page" id="literature">
+<p class="kicker">3. Literature review</p>
+<h2>Published mechanism anchors guide candidate selection. They do not establish it.</h2>
+<div class="diagram three-step" role="img" aria-label="Literature workflow from records to annotations to reviewed evidence">
+<div class="node"><strong>Search and retrieve</strong>Record exact queries, sources, dates, and retrieval status.</div>
+<div class="node"><strong>Annotate and map</strong>Separate named pathways from gene-only mentions. Preserve source links.</div>
+<div class="node"><strong>Screen and appraise</strong>Apply eligibility and risk-of-bias review before clinical interpretation.</div>
+</div>
+<div class="grid three">
+<div class="card"><span class="metric">538</span><span class="label">Scored articles in the documented historical snapshot.</span></div>
+<div class="card"><span class="metric">130</span><span class="label">Articles with a pathway or process mention.</span></div>
+<div class="card"><span class="metric">27</span><span class="label">Named groups with coverage of at least one historical HPO feature.</span></div>
+</div>
+<div class="note"><strong>What exists.</strong> The literature registry records primary papers for BUB1B, CEP57, TRIP13, MAD1L1, CENATAC, SLF2, and SMC5. The reproduction document describes a historical frozen snapshot.</div>
+<div class="warning"><strong>What does not exist.</strong> The documented article counts do not represent a completed PRISMA review. The local repository does not contain the described patch or scored snapshot.</div>
+<div class="source">Sources: <a href="../../src/mva_hackathon/literature_registry.json">literature registry</a>. <a href="../literature_review_HPO_PATHWAY_REPRODUCTION.md">literature workflow reproduction</a>.<span class="page-number">4 / 12</span></div>
+</section>
+
+<section class="page" id="vcf-method">
+<p class="kicker">4. VCF-derived gene analysis</p>
+<h2>Phase 0 selects variants. Phase 1 creates candidate seed genes.</h2>
+<div class="diagram" role="img" aria-label="Flowchart from annotated variants through coordinate, rarity, impact gates to candidate seed genes">
+<div class="node"><strong>Annotate</strong>Use consequence, population, clinical, splice, and missense evidence.</div>
+<div class="node"><strong>Check coordinates</strong>Require a chromosome, positive position, reference allele, and alternate allele.</div>
+<div class="node"><strong>Apply research gates</strong>Test rarity and at least one impact criterion.</div>
+<div class="node"><strong>Aggregate by gene</strong>Genes with one or more passing variants become network seeds.</div>
+</div>
+<div class="grid two">
+<div class="card"><h3>Rarity rule in code</h3><p>Pass when the consolidated allele frequency is ≤ 0.001, or when gnomAD reports the allele as not found.</p><p>Unknown frequency has a narrow exception for genes in an MVA biological category.</p></div>
+<div class="card"><h3>Impact rule in code</h3><p>Pass with a high-impact consequence, P/LP ClinVar label, CADD ≥ 20, SpliceAI ≥ 0.2, REVEL ≥ 0.5, or AlphaMissense ≥ 0.5.</p></div>
+</div>
+<div class="warning"><strong>Implementation difference.</strong> Narrative reports describe <code>NHOMALT &lt; 5</code> as a rarity gate. Current code records population homozygotes but does not apply that threshold as a gate.</div>
+<div class="source">Source of truth for gates: <a href="../../src/mva_hackathon/candidate_consolidation.py">candidate_consolidation.py</a>. Reported aggregates: <a href="../JOURNEY.md">JOURNEY.md</a>.<span class="page-number">5 / 12</span></div>
+</section>
+
+<section class="page" id="gene-results">
+<p class="kicker">5. Candidate-gene results</p>
+<h2>Filtering reduces the variant list. It does not establish a disease gene.</h2>
+<div class="grid four">
+<div class="card"><span class="metric">18,252</span><span class="label">Annotated variant records evaluated upstream.</span></div>
+<div class="card"><span class="metric">2,215</span><span class="label">Variant records reported as passing research gates.</span></div>
+<div class="card"><span class="metric">8,876</span><span class="label">Genes evaluated in Phase 1.</span></div>
+<div class="card"><span class="metric">1,985</span><span class="label">Genes with at least one passing candidate variant.</span></div>
+</div>
+<div class="grid two" style="margin-top:16px">
+<div class="card"><h3>Multi-hit signal</h3><p>168 genes have two or more passing candidate variants. This supports follow-up under a recessive model.</p><p>Short-read data do not resolve whether candidate alleles are in cis or trans.</p></div>
+<div class="card"><h3>Correct name</h3><p>Use <span class="definition">filter-qualified candidate seed genes</span>. Do not call this a verified gene list.</p><p>A gene needs orthogonal evidence before causal interpretation.</p></div>
+</div>
+<div class="note"><strong>Required next evidence.</strong> Variant confirmation, inheritance or long-read phasing, cellular evidence, and phenotype review must remain separate from this filtering output.</div>
+<div class="source">Reported Phase 0 and Phase 1 counts: <a href="../JOURNEY.md">JOURNEY.md</a>.<span class="page-number">6 / 12</span></div>
+</section>
+
+<section class="page" id="network">
+<p class="kicker">6. Network pipeline</p>
+<h2>STRING supplies interaction context for candidate seed genes</h2>
+<div class="diagram three-step" role="img" aria-label="Network workflow from candidate genes through symbol mapping and STRING query to graph components">
+<div class="node"><strong>Seed list</strong>Use 1,985 genes with one or more passing candidate variants.</div>
+<div class="node"><strong>STRING query</strong>Use STRING v12.5 with combined score ≥ 0.700 and no added nodes.</div>
+<div class="node"><strong>Graph summary</strong>Report edges, components, and the MVA-focus component.</div>
+</div>
+<div class="grid three">
+<div class="card"><span class="metric">477</span><span class="label">Reported high-confidence STRING edges.</span></div>
+<div class="card"><span class="metric">1,600</span><span class="label">Reported connected components.</span></div>
+<div class="card"><span class="metric">37 / 52</span><span class="label">Genes / edges in the reported MVA-focus component.</span></div>
+</div>
+<div class="note"><strong>Focused module.</strong> The reported MVA-focus component contains BUB1B, MAD1L1, and MAD2L2. It is a useful follow-up module because the pipeline did not add external proteins.</div>
+<div class="warning"><strong>Limit.</strong> STRING confidence does not show causal flow. A network edge does not show that a variant changes the linked protein or pathway.</div>
+<div class="source">Parameters and reported aggregates: <a href="../JOURNEY.md">JOURNEY.md, Phase 2</a>.<span class="page-number">7 / 12</span></div>
+</section>
+
+<section class="page" id="pathway-methods">
+<p class="kicker">7. Pathway pipeline</p>
+<h2>Provider-specific analyses use different inputs and statistical semantics</h2>
+<div class="branch" role="img" aria-label="Branching pathway workflow from candidate seed genes to Phase 2, independent P0 to P7, and DAVID">
+<div class="branch-node"><strong>Candidate seed genes</strong><br>Phase 1 genes with at least one passing candidate variant.</div>
+<div class="branch-center" aria-hidden="true"></div>
+<div class="branch-node"><strong>Phase 2 projection</strong><br>Saved Reactome and g:Profiler export. Read reported FDR values.</div>
+</div>
+<div class="grid three">
+<div class="card"><h3>Phase 2 projection</h3><p>Uses a saved enrichment export from the network workflow. The export contains 84 rows.</p></div>
+<div class="card"><h3>Independent P0–P7</h3><p>Uses passing genes as foreground and all evaluated Phase 1 genes as custom background. Retains provider BH values.</p></div>
+<div class="card"><h3>DAVID addendum</h3><p>Uses a human-operated native run with an uploaded custom background. Uses Benjamini values for its term count.</p></div>
+</div>
+<div class="warning"><strong>Do not pool results.</strong> Each analysis uses provider-specific identifier mapping, background, tested-term space, and adjustment procedure. Term overlap is descriptive only.</div>
+<div class="source">Sources: <a href="../JOURNEY.md">JOURNEY.md, independent pathway branch</a>. <a href="../DAVID_PATHWAY_REPORT.md">DAVID pathway report</a>.<span class="page-number">8 / 12</span></div>
+</section>
+
+<section class="page" id="pathway-results">
+<p class="kicker">8. Pathway results</p>
+<h2>Results differ across the three pathway analyses</h2>
+<div class="table-wrap"><table><thead><tr><th>Analysis</th><th>Observed result</th><th>Interpretation</th></tr></thead><tbody><tr><td>Phase 2 saved export</td><td>34 of 84 rows have FDR ≤ 0.05.</td><td>Leading terms are broad: organelle organization, response to stimulus, and cytoskeleton organization.</td></tr><tr><td>Independent P0–P7</td><td>0 of 16,455 returned terms have BH q ≤ 0.05. Lowest q is 0.08037.</td><td>No pathway proceeds to primary prioritization.</td></tr><tr><td>DAVID</td><td>2 of 318 chart terms have Benjamini ≤ 0.05.</td><td>Supplementary annotation evidence. Significant term names are unavailable in checked-in documentation.</td></tr></tbody></table></div>
+<div class="bar-row"><span>Phase 2 FDR ≤ 0.05</span><div class="track"><div class="bar" style="width:40.48%"></div></div><strong>34</strong></div>
+<div class="bar-row"><span>Other Phase 2 rows</span><div class="track"><div class="bar blue" style="width:59.52%"></div></div><strong>50</strong></div>
+<div class="warning"><strong>Documentation conflict.</strong> One narrative report labels all 84 Phase 2 rows significant. The saved FDR values support 34 rows at FDR ≤ 0.05. This report uses the saved values.</div>
+<div class="source">Data-blind checks used only pathway names and adjusted values from the Phase 2 and P0–P7 pathway tables. DAVID aggregates: <a href="../DAVID_PATHWAY_REPORT.md">DAVID pathway report</a>.<span class="page-number">9 / 12</span></div>
+</section>
+
+<section class="page" id="david">
+<p class="kicker">9. DAVID addendum</p>
+<h2>DAVID changes the effective tested gene universe through identifier mapping</h2>
+<div class="diagram three-step" role="img" aria-label="DAVID workflow from Ensembl identifiers to native DAVID run to validated local import">
+<div class="node"><strong>Prepare lists</strong>Normalize foreground and custom-background Ensembl identifiers.</div>
+<div class="node"><strong>Native DAVID run</strong>Human operator uploads lists and exports chart and clustering results.</div>
+<div class="node"><strong>Check import</strong>Check receipt, settings, hashes, and report completeness before comparison.</div>
+</div>
+<div class="grid three">
+<div class="card"><span class="metric">1,591 / 1,926</span><span class="label">DAVID mapped / submitted foreground identifiers.</span></div>
+<div class="card"><span class="metric">8,371 / 8,740</span><span class="label">DAVID mapped / submitted background identifiers.</span></div>
+<div class="card"><span class="metric">74</span><span class="label">Shared stable term identifiers in a descriptive provider comparison.</span></div>
+</div>
+<div class="note"><strong>Meaning of mapping loss.</strong> DAVID tests its mapped identifiers. Therefore, the effective foreground and background differ from the submitted lists.</div>
+<div class="warning"><strong>Limit.</strong> Shared annotation identifiers do not establish independent replication. DAVID and g:Profiler adjusted values must remain separate.</div>
+<div class="source">Source: <a href="../DAVID_PATHWAY_REPORT.md">DAVID pathway report</a>.<span class="page-number">10 / 12</span></div>
+</section>
+
+<section class="page" id="interpretation">
+<p class="kicker">10. Integrated interpretation</p>
+<h2>Evidence converges on a research hypothesis, not an established mechanism</h2>
+<div class="grid two">
+<div class="card"><h3>What aligns</h3><ul><li>Published papers support chromosome-stability roles for known MVA-related genes.</li><li>Candidate filtering provides a reproducible seed list for exploration.</li><li>STRING reports a focused component containing established checkpoint genes.</li><li>Phase 2 contains statistically significant broad annotation terms.</li></ul></div>
+<div class="card"><h3>What does not align</h3><ul><li>Independent custom-background enrichment has no BH-significant term.</li><li>DAVID maps fewer identifiers and uses a different statistical system.</li><li>Broad terms do not isolate a unique spindle-checkpoint mechanism.</li><li>Gene selection can bias enrichment through coverage and annotation density.</li></ul></div>
+</div>
+<div class="summary"><strong>Working conclusion.</strong> The combined outputs identify candidate genes and a follow-up network context that are compatible with chromosome-segregation biology. They do not demonstrate that any selected variant causes a disorder or activates a pathway.</div>
+<div class="source">Evidence synthesis based on sources listed on page 12.<span class="page-number">11 / 12</span></div>
+</section>
+
+<section class="page sources" id="sources">
+<p class="kicker">11. Validation, next steps, and sources</p>
+<h2>Resolve discrepancies before stronger interpretation</h2>
+<div class="grid two">
+<div class="card"><h3>Required validation</h3><ol><li>Reconcile filtering code, saved tables, and narrative reports.</li><li>Use an approved orthogonal method to check candidate variants.</li><li>Resolve allele phase with family data or long-read evidence when available.</li><li>Test proposed cellular mechanisms with suitable functional assays.</li><li>Rerun enrichment with a documented callable-gene universe.</li></ol></div>
+<div class="card"><h3>Limits that remain</h3><ul><li>In-silico predictions do not measure functional effect.</li><li>Short-read multi-hit patterns do not prove a biallelic configuration.</li><li>Network topology does not show direction or treatment relevance.</li><li>Annotation enrichment does not show pathway activity.</li></ul></div>
+</div>
+<h3 style="margin-top:18px">Sources</h3>
+<div class="references"><p><strong>[R1]</strong> <a href="../../src/mva_hackathon/literature_registry.json">Local literature registry</a>. Curated PMID and DOI entries for disease-gene evidence.</p><p><strong>[R2]</strong> <a href="../literature_review_HPO_PATHWAY_REPRODUCTION.md">Literature workflow reproduction</a>. Historical snapshot counts and review limitations.</p><p><strong>[R3]</strong> <a href="../JOURNEY.md">JOURNEY.md</a>. Phase 0–2 and P0–P7 workflow documentation.</p><p><strong>[R4]</strong> <a href="../../src/mva_hackathon/candidate_consolidation.py">candidate_consolidation.py</a>. Implemented coordinate, rarity, impact, and overall gates.</p><p><strong>[R5]</strong> <a href="../DAVID_PATHWAY_REPORT.md">DAVID pathway report</a>. Mapping, native results, and provider comparison.</p><p><strong>[R6]</strong> Hanks et al. 2004. <a href="https://doi.org/10.1038/ng1449">doi:10.1038/ng1449</a>. Snape et al. 2011. <a href="https://doi.org/10.1038/ng.822">doi:10.1038/ng.822</a>.</p></div>
+<div class="source">This document is self-contained. Diagrams are HTML flowcharts that remain visible without scripts or network access.<span class="page-number">12 / 12</span></div>
+</section>
+</main>
+</body>
+</html>
