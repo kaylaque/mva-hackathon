@@ -264,4 +264,3 @@ The updated drug-repurposing search supports oral phosphate supplementation only
 16. TTK inhibitors as a targeted therapy for CTNNB1 (β-catenin) mutant cancers. *Molecular Cancer Therapeutics* (2017). https://doi.org/10.1158/1535-7163.MCT-17-0342  
 17. Targeting hypercalciuria in SLC34A1-related disorders: impact of oral phosphate therapy and novel genetic insights in paediatric case series. *Calcified Tissue International* (2026). https://doi.org/10.1007/s00223-025-01462-x  
 18. Project material: [The MVA Hackathon 2026 workbook](https://github.com/kaylaque/mva-hackathon/blob/main/docs/The%20MVA%20Hackathon%202026.xlsx).  
-19. Project material: [Canva presentation](https://canva.link/7vszbtzazleyv9k).

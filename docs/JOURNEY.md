@@ -940,8 +940,8 @@ whole-exome callable universe. P1 retains g:Profiler BH-adjusted values as
 `BH_Q`/`PROVIDER_ADJUSTED_P`, separately stores raw hypergeometric values only
 when provider effective-domain counts are valid, and does not double-correct
 returned hit terms. HP results are **observational gene-annotation enrichment**,
-not observed patient phenotype. P2 prioritizes MVA relevance, q value, fold
-enrichment, and intersection size without an uncalibrated efficacy score. P5
+not observed patient phenotype. P2 prioritizes q value, fold enrichment, and
+intersection size without an uncalibrated efficacy score or MVA relevance score. P5
 labels inhibitor-like actions against restoration-required genes as
 contradictions; pharmacological action evidence never proves biological rescue.
 
