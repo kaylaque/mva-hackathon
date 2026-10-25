@@ -1,6 +1,6 @@
 {
   "pipeline_stage": "Phase 0 (Candidate Intake, Gating, and Consolidation)",
-  "timestamp_utc": "2026-10-10T13:06:54.809751+00:00",
+  "timestamp_utc": "2026-10-11T03:35:27.722277+00:00",
   "genome_build": "GRCh38",
   "pipeline_version": "0.2.0",
   "gates_config": {
@@ -12,9 +12,9 @@
     "reference_build": "GRCh38",
     "pipeline_version": "0.2.0"
   },
-  "input_evidence": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/processed/variant_evidence_master.csv",
-  "input_exomiser_variants": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/interim/exomiser/mva_patient_exomiser.variants.tsv",
-  "input_exomiser_genes": "/home/nauvalrajwaa/proj/mva_hackathon/MVA/data/interim/exomiser/mva_patient_exomiser.genes.tsv",
+  "input_evidence": "/Users/macbookpro/Documents/RA/mva-hackathon/data/processed/variant_evidence_master.csv",
+  "input_exomiser_variants": "/Users/macbookpro/Documents/RA/mva-hackathon/data/interim/exomiser/mva_patient_exomiser.variants.tsv",
+  "input_exomiser_genes": "/Users/macbookpro/Documents/RA/mva-hackathon/data/interim/exomiser/mva_patient_exomiser.genes.tsv",
   "total_variants_ingested": 18252,
   "total_variants_passing_gates": 2215,
   "total_mva_core_variants": 6,
