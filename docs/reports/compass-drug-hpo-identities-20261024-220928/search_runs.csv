@@ -1,0 +1,1255 @@
+SOURCE,CANONICAL_DRUG_ID,HPO_CODE,QUERY,STATUS
+fda,CHEMBL1200485,,"""SORAFENIB TOSYLATE""",reviewed_no_qualifying_evidence
+fda,CHEMBL1201608,,"""MUROMONAB-CD3""",reviewed_no_qualifying_evidence
+fda,CHEMBL1230607,,"""PHA-793887""",reviewed_no_qualifying_evidence
+fda,CHEMBL14762,,"""SELICICLIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL1614713,,"""CC-401""",reviewed_no_qualifying_evidence
+fda,CHEMBL1649931,,"""PF-232798""",reviewed_no_qualifying_evidence
+fda,CHEMBL1668019,,"""APLAVIROC HYDROCHLORIDE""",reviewed_no_qualifying_evidence
+fda,CHEMBL1688243,,"""INCB-9471""",reviewed_no_qualifying_evidence
+fda,CHEMBL1742992,,"""BLINATUMOMAB""",evidence_coded
+fda,CHEMBL1743020,,"""FORALUMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL1743053,,"""OTELIXIZUMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL1743078,,"""TEPLIZUMAB""",evidence_coded
+fda,CHEMBL1944698,,"""ZOTIRACICLIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL1946170,,"""REGORAFENIB""",evidence_coded
+fda,CHEMBL1950289,,"""TANZISERTIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL1951914,,"""AZD5672""",reviewed_no_qualifying_evidence
+fda,CHEMBL197672,,"""EMRICASAN""",reviewed_no_qualifying_evidence
+fda,CHEMBL2103840,,"""DINACICLIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL2105721,,"""NIVOCASAN""",reviewed_no_qualifying_evidence
+fda,CHEMBL2107384,,"""VICRIVIROC MALEATE""",reviewed_no_qualifying_evidence
+fda,CHEMBL2108029,,"""ERTUMAXOMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL2108581,,"""CATUMAXOMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL2108811,,"""VISILIZUMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109253,,"""HOKT3""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109264,,"""SOLITOMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109341,,"""CCR5MAB004""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109342,,"""HGS-1025""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109343,,"""LERONLIMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109351,,"""FBT-A05""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109372,,"""MEDI-565""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109434,,"""IMC-GP100""",reviewed_no_qualifying_evidence
+fda,CHEMBL2110727,,"""CENICRIVIROC""",reviewed_no_qualifying_evidence
+fda,CHEMBL256907,,"""MARAVIROC""",evidence_coded
+fda,CHEMBL3128043,,"""PF-03758309""",reviewed_no_qualifying_evidence
+fda,CHEMBL3348923,,"""TOVORAFENIB""",evidence_coded
+fda,CHEMBL3545027,,"""XL-281""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545082,,"""RG-7376""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545083,,"""RGB-286638""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545213,,"""BENTAMAPIMOD""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545263,,"""LGX-806""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545283,,"""RIVICICLIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545420,,"""AG-24322""",reviewed_no_qualifying_evidence
+fda,CHEMBL3577124,,"""LY-3009120""",reviewed_no_qualifying_evidence
+fda,CHEMBL384304,,"""RG-547""",reviewed_no_qualifying_evidence
+fda,CHEMBL3977543,,"""BELVARAFENIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL3990038,,"""FLOTETUZUMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL428690,,"""ALVOCIDIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297348,,"""BRIMAPITIDE, C-TERMINAL ACID""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297555,,"""RESIMMUNE""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297650,,"""BRIMAPITIDE""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297788,,"""MOSUNETUZUMAB""",evidence_coded
+fda,CHEMBL4297809,,"""ELRANATAMAB""",evidence_coded
+fda,CHEMBL4298084,,"""ODRONEXTAMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL4298092,,"""GLOFITAMAB""",evidence_coded
+fda,CHEMBL4442620,,"""RONICICLIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL445813,,"""AT-7519""",reviewed_no_qualifying_evidence
+fda,CHEMBL4583691,,"""NAPORAFENIB""",reviewed_no_qualifying_evidence
+fda,CHEMBL4594419,,"""BMS-813160""",reviewed_no_qualifying_evidence
+fda,CHEMBL4594503,,"""TALQUETAMAB""",evidence_coded
+fda,CHEMBL4594505,,"""TECLISTAMAB""",evidence_coded
+fda,CHEMBL4650393,,"""EPCORITAMAB""",evidence_coded
+fda,CHEMBL488436,,"""AZD-5438""",reviewed_no_qualifying_evidence
+fda,CHEMBL5095029,,"""PF-04634817""",reviewed_no_qualifying_evidence
+fda,CHEMBL5095292,,"""TARLATAMAB""",reviewed_no_qualifying_evidence
+fda,CHEMBL5314407,,"""ARQ-736""",reviewed_no_qualifying_evidence
+fda,CHEMBL564829,,"""MILCICLIB""",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,,"""SORAFENIB TOSYLATE""",retrieval_failed
+literature,CHEMBL1200485,HP:0000121,"(""SORAFENIB TOSYLATE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0001508,"(""SORAFENIB TOSYLATE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0001518,"(""SORAFENIB TOSYLATE"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1200485,HP:0001622,"(""SORAFENIB TOSYLATE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0002859,"(""SORAFENIB TOSYLATE"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1200485,HP:0003202,"(""SORAFENIB TOSYLATE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0004322,"(""SORAFENIB TOSYLATE"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1200485,HP:0200067,"(""SORAFENIB TOSYLATE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,,"""MUROMONAB-CD3""",retrieval_failed
+literature,CHEMBL1201608,HP:0000121,"(""MUROMONAB-CD3"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL1201608,HP:0001508,"(""MUROMONAB-CD3"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL1201608,HP:0001518,"(""MUROMONAB-CD3"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1201608,HP:0001622,"(""MUROMONAB-CD3"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL1201608,HP:0002859,"(""MUROMONAB-CD3"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1201608,HP:0003202,"(""MUROMONAB-CD3"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0004322,"(""MUROMONAB-CD3"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1201608,HP:0200067,"(""MUROMONAB-CD3"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL1230607,,"""PHA-793887""",retrieval_failed
+literature,CHEMBL1230607,HP:0000121,"(""PHA-793887"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0001508,"(""PHA-793887"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0001518,"(""PHA-793887"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0001622,"(""PHA-793887"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0002859,"(""PHA-793887"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1230607,HP:0003202,"(""PHA-793887"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0004322,"(""PHA-793887"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1230607,HP:0200067,"(""PHA-793887"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,,"""SELICICLIB""",retrieval_failed
+literature,CHEMBL14762,HP:0000121,"(""SELICICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0001508,"(""SELICICLIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL14762,HP:0001518,"(""SELICICLIB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL14762,HP:0001622,"(""SELICICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0002859,"(""SELICICLIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL14762,HP:0003202,"(""SELICICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0004322,"(""SELICICLIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL14762,HP:0200067,"(""SELICICLIB"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL1614713,,"""CC-401""",retrieval_failed
+literature,CHEMBL1614713,HP:0000121,"(""CC-401"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0001508,"(""CC-401"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0001518,"(""CC-401"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0001622,"(""CC-401"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0002859,"(""CC-401"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1614713,HP:0003202,"(""CC-401"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0004322,"(""CC-401"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1614713,HP:0200067,"(""CC-401"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,,"""PF-232798""",retrieval_failed
+literature,CHEMBL1649931,HP:0000121,"(""PF-232798"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0001508,"(""PF-232798"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0001518,"(""PF-232798"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0001622,"(""PF-232798"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0002859,"(""PF-232798"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0003202,"(""PF-232798"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0004322,"(""PF-232798"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0200067,"(""PF-232798"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,,"""APLAVIROC HYDROCHLORIDE""",retrieval_failed
+literature,CHEMBL1668019,HP:0000121,"(""APLAVIROC HYDROCHLORIDE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0001508,"(""APLAVIROC HYDROCHLORIDE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0001518,"(""APLAVIROC HYDROCHLORIDE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0001622,"(""APLAVIROC HYDROCHLORIDE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0002859,"(""APLAVIROC HYDROCHLORIDE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0003202,"(""APLAVIROC HYDROCHLORIDE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0004322,"(""APLAVIROC HYDROCHLORIDE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0200067,"(""APLAVIROC HYDROCHLORIDE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,,"""INCB-9471""",retrieval_failed
+literature,CHEMBL1688243,HP:0000121,"(""INCB-9471"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0001508,"(""INCB-9471"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0001518,"(""INCB-9471"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0001622,"(""INCB-9471"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0002859,"(""INCB-9471"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0003202,"(""INCB-9471"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0004322,"(""INCB-9471"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0200067,"(""INCB-9471"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,,"""BLINATUMOMAB""",retrieval_failed
+literature,CHEMBL1742992,HP:0000121,"(""BLINATUMOMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL1742992,HP:0001508,"(""BLINATUMOMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL1742992,HP:0001518,"(""BLINATUMOMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1742992,HP:0001622,"(""BLINATUMOMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL1742992,HP:0002859,"(""BLINATUMOMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1742992,HP:0003202,"(""BLINATUMOMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL1742992,HP:0004322,"(""BLINATUMOMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1742992,HP:0200067,"(""BLINATUMOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,,"""FORALUMAB""",retrieval_failed
+literature,CHEMBL1743020,HP:0000121,"(""FORALUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0001508,"(""FORALUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0001518,"(""FORALUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0001622,"(""FORALUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0002859,"(""FORALUMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1743020,HP:0003202,"(""FORALUMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL1743020,HP:0004322,"(""FORALUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0200067,"(""FORALUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,,"""OTELIXIZUMAB""",retrieval_failed
+literature,CHEMBL1743053,HP:0000121,"(""OTELIXIZUMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL1743053,HP:0001508,"(""OTELIXIZUMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL1743053,HP:0001518,"(""OTELIXIZUMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1743053,HP:0001622,"(""OTELIXIZUMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL1743053,HP:0002859,"(""OTELIXIZUMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1743053,HP:0003202,"(""OTELIXIZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0004322,"(""OTELIXIZUMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1743053,HP:0200067,"(""OTELIXIZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,,"""TEPLIZUMAB""",retrieval_failed
+literature,CHEMBL1743078,HP:0000121,"(""TEPLIZUMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL1743078,HP:0001508,"(""TEPLIZUMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL1743078,HP:0001518,"(""TEPLIZUMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1743078,HP:0001622,"(""TEPLIZUMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL1743078,HP:0002859,"(""TEPLIZUMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1743078,HP:0003202,"(""TEPLIZUMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL1743078,HP:0004322,"(""TEPLIZUMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1743078,HP:0200067,"(""TEPLIZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,,"""ZOTIRACICLIB""",retrieval_failed
+literature,CHEMBL1944698,HP:0000121,"(""ZOTIRACICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0001508,"(""ZOTIRACICLIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL1944698,HP:0001518,"(""ZOTIRACICLIB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1944698,HP:0001622,"(""ZOTIRACICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0002859,"(""ZOTIRACICLIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1944698,HP:0003202,"(""ZOTIRACICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0004322,"(""ZOTIRACICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0200067,"(""ZOTIRACICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,,"""REGORAFENIB""",retrieval_failed
+literature,CHEMBL1946170,HP:0000121,"(""REGORAFENIB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL1946170,HP:0001508,"(""REGORAFENIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL1946170,HP:0001518,"(""REGORAFENIB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL1946170,HP:0001622,"(""REGORAFENIB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL1946170,HP:0002859,"(""REGORAFENIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1946170,HP:0003202,"(""REGORAFENIB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL1946170,HP:0004322,"(""REGORAFENIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL1946170,HP:0200067,"(""REGORAFENIB"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL1950289,,"""TANZISERTIB""",retrieval_failed
+literature,CHEMBL1950289,HP:0000121,"(""TANZISERTIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0001508,"(""TANZISERTIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0001518,"(""TANZISERTIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0001622,"(""TANZISERTIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0002859,"(""TANZISERTIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL1950289,HP:0003202,"(""TANZISERTIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0004322,"(""TANZISERTIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0200067,"(""TANZISERTIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,,"""AZD5672""",retrieval_failed
+literature,CHEMBL1951914,HP:0000121,"(""AZD5672"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0001508,"(""AZD5672"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0001518,"(""AZD5672"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0001622,"(""AZD5672"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0002859,"(""AZD5672"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0003202,"(""AZD5672"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0004322,"(""AZD5672"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0200067,"(""AZD5672"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,,"""EMRICASAN""",retrieval_failed
+literature,CHEMBL197672,HP:0000121,"(""EMRICASAN"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0001508,"(""EMRICASAN"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL197672,HP:0001518,"(""EMRICASAN"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL197672,HP:0001622,"(""EMRICASAN"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL197672,HP:0002859,"(""EMRICASAN"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL197672,HP:0003202,"(""EMRICASAN"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0004322,"(""EMRICASAN"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL197672,HP:0200067,"(""EMRICASAN"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,,"""DINACICLIB""",retrieval_failed
+literature,CHEMBL2103840,HP:0000121,"(""DINACICLIB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL2103840,HP:0001508,"(""DINACICLIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL2103840,HP:0001518,"(""DINACICLIB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL2103840,HP:0001622,"(""DINACICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0002859,"(""DINACICLIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2103840,HP:0003202,"(""DINACICLIB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL2103840,HP:0004322,"(""DINACICLIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL2103840,HP:0200067,"(""DINACICLIB"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL2105721,,"""NIVOCASAN""",retrieval_failed
+literature,CHEMBL2105721,HP:0000121,"(""NIVOCASAN"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0001508,"(""NIVOCASAN"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0001518,"(""NIVOCASAN"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0001622,"(""NIVOCASAN"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0002859,"(""NIVOCASAN"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0003202,"(""NIVOCASAN"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0004322,"(""NIVOCASAN"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0200067,"(""NIVOCASAN"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,,"""VICRIVIROC MALEATE""",retrieval_failed
+literature,CHEMBL2107384,HP:0000121,"(""VICRIVIROC MALEATE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0001508,"(""VICRIVIROC MALEATE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0001518,"(""VICRIVIROC MALEATE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0001622,"(""VICRIVIROC MALEATE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0002859,"(""VICRIVIROC MALEATE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0003202,"(""VICRIVIROC MALEATE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0004322,"(""VICRIVIROC MALEATE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0200067,"(""VICRIVIROC MALEATE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,,"""ERTUMAXOMAB""",retrieval_failed
+literature,CHEMBL2108029,HP:0000121,"(""ERTUMAXOMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL2108029,HP:0001508,"(""ERTUMAXOMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0001518,"(""ERTUMAXOMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0001622,"(""ERTUMAXOMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0002859,"(""ERTUMAXOMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2108029,HP:0003202,"(""ERTUMAXOMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0004322,"(""ERTUMAXOMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0200067,"(""ERTUMAXOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,,"""CATUMAXOMAB""",retrieval_failed
+literature,CHEMBL2108581,HP:0000121,"(""CATUMAXOMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL2108581,HP:0001508,"(""CATUMAXOMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL2108581,HP:0001518,"(""CATUMAXOMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL2108581,HP:0001622,"(""CATUMAXOMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL2108581,HP:0002859,"(""CATUMAXOMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2108581,HP:0003202,"(""CATUMAXOMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0004322,"(""CATUMAXOMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL2108581,HP:0200067,"(""CATUMAXOMAB"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL2108811,,"""VISILIZUMAB""",retrieval_failed
+literature,CHEMBL2108811,HP:0000121,"(""VISILIZUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0001508,"(""VISILIZUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0001518,"(""VISILIZUMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL2108811,HP:0001622,"(""VISILIZUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0002859,"(""VISILIZUMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2108811,HP:0003202,"(""VISILIZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0004322,"(""VISILIZUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0200067,"(""VISILIZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,,"""HOKT3""",retrieval_failed
+literature,CHEMBL2109253,HP:0000121,"(""HOKT3"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0001508,"(""HOKT3"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0001518,"(""HOKT3"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0001622,"(""HOKT3"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0002859,"(""HOKT3"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0003202,"(""HOKT3"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0004322,"(""HOKT3"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0200067,"(""HOKT3"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,,"""SOLITOMAB""",retrieval_failed
+literature,CHEMBL2109264,HP:0000121,"(""SOLITOMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0001508,"(""SOLITOMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0001518,"(""SOLITOMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0001622,"(""SOLITOMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0002859,"(""SOLITOMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2109264,HP:0003202,"(""SOLITOMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL2109264,HP:0004322,"(""SOLITOMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0200067,"(""SOLITOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,,"""CCR5MAB004""",retrieval_failed
+literature,CHEMBL2109341,HP:0000121,"(""CCR5MAB004"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0001508,"(""CCR5MAB004"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0001518,"(""CCR5MAB004"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0001622,"(""CCR5MAB004"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0002859,"(""CCR5MAB004"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0003202,"(""CCR5MAB004"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0004322,"(""CCR5MAB004"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0200067,"(""CCR5MAB004"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,,"""HGS-1025""",retrieval_failed
+literature,CHEMBL2109342,HP:0000121,"(""HGS-1025"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0001508,"(""HGS-1025"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0001518,"(""HGS-1025"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0001622,"(""HGS-1025"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0002859,"(""HGS-1025"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0003202,"(""HGS-1025"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0004322,"(""HGS-1025"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0200067,"(""HGS-1025"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,,"""LERONLIMAB""",retrieval_failed
+literature,CHEMBL2109343,HP:0000121,"(""LERONLIMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0001508,"(""LERONLIMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL2109343,HP:0001518,"(""LERONLIMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL2109343,HP:0001622,"(""LERONLIMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0002859,"(""LERONLIMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2109343,HP:0003202,"(""LERONLIMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0004322,"(""LERONLIMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL2109343,HP:0200067,"(""LERONLIMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,,"""FBT-A05""",retrieval_failed
+literature,CHEMBL2109351,HP:0000121,"(""FBT-A05"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0001508,"(""FBT-A05"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0001518,"(""FBT-A05"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0001622,"(""FBT-A05"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0002859,"(""FBT-A05"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0003202,"(""FBT-A05"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0004322,"(""FBT-A05"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0200067,"(""FBT-A05"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,,"""MEDI-565""",retrieval_failed
+literature,CHEMBL2109372,HP:0000121,"(""MEDI-565"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0001508,"(""MEDI-565"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0001518,"(""MEDI-565"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0001622,"(""MEDI-565"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0002859,"(""MEDI-565"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0003202,"(""MEDI-565"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0004322,"(""MEDI-565"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0200067,"(""MEDI-565"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,,"""IMC-GP100""",retrieval_failed
+literature,CHEMBL2109434,HP:0000121,"(""IMC-GP100"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0001508,"(""IMC-GP100"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0001518,"(""IMC-GP100"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0001622,"(""IMC-GP100"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0002859,"(""IMC-GP100"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0003202,"(""IMC-GP100"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0004322,"(""IMC-GP100"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0200067,"(""IMC-GP100"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,,"""CENICRIVIROC""",retrieval_failed
+literature,CHEMBL2110727,HP:0000121,"(""CENICRIVIROC"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL2110727,HP:0001508,"(""CENICRIVIROC"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL2110727,HP:0001518,"(""CENICRIVIROC"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL2110727,HP:0001622,"(""CENICRIVIROC"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL2110727,HP:0002859,"(""CENICRIVIROC"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL2110727,HP:0003202,"(""CENICRIVIROC"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL2110727,HP:0004322,"(""CENICRIVIROC"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0200067,"(""CENICRIVIROC"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,,"""MARAVIROC""",retrieval_failed
+literature,CHEMBL256907,HP:0000121,"(""MARAVIROC"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL256907,HP:0001508,"(""MARAVIROC"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL256907,HP:0001518,"(""MARAVIROC"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL256907,HP:0001622,"(""MARAVIROC"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL256907,HP:0002859,"(""MARAVIROC"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL256907,HP:0003202,"(""MARAVIROC"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL256907,HP:0004322,"(""MARAVIROC"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL256907,HP:0200067,"(""MARAVIROC"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL3128043,,"""PF-03758309""",retrieval_failed
+literature,CHEMBL3128043,HP:0000121,"(""PF-03758309"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0001508,"(""PF-03758309"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0001518,"(""PF-03758309"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0001622,"(""PF-03758309"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0002859,"(""PF-03758309"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3128043,HP:0003202,"(""PF-03758309"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0004322,"(""PF-03758309"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0200067,"(""PF-03758309"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,,"""TOVORAFENIB""",retrieval_failed
+literature,CHEMBL3348923,HP:0000121,"(""TOVORAFENIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0001508,"(""TOVORAFENIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL3348923,HP:0001518,"(""TOVORAFENIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0001622,"(""TOVORAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0002859,"(""TOVORAFENIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3348923,HP:0003202,"(""TOVORAFENIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0004322,"(""TOVORAFENIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL3348923,HP:0200067,"(""TOVORAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,,"""XL-281""",retrieval_failed
+literature,CHEMBL3545027,HP:0000121,"(""XL-281"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0001508,"(""XL-281"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0001518,"(""XL-281"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0001622,"(""XL-281"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0002859,"(""XL-281"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0003202,"(""XL-281"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0004322,"(""XL-281"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0200067,"(""XL-281"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,,"""RG-7376""",retrieval_failed
+literature,CHEMBL3545082,HP:0000121,"(""RG-7376"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0001508,"(""RG-7376"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0001518,"(""RG-7376"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0001622,"(""RG-7376"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0002859,"(""RG-7376"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0003202,"(""RG-7376"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0004322,"(""RG-7376"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0200067,"(""RG-7376"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,,"""RGB-286638""",retrieval_failed
+literature,CHEMBL3545083,HP:0000121,"(""RGB-286638"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0001508,"(""RGB-286638"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0001518,"(""RGB-286638"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0001622,"(""RGB-286638"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0002859,"(""RGB-286638"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3545083,HP:0003202,"(""RGB-286638"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0004322,"(""RGB-286638"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL3545083,HP:0200067,"(""RGB-286638"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,,"""BENTAMAPIMOD""",retrieval_failed
+literature,CHEMBL3545213,HP:0000121,"(""BENTAMAPIMOD"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,HP:0001508,"(""BENTAMAPIMOD"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,HP:0001518,"(""BENTAMAPIMOD"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,HP:0001622,"(""BENTAMAPIMOD"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,HP:0002859,"(""BENTAMAPIMOD"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3545213,HP:0003202,"(""BENTAMAPIMOD"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,HP:0004322,"(""BENTAMAPIMOD"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545213,HP:0200067,"(""BENTAMAPIMOD"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,,"""LGX-806""",retrieval_failed
+literature,CHEMBL3545263,HP:0000121,"(""LGX-806"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0001508,"(""LGX-806"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0001518,"(""LGX-806"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0001622,"(""LGX-806"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0002859,"(""LGX-806"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0003202,"(""LGX-806"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0004322,"(""LGX-806"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0200067,"(""LGX-806"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,,"""RIVICICLIB""",retrieval_failed
+literature,CHEMBL3545283,HP:0000121,"(""RIVICICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0001508,"(""RIVICICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0001518,"(""RIVICICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0001622,"(""RIVICICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0002859,"(""RIVICICLIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3545283,HP:0003202,"(""RIVICICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0004322,"(""RIVICICLIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL3545283,HP:0200067,"(""RIVICICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,,"""AG-24322""",retrieval_failed
+literature,CHEMBL3545420,HP:0000121,"(""AG-24322"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0001508,"(""AG-24322"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0001518,"(""AG-24322"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0001622,"(""AG-24322"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0002859,"(""AG-24322"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0003202,"(""AG-24322"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0004322,"(""AG-24322"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0200067,"(""AG-24322"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,,"""LY-3009120""",retrieval_failed
+literature,CHEMBL3577124,HP:0000121,"(""LY-3009120"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0001508,"(""LY-3009120"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0001518,"(""LY-3009120"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0001622,"(""LY-3009120"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0002859,"(""LY-3009120"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3577124,HP:0003202,"(""LY-3009120"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0004322,"(""LY-3009120"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0200067,"(""LY-3009120"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,,"""RG-547""",retrieval_failed
+literature,CHEMBL384304,HP:0000121,"(""RG-547"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0001508,"(""RG-547"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0001518,"(""RG-547"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0001622,"(""RG-547"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0002859,"(""RG-547"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0003202,"(""RG-547"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0004322,"(""RG-547"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0200067,"(""RG-547"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,,"""BELVARAFENIB""",retrieval_failed
+literature,CHEMBL3977543,HP:0000121,"(""BELVARAFENIB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL3977543,HP:0001508,"(""BELVARAFENIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL3977543,HP:0001518,"(""BELVARAFENIB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL3977543,HP:0001622,"(""BELVARAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0002859,"(""BELVARAFENIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3977543,HP:0003202,"(""BELVARAFENIB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL3977543,HP:0004322,"(""BELVARAFENIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL3977543,HP:0200067,"(""BELVARAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,,"""FLOTETUZUMAB""",retrieval_failed
+literature,CHEMBL3990038,HP:0000121,"(""FLOTETUZUMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL3990038,HP:0001508,"(""FLOTETUZUMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL3990038,HP:0001518,"(""FLOTETUZUMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL3990038,HP:0001622,"(""FLOTETUZUMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL3990038,HP:0002859,"(""FLOTETUZUMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL3990038,HP:0003202,"(""FLOTETUZUMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL3990038,HP:0004322,"(""FLOTETUZUMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL3990038,HP:0200067,"(""FLOTETUZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,,"""ALVOCIDIB""",retrieval_failed
+literature,CHEMBL428690,HP:0000121,"(""ALVOCIDIB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL428690,HP:0001508,"(""ALVOCIDIB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL428690,HP:0001518,"(""ALVOCIDIB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL428690,HP:0001622,"(""ALVOCIDIB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL428690,HP:0002859,"(""ALVOCIDIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL428690,HP:0003202,"(""ALVOCIDIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0004322,"(""ALVOCIDIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL428690,HP:0200067,"(""ALVOCIDIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,,"""BRIMAPITIDE, C-TERMINAL ACID""",retrieval_failed
+literature,CHEMBL4297348,HP:0000121,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0001508,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0001518,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0001622,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0002859,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0003202,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0004322,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0200067,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,,"""RESIMMUNE""",retrieval_failed
+literature,CHEMBL4297555,HP:0000121,"(""RESIMMUNE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0001508,"(""RESIMMUNE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0001518,"(""RESIMMUNE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0001622,"(""RESIMMUNE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0002859,"(""RESIMMUNE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0003202,"(""RESIMMUNE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0004322,"(""RESIMMUNE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0200067,"(""RESIMMUNE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,,"""BRIMAPITIDE""",retrieval_failed
+literature,CHEMBL4297650,HP:0000121,"(""BRIMAPITIDE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0001508,"(""BRIMAPITIDE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0001518,"(""BRIMAPITIDE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0001622,"(""BRIMAPITIDE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0002859,"(""BRIMAPITIDE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0003202,"(""BRIMAPITIDE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0004322,"(""BRIMAPITIDE"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4297650,HP:0200067,"(""BRIMAPITIDE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,,"""MOSUNETUZUMAB""",retrieval_failed
+literature,CHEMBL4297788,HP:0000121,"(""MOSUNETUZUMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4297788,HP:0001508,"(""MOSUNETUZUMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4297788,HP:0001518,"(""MOSUNETUZUMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4297788,HP:0001622,"(""MOSUNETUZUMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL4297788,HP:0002859,"(""MOSUNETUZUMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4297788,HP:0003202,"(""MOSUNETUZUMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4297788,HP:0004322,"(""MOSUNETUZUMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4297788,HP:0200067,"(""MOSUNETUZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,,"""ELRANATAMAB""",retrieval_failed
+literature,CHEMBL4297809,HP:0000121,"(""ELRANATAMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4297809,HP:0001508,"(""ELRANATAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4297809,HP:0001518,"(""ELRANATAMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4297809,HP:0001622,"(""ELRANATAMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL4297809,HP:0002859,"(""ELRANATAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4297809,HP:0003202,"(""ELRANATAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4297809,HP:0004322,"(""ELRANATAMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4297809,HP:0200067,"(""ELRANATAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,,"""ODRONEXTAMAB""",retrieval_failed
+literature,CHEMBL4298084,HP:0000121,"(""ODRONEXTAMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4298084,HP:0001508,"(""ODRONEXTAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4298084,HP:0001518,"(""ODRONEXTAMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4298084,HP:0001622,"(""ODRONEXTAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0002859,"(""ODRONEXTAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4298084,HP:0003202,"(""ODRONEXTAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4298084,HP:0004322,"(""ODRONEXTAMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4298084,HP:0200067,"(""ODRONEXTAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,,"""GLOFITAMAB""",retrieval_failed
+literature,CHEMBL4298092,HP:0000121,"(""GLOFITAMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4298092,HP:0001508,"(""GLOFITAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4298092,HP:0001518,"(""GLOFITAMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4298092,HP:0001622,"(""GLOFITAMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL4298092,HP:0002859,"(""GLOFITAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4298092,HP:0003202,"(""GLOFITAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4298092,HP:0004322,"(""GLOFITAMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4298092,HP:0200067,"(""GLOFITAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,,"""RONICICLIB""",retrieval_failed
+literature,CHEMBL4442620,HP:0000121,"(""RONICICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0001508,"(""RONICICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0001518,"(""RONICICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0001622,"(""RONICICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0002859,"(""RONICICLIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4442620,HP:0003202,"(""RONICICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0004322,"(""RONICICLIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4442620,HP:0200067,"(""RONICICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,,"""AT-7519""",retrieval_failed
+literature,CHEMBL445813,HP:0000121,"(""AT-7519"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL445813,HP:0001508,"(""AT-7519"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL445813,HP:0001518,"(""AT-7519"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL445813,HP:0001622,"(""AT-7519"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL445813,HP:0002859,"(""AT-7519"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL445813,HP:0003202,"(""AT-7519"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL445813,HP:0004322,"(""AT-7519"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL445813,HP:0200067,"(""AT-7519"") AND (""Recurrent spontaneous abortion"")",retrieval_failed
+literature,CHEMBL4583691,,"""NAPORAFENIB""",retrieval_failed
+literature,CHEMBL4583691,HP:0000121,"(""NAPORAFENIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0001508,"(""NAPORAFENIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0001518,"(""NAPORAFENIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0001622,"(""NAPORAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0002859,"(""NAPORAFENIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4583691,HP:0003202,"(""NAPORAFENIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0004322,"(""NAPORAFENIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0200067,"(""NAPORAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,,"""BMS-813160""",retrieval_failed
+literature,CHEMBL4594419,HP:0000121,"(""BMS-813160"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0001508,"(""BMS-813160"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0001518,"(""BMS-813160"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0001622,"(""BMS-813160"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0002859,"(""BMS-813160"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4594419,HP:0003202,"(""BMS-813160"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0004322,"(""BMS-813160"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4594419,HP:0200067,"(""BMS-813160"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,,"""TALQUETAMAB""",retrieval_failed
+literature,CHEMBL4594503,HP:0000121,"(""TALQUETAMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4594503,HP:0001508,"(""TALQUETAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4594503,HP:0001518,"(""TALQUETAMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4594503,HP:0001622,"(""TALQUETAMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL4594503,HP:0002859,"(""TALQUETAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4594503,HP:0003202,"(""TALQUETAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4594503,HP:0004322,"(""TALQUETAMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4594503,HP:0200067,"(""TALQUETAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,,"""TECLISTAMAB""",retrieval_failed
+literature,CHEMBL4594505,HP:0000121,"(""TECLISTAMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4594505,HP:0001508,"(""TECLISTAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4594505,HP:0001518,"(""TECLISTAMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4594505,HP:0001622,"(""TECLISTAMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL4594505,HP:0002859,"(""TECLISTAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4594505,HP:0003202,"(""TECLISTAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4594505,HP:0004322,"(""TECLISTAMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4594505,HP:0200067,"(""TECLISTAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,,"""EPCORITAMAB""",retrieval_failed
+literature,CHEMBL4650393,HP:0000121,"(""EPCORITAMAB"") AND (""Nephrocalcinosis"")",retrieval_failed
+literature,CHEMBL4650393,HP:0001508,"(""EPCORITAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL4650393,HP:0001518,"(""EPCORITAMAB"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL4650393,HP:0001622,"(""EPCORITAMAB"") AND (""Premature birth"")",retrieval_failed
+literature,CHEMBL4650393,HP:0002859,"(""EPCORITAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL4650393,HP:0003202,"(""EPCORITAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL4650393,HP:0004322,"(""EPCORITAMAB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL4650393,HP:0200067,"(""EPCORITAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,,"""AZD-5438""",retrieval_failed
+literature,CHEMBL488436,HP:0000121,"(""AZD-5438"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0001508,"(""AZD-5438"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0001518,"(""AZD-5438"") AND (""Small for gestational age"")",retrieval_failed
+literature,CHEMBL488436,HP:0001622,"(""AZD-5438"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0002859,"(""AZD-5438"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL488436,HP:0003202,"(""AZD-5438"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0004322,"(""AZD-5438"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL488436,HP:0200067,"(""AZD-5438"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,,"""PF-04634817""",retrieval_failed
+literature,CHEMBL5095029,HP:0000121,"(""PF-04634817"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0001508,"(""PF-04634817"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0001518,"(""PF-04634817"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0001622,"(""PF-04634817"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0002859,"(""PF-04634817"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL5095029,HP:0003202,"(""PF-04634817"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0004322,"(""PF-04634817"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0200067,"(""PF-04634817"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,,"""TARLATAMAB""",retrieval_failed
+literature,CHEMBL5095292,HP:0000121,"(""TARLATAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0001508,"(""TARLATAMAB"") AND (""Failure to thrive"")",retrieval_failed
+literature,CHEMBL5095292,HP:0001518,"(""TARLATAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0001622,"(""TARLATAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0002859,"(""TARLATAMAB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL5095292,HP:0003202,"(""TARLATAMAB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL5095292,HP:0004322,"(""TARLATAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0200067,"(""TARLATAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,,"""ARQ-736""",retrieval_failed
+literature,CHEMBL5314407,HP:0000121,"(""ARQ-736"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0001508,"(""ARQ-736"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0001518,"(""ARQ-736"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0001622,"(""ARQ-736"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0002859,"(""ARQ-736"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0003202,"(""ARQ-736"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0004322,"(""ARQ-736"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0200067,"(""ARQ-736"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,,"""MILCICLIB""",retrieval_failed
+literature,CHEMBL564829,HP:0000121,"(""MILCICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0001508,"(""MILCICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0001518,"(""MILCICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0001622,"(""MILCICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0002859,"(""MILCICLIB"") AND (""Rhabdomyosarcoma"")",retrieval_failed
+literature,CHEMBL564829,HP:0003202,"(""MILCICLIB"") AND (""Skeletal muscle atrophy"")",retrieval_failed
+literature,CHEMBL564829,HP:0004322,"(""MILCICLIB"") AND (""Short stature"")",retrieval_failed
+literature,CHEMBL564829,HP:0200067,"(""MILCICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,,"""SORAFENIB TOSYLATE""",retrieval_failed
+trials,CHEMBL1200485,HP:0000121,"(""SORAFENIB TOSYLATE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0001508,"(""SORAFENIB TOSYLATE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0001518,"(""SORAFENIB TOSYLATE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0001622,"(""SORAFENIB TOSYLATE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0002859,"(""SORAFENIB TOSYLATE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0003202,"(""SORAFENIB TOSYLATE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0004322,"(""SORAFENIB TOSYLATE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0200067,"(""SORAFENIB TOSYLATE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,,"""MUROMONAB-CD3""",retrieval_failed
+trials,CHEMBL1201608,HP:0000121,"(""MUROMONAB-CD3"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0001508,"(""MUROMONAB-CD3"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0001518,"(""MUROMONAB-CD3"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0001622,"(""MUROMONAB-CD3"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0002859,"(""MUROMONAB-CD3"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0003202,"(""MUROMONAB-CD3"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0004322,"(""MUROMONAB-CD3"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0200067,"(""MUROMONAB-CD3"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,,"""PHA-793887""",retrieval_failed
+trials,CHEMBL1230607,HP:0000121,"(""PHA-793887"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0001508,"(""PHA-793887"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0001518,"(""PHA-793887"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0001622,"(""PHA-793887"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0002859,"(""PHA-793887"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0003202,"(""PHA-793887"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0004322,"(""PHA-793887"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0200067,"(""PHA-793887"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,,"""SELICICLIB""",retrieval_failed
+trials,CHEMBL14762,HP:0000121,"(""SELICICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0001508,"(""SELICICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0001518,"(""SELICICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0001622,"(""SELICICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0002859,"(""SELICICLIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0003202,"(""SELICICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0004322,"(""SELICICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0200067,"(""SELICICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,,"""CC-401""",retrieval_failed
+trials,CHEMBL1614713,HP:0000121,"(""CC-401"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0001508,"(""CC-401"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0001518,"(""CC-401"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0001622,"(""CC-401"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0002859,"(""CC-401"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0003202,"(""CC-401"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0004322,"(""CC-401"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0200067,"(""CC-401"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,,"""PF-232798""",retrieval_failed
+trials,CHEMBL1649931,HP:0000121,"(""PF-232798"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0001508,"(""PF-232798"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0001518,"(""PF-232798"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0001622,"(""PF-232798"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0002859,"(""PF-232798"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0003202,"(""PF-232798"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0004322,"(""PF-232798"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0200067,"(""PF-232798"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,,"""APLAVIROC HYDROCHLORIDE""",retrieval_failed
+trials,CHEMBL1668019,HP:0000121,"(""APLAVIROC HYDROCHLORIDE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0001508,"(""APLAVIROC HYDROCHLORIDE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0001518,"(""APLAVIROC HYDROCHLORIDE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0001622,"(""APLAVIROC HYDROCHLORIDE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0002859,"(""APLAVIROC HYDROCHLORIDE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0003202,"(""APLAVIROC HYDROCHLORIDE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0004322,"(""APLAVIROC HYDROCHLORIDE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0200067,"(""APLAVIROC HYDROCHLORIDE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,,"""INCB-9471""",retrieval_failed
+trials,CHEMBL1688243,HP:0000121,"(""INCB-9471"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0001508,"(""INCB-9471"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0001518,"(""INCB-9471"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0001622,"(""INCB-9471"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0002859,"(""INCB-9471"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0003202,"(""INCB-9471"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0004322,"(""INCB-9471"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0200067,"(""INCB-9471"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,,"""BLINATUMOMAB""",retrieval_failed
+trials,CHEMBL1742992,HP:0000121,"(""BLINATUMOMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0001508,"(""BLINATUMOMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0001518,"(""BLINATUMOMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0001622,"(""BLINATUMOMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0002859,"(""BLINATUMOMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0003202,"(""BLINATUMOMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0004322,"(""BLINATUMOMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0200067,"(""BLINATUMOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,,"""FORALUMAB""",retrieval_failed
+trials,CHEMBL1743020,HP:0000121,"(""FORALUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0001508,"(""FORALUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0001518,"(""FORALUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0001622,"(""FORALUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0002859,"(""FORALUMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0003202,"(""FORALUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0004322,"(""FORALUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0200067,"(""FORALUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,,"""OTELIXIZUMAB""",retrieval_failed
+trials,CHEMBL1743053,HP:0000121,"(""OTELIXIZUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0001508,"(""OTELIXIZUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0001518,"(""OTELIXIZUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0001622,"(""OTELIXIZUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0002859,"(""OTELIXIZUMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0003202,"(""OTELIXIZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0004322,"(""OTELIXIZUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0200067,"(""OTELIXIZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,,"""TEPLIZUMAB""",retrieval_failed
+trials,CHEMBL1743078,HP:0000121,"(""TEPLIZUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0001508,"(""TEPLIZUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0001518,"(""TEPLIZUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0001622,"(""TEPLIZUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0002859,"(""TEPLIZUMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0003202,"(""TEPLIZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0004322,"(""TEPLIZUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0200067,"(""TEPLIZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,,"""ZOTIRACICLIB""",retrieval_failed
+trials,CHEMBL1944698,HP:0000121,"(""ZOTIRACICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0001508,"(""ZOTIRACICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0001518,"(""ZOTIRACICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0001622,"(""ZOTIRACICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0002859,"(""ZOTIRACICLIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0003202,"(""ZOTIRACICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0004322,"(""ZOTIRACICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0200067,"(""ZOTIRACICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,,"""REGORAFENIB""",retrieval_failed
+trials,CHEMBL1946170,HP:0000121,"(""REGORAFENIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0001508,"(""REGORAFENIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0001518,"(""REGORAFENIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0001622,"(""REGORAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0002859,"(""REGORAFENIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0003202,"(""REGORAFENIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0004322,"(""REGORAFENIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0200067,"(""REGORAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,,"""TANZISERTIB""",retrieval_failed
+trials,CHEMBL1950289,HP:0000121,"(""TANZISERTIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0001508,"(""TANZISERTIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0001518,"(""TANZISERTIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0001622,"(""TANZISERTIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0002859,"(""TANZISERTIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0003202,"(""TANZISERTIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0004322,"(""TANZISERTIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0200067,"(""TANZISERTIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,,"""AZD5672""",retrieval_failed
+trials,CHEMBL1951914,HP:0000121,"(""AZD5672"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0001508,"(""AZD5672"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0001518,"(""AZD5672"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0001622,"(""AZD5672"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0002859,"(""AZD5672"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0003202,"(""AZD5672"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0004322,"(""AZD5672"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0200067,"(""AZD5672"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,,"""EMRICASAN""",retrieval_failed
+trials,CHEMBL197672,HP:0000121,"(""EMRICASAN"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0001508,"(""EMRICASAN"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0001518,"(""EMRICASAN"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0001622,"(""EMRICASAN"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0002859,"(""EMRICASAN"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0003202,"(""EMRICASAN"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0004322,"(""EMRICASAN"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0200067,"(""EMRICASAN"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,,"""DINACICLIB""",retrieval_failed
+trials,CHEMBL2103840,HP:0000121,"(""DINACICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0001508,"(""DINACICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0001518,"(""DINACICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0001622,"(""DINACICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0002859,"(""DINACICLIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0003202,"(""DINACICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0004322,"(""DINACICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0200067,"(""DINACICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,,"""NIVOCASAN""",retrieval_failed
+trials,CHEMBL2105721,HP:0000121,"(""NIVOCASAN"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0001508,"(""NIVOCASAN"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0001518,"(""NIVOCASAN"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0001622,"(""NIVOCASAN"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0002859,"(""NIVOCASAN"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0003202,"(""NIVOCASAN"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0004322,"(""NIVOCASAN"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0200067,"(""NIVOCASAN"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,,"""VICRIVIROC MALEATE""",retrieval_failed
+trials,CHEMBL2107384,HP:0000121,"(""VICRIVIROC MALEATE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0001508,"(""VICRIVIROC MALEATE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0001518,"(""VICRIVIROC MALEATE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0001622,"(""VICRIVIROC MALEATE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0002859,"(""VICRIVIROC MALEATE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0003202,"(""VICRIVIROC MALEATE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0004322,"(""VICRIVIROC MALEATE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0200067,"(""VICRIVIROC MALEATE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,,"""ERTUMAXOMAB""",retrieval_failed
+trials,CHEMBL2108029,HP:0000121,"(""ERTUMAXOMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0001508,"(""ERTUMAXOMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0001518,"(""ERTUMAXOMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0001622,"(""ERTUMAXOMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0002859,"(""ERTUMAXOMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0003202,"(""ERTUMAXOMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0004322,"(""ERTUMAXOMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0200067,"(""ERTUMAXOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,,"""CATUMAXOMAB""",retrieval_failed
+trials,CHEMBL2108581,HP:0000121,"(""CATUMAXOMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0001508,"(""CATUMAXOMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0001518,"(""CATUMAXOMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0001622,"(""CATUMAXOMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0002859,"(""CATUMAXOMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0003202,"(""CATUMAXOMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0004322,"(""CATUMAXOMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0200067,"(""CATUMAXOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,,"""VISILIZUMAB""",retrieval_failed
+trials,CHEMBL2108811,HP:0000121,"(""VISILIZUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0001508,"(""VISILIZUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0001518,"(""VISILIZUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0001622,"(""VISILIZUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0002859,"(""VISILIZUMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0003202,"(""VISILIZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0004322,"(""VISILIZUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0200067,"(""VISILIZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,,"""HOKT3""",retrieval_failed
+trials,CHEMBL2109253,HP:0000121,"(""HOKT3"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0001508,"(""HOKT3"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0001518,"(""HOKT3"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0001622,"(""HOKT3"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0002859,"(""HOKT3"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0003202,"(""HOKT3"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0004322,"(""HOKT3"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0200067,"(""HOKT3"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,,"""SOLITOMAB""",retrieval_failed
+trials,CHEMBL2109264,HP:0000121,"(""SOLITOMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0001508,"(""SOLITOMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0001518,"(""SOLITOMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0001622,"(""SOLITOMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0002859,"(""SOLITOMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0003202,"(""SOLITOMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0004322,"(""SOLITOMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0200067,"(""SOLITOMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,,"""CCR5MAB004""",retrieval_failed
+trials,CHEMBL2109341,HP:0000121,"(""CCR5MAB004"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0001508,"(""CCR5MAB004"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0001518,"(""CCR5MAB004"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0001622,"(""CCR5MAB004"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0002859,"(""CCR5MAB004"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0003202,"(""CCR5MAB004"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0004322,"(""CCR5MAB004"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0200067,"(""CCR5MAB004"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,,"""HGS-1025""",retrieval_failed
+trials,CHEMBL2109342,HP:0000121,"(""HGS-1025"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0001508,"(""HGS-1025"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0001518,"(""HGS-1025"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0001622,"(""HGS-1025"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0002859,"(""HGS-1025"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0003202,"(""HGS-1025"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0004322,"(""HGS-1025"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0200067,"(""HGS-1025"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,,"""LERONLIMAB""",retrieval_failed
+trials,CHEMBL2109343,HP:0000121,"(""LERONLIMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0001508,"(""LERONLIMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0001518,"(""LERONLIMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0001622,"(""LERONLIMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0002859,"(""LERONLIMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0003202,"(""LERONLIMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0004322,"(""LERONLIMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0200067,"(""LERONLIMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,,"""FBT-A05""",retrieval_failed
+trials,CHEMBL2109351,HP:0000121,"(""FBT-A05"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0001508,"(""FBT-A05"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0001518,"(""FBT-A05"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0001622,"(""FBT-A05"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0002859,"(""FBT-A05"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0003202,"(""FBT-A05"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0004322,"(""FBT-A05"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0200067,"(""FBT-A05"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,,"""MEDI-565""",retrieval_failed
+trials,CHEMBL2109372,HP:0000121,"(""MEDI-565"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0001508,"(""MEDI-565"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0001518,"(""MEDI-565"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0001622,"(""MEDI-565"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0002859,"(""MEDI-565"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0003202,"(""MEDI-565"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0004322,"(""MEDI-565"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0200067,"(""MEDI-565"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,,"""IMC-GP100""",retrieval_failed
+trials,CHEMBL2109434,HP:0000121,"(""IMC-GP100"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0001508,"(""IMC-GP100"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0001518,"(""IMC-GP100"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0001622,"(""IMC-GP100"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0002859,"(""IMC-GP100"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0003202,"(""IMC-GP100"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0004322,"(""IMC-GP100"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0200067,"(""IMC-GP100"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,,"""CENICRIVIROC""",retrieval_failed
+trials,CHEMBL2110727,HP:0000121,"(""CENICRIVIROC"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0001508,"(""CENICRIVIROC"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0001518,"(""CENICRIVIROC"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0001622,"(""CENICRIVIROC"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0002859,"(""CENICRIVIROC"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0003202,"(""CENICRIVIROC"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0004322,"(""CENICRIVIROC"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0200067,"(""CENICRIVIROC"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,,"""MARAVIROC""",retrieval_failed
+trials,CHEMBL256907,HP:0000121,"(""MARAVIROC"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0001508,"(""MARAVIROC"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0001518,"(""MARAVIROC"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0001622,"(""MARAVIROC"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0002859,"(""MARAVIROC"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0003202,"(""MARAVIROC"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0004322,"(""MARAVIROC"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0200067,"(""MARAVIROC"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,,"""PF-03758309""",retrieval_failed
+trials,CHEMBL3128043,HP:0000121,"(""PF-03758309"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0001508,"(""PF-03758309"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0001518,"(""PF-03758309"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0001622,"(""PF-03758309"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0002859,"(""PF-03758309"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0003202,"(""PF-03758309"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0004322,"(""PF-03758309"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0200067,"(""PF-03758309"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,,"""TOVORAFENIB""",retrieval_failed
+trials,CHEMBL3348923,HP:0000121,"(""TOVORAFENIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0001508,"(""TOVORAFENIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0001518,"(""TOVORAFENIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0001622,"(""TOVORAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0002859,"(""TOVORAFENIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0003202,"(""TOVORAFENIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0004322,"(""TOVORAFENIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0200067,"(""TOVORAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,,"""XL-281""",retrieval_failed
+trials,CHEMBL3545027,HP:0000121,"(""XL-281"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0001508,"(""XL-281"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0001518,"(""XL-281"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0001622,"(""XL-281"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0002859,"(""XL-281"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0003202,"(""XL-281"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0004322,"(""XL-281"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0200067,"(""XL-281"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,,"""RG-7376""",retrieval_failed
+trials,CHEMBL3545082,HP:0000121,"(""RG-7376"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0001508,"(""RG-7376"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0001518,"(""RG-7376"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0001622,"(""RG-7376"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0002859,"(""RG-7376"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0003202,"(""RG-7376"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0004322,"(""RG-7376"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0200067,"(""RG-7376"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,,"""RGB-286638""",retrieval_failed
+trials,CHEMBL3545083,HP:0000121,"(""RGB-286638"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0001508,"(""RGB-286638"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0001518,"(""RGB-286638"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0001622,"(""RGB-286638"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0002859,"(""RGB-286638"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0003202,"(""RGB-286638"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0004322,"(""RGB-286638"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0200067,"(""RGB-286638"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,,"""BENTAMAPIMOD""",retrieval_failed
+trials,CHEMBL3545213,HP:0000121,"(""BENTAMAPIMOD"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0001508,"(""BENTAMAPIMOD"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0001518,"(""BENTAMAPIMOD"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0001622,"(""BENTAMAPIMOD"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0002859,"(""BENTAMAPIMOD"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0003202,"(""BENTAMAPIMOD"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0004322,"(""BENTAMAPIMOD"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545213,HP:0200067,"(""BENTAMAPIMOD"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,,"""LGX-806""",retrieval_failed
+trials,CHEMBL3545263,HP:0000121,"(""LGX-806"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0001508,"(""LGX-806"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0001518,"(""LGX-806"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0001622,"(""LGX-806"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0002859,"(""LGX-806"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0003202,"(""LGX-806"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0004322,"(""LGX-806"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0200067,"(""LGX-806"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,,"""RIVICICLIB""",retrieval_failed
+trials,CHEMBL3545283,HP:0000121,"(""RIVICICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0001508,"(""RIVICICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0001518,"(""RIVICICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0001622,"(""RIVICICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0002859,"(""RIVICICLIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0003202,"(""RIVICICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0004322,"(""RIVICICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0200067,"(""RIVICICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,,"""AG-24322""",retrieval_failed
+trials,CHEMBL3545420,HP:0000121,"(""AG-24322"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0001508,"(""AG-24322"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0001518,"(""AG-24322"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0001622,"(""AG-24322"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0002859,"(""AG-24322"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0003202,"(""AG-24322"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0004322,"(""AG-24322"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0200067,"(""AG-24322"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,,"""LY-3009120""",retrieval_failed
+trials,CHEMBL3577124,HP:0000121,"(""LY-3009120"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0001508,"(""LY-3009120"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0001518,"(""LY-3009120"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0001622,"(""LY-3009120"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0002859,"(""LY-3009120"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0003202,"(""LY-3009120"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0004322,"(""LY-3009120"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0200067,"(""LY-3009120"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,,"""RG-547""",retrieval_failed
+trials,CHEMBL384304,HP:0000121,"(""RG-547"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0001508,"(""RG-547"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0001518,"(""RG-547"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0001622,"(""RG-547"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0002859,"(""RG-547"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0003202,"(""RG-547"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0004322,"(""RG-547"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0200067,"(""RG-547"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,,"""BELVARAFENIB""",retrieval_failed
+trials,CHEMBL3977543,HP:0000121,"(""BELVARAFENIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0001508,"(""BELVARAFENIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0001518,"(""BELVARAFENIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0001622,"(""BELVARAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0002859,"(""BELVARAFENIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0003202,"(""BELVARAFENIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0004322,"(""BELVARAFENIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0200067,"(""BELVARAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,,"""FLOTETUZUMAB""",retrieval_failed
+trials,CHEMBL3990038,HP:0000121,"(""FLOTETUZUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0001508,"(""FLOTETUZUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0001518,"(""FLOTETUZUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0001622,"(""FLOTETUZUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0002859,"(""FLOTETUZUMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0003202,"(""FLOTETUZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0004322,"(""FLOTETUZUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0200067,"(""FLOTETUZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,,"""ALVOCIDIB""",retrieval_failed
+trials,CHEMBL428690,HP:0000121,"(""ALVOCIDIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0001508,"(""ALVOCIDIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0001518,"(""ALVOCIDIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0001622,"(""ALVOCIDIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0002859,"(""ALVOCIDIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0003202,"(""ALVOCIDIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0004322,"(""ALVOCIDIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0200067,"(""ALVOCIDIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,,"""BRIMAPITIDE, C-TERMINAL ACID""",retrieval_failed
+trials,CHEMBL4297348,HP:0000121,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0001508,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0001518,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0001622,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0002859,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0003202,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0004322,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0200067,"(""BRIMAPITIDE, C-TERMINAL ACID"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,,"""RESIMMUNE""",retrieval_failed
+trials,CHEMBL4297555,HP:0000121,"(""RESIMMUNE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0001508,"(""RESIMMUNE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0001518,"(""RESIMMUNE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0001622,"(""RESIMMUNE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0002859,"(""RESIMMUNE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0003202,"(""RESIMMUNE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0004322,"(""RESIMMUNE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0200067,"(""RESIMMUNE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,,"""BRIMAPITIDE""",retrieval_failed
+trials,CHEMBL4297650,HP:0000121,"(""BRIMAPITIDE"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0001508,"(""BRIMAPITIDE"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0001518,"(""BRIMAPITIDE"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0001622,"(""BRIMAPITIDE"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0002859,"(""BRIMAPITIDE"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0003202,"(""BRIMAPITIDE"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0004322,"(""BRIMAPITIDE"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0200067,"(""BRIMAPITIDE"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,,"""MOSUNETUZUMAB""",retrieval_failed
+trials,CHEMBL4297788,HP:0000121,"(""MOSUNETUZUMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0001508,"(""MOSUNETUZUMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0001518,"(""MOSUNETUZUMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0001622,"(""MOSUNETUZUMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0002859,"(""MOSUNETUZUMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0003202,"(""MOSUNETUZUMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0004322,"(""MOSUNETUZUMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0200067,"(""MOSUNETUZUMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,,"""ELRANATAMAB""",retrieval_failed
+trials,CHEMBL4297809,HP:0000121,"(""ELRANATAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0001508,"(""ELRANATAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0001518,"(""ELRANATAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0001622,"(""ELRANATAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0002859,"(""ELRANATAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0003202,"(""ELRANATAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0004322,"(""ELRANATAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0200067,"(""ELRANATAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,,"""ODRONEXTAMAB""",retrieval_failed
+trials,CHEMBL4298084,HP:0000121,"(""ODRONEXTAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0001508,"(""ODRONEXTAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0001518,"(""ODRONEXTAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0001622,"(""ODRONEXTAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0002859,"(""ODRONEXTAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0003202,"(""ODRONEXTAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0004322,"(""ODRONEXTAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0200067,"(""ODRONEXTAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,,"""GLOFITAMAB""",retrieval_failed
+trials,CHEMBL4298092,HP:0000121,"(""GLOFITAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0001508,"(""GLOFITAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0001518,"(""GLOFITAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0001622,"(""GLOFITAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0002859,"(""GLOFITAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0003202,"(""GLOFITAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0004322,"(""GLOFITAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0200067,"(""GLOFITAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,,"""RONICICLIB""",retrieval_failed
+trials,CHEMBL4442620,HP:0000121,"(""RONICICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0001508,"(""RONICICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0001518,"(""RONICICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0001622,"(""RONICICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0002859,"(""RONICICLIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0003202,"(""RONICICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0004322,"(""RONICICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0200067,"(""RONICICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,,"""AT-7519""",retrieval_failed
+trials,CHEMBL445813,HP:0000121,"(""AT-7519"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0001508,"(""AT-7519"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0001518,"(""AT-7519"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0001622,"(""AT-7519"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0002859,"(""AT-7519"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0003202,"(""AT-7519"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0004322,"(""AT-7519"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0200067,"(""AT-7519"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,,"""NAPORAFENIB""",retrieval_failed
+trials,CHEMBL4583691,HP:0000121,"(""NAPORAFENIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0001508,"(""NAPORAFENIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0001518,"(""NAPORAFENIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0001622,"(""NAPORAFENIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0002859,"(""NAPORAFENIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0003202,"(""NAPORAFENIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0004322,"(""NAPORAFENIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0200067,"(""NAPORAFENIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,,"""BMS-813160""",retrieval_failed
+trials,CHEMBL4594419,HP:0000121,"(""BMS-813160"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0001508,"(""BMS-813160"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0001518,"(""BMS-813160"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0001622,"(""BMS-813160"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0002859,"(""BMS-813160"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0003202,"(""BMS-813160"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0004322,"(""BMS-813160"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0200067,"(""BMS-813160"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,,"""TALQUETAMAB""",retrieval_failed
+trials,CHEMBL4594503,HP:0000121,"(""TALQUETAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0001508,"(""TALQUETAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0001518,"(""TALQUETAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0001622,"(""TALQUETAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0002859,"(""TALQUETAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0003202,"(""TALQUETAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0004322,"(""TALQUETAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0200067,"(""TALQUETAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,,"""TECLISTAMAB""",retrieval_failed
+trials,CHEMBL4594505,HP:0000121,"(""TECLISTAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0001508,"(""TECLISTAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0001518,"(""TECLISTAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0001622,"(""TECLISTAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0002859,"(""TECLISTAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0003202,"(""TECLISTAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0004322,"(""TECLISTAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0200067,"(""TECLISTAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,,"""EPCORITAMAB""",retrieval_failed
+trials,CHEMBL4650393,HP:0000121,"(""EPCORITAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0001508,"(""EPCORITAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0001518,"(""EPCORITAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0001622,"(""EPCORITAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0002859,"(""EPCORITAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0003202,"(""EPCORITAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0004322,"(""EPCORITAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0200067,"(""EPCORITAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,,"""AZD-5438""",retrieval_failed
+trials,CHEMBL488436,HP:0000121,"(""AZD-5438"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0001508,"(""AZD-5438"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0001518,"(""AZD-5438"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0001622,"(""AZD-5438"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0002859,"(""AZD-5438"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0003202,"(""AZD-5438"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0004322,"(""AZD-5438"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0200067,"(""AZD-5438"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,,"""PF-04634817""",retrieval_failed
+trials,CHEMBL5095029,HP:0000121,"(""PF-04634817"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0001508,"(""PF-04634817"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0001518,"(""PF-04634817"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0001622,"(""PF-04634817"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0002859,"(""PF-04634817"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0003202,"(""PF-04634817"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0004322,"(""PF-04634817"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0200067,"(""PF-04634817"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,,"""TARLATAMAB""",retrieval_failed
+trials,CHEMBL5095292,HP:0000121,"(""TARLATAMAB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0001508,"(""TARLATAMAB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0001518,"(""TARLATAMAB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0001622,"(""TARLATAMAB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0002859,"(""TARLATAMAB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0003202,"(""TARLATAMAB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0004322,"(""TARLATAMAB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0200067,"(""TARLATAMAB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,,"""ARQ-736""",retrieval_failed
+trials,CHEMBL5314407,HP:0000121,"(""ARQ-736"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0001508,"(""ARQ-736"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0001518,"(""ARQ-736"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0001622,"(""ARQ-736"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0002859,"(""ARQ-736"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0003202,"(""ARQ-736"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0004322,"(""ARQ-736"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0200067,"(""ARQ-736"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,,"""MILCICLIB""",retrieval_failed
+trials,CHEMBL564829,HP:0000121,"(""MILCICLIB"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0001508,"(""MILCICLIB"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0001518,"(""MILCICLIB"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0001622,"(""MILCICLIB"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0002859,"(""MILCICLIB"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0003202,"(""MILCICLIB"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0004322,"(""MILCICLIB"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0200067,"(""MILCICLIB"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence

@@ -1,0 +1,1236 @@
+SOURCE,CANONICAL_DRUG_ID,HPO_CODE,QUERY,STATUS
+fda,CHEMBL1200485,,"""CHEMBL1200485""",reviewed_no_qualifying_evidence
+fda,CHEMBL1201608,,"""CHEMBL1201608""",reviewed_no_qualifying_evidence
+fda,CHEMBL1230607,,"""CHEMBL1230607""",reviewed_no_qualifying_evidence
+fda,CHEMBL14762,,"""CHEMBL14762""",reviewed_no_qualifying_evidence
+fda,CHEMBL1614713,,"""CHEMBL1614713""",reviewed_no_qualifying_evidence
+fda,CHEMBL1649931,,"""CHEMBL1649931""",reviewed_no_qualifying_evidence
+fda,CHEMBL1668019,,"""CHEMBL1668019""",reviewed_no_qualifying_evidence
+fda,CHEMBL1688243,,"""CHEMBL1688243""",reviewed_no_qualifying_evidence
+fda,CHEMBL1742992,,"""CHEMBL1742992""",reviewed_no_qualifying_evidence
+fda,CHEMBL1743020,,"""CHEMBL1743020""",reviewed_no_qualifying_evidence
+fda,CHEMBL1743053,,"""CHEMBL1743053""",reviewed_no_qualifying_evidence
+fda,CHEMBL1743078,,"""CHEMBL1743078""",reviewed_no_qualifying_evidence
+fda,CHEMBL1944698,,"""CHEMBL1944698""",reviewed_no_qualifying_evidence
+fda,CHEMBL1946170,,"""CHEMBL1946170""",reviewed_no_qualifying_evidence
+fda,CHEMBL1950289,,"""CHEMBL1950289""",reviewed_no_qualifying_evidence
+fda,CHEMBL1951914,,"""CHEMBL1951914""",reviewed_no_qualifying_evidence
+fda,CHEMBL197672,,"""CHEMBL197672""",reviewed_no_qualifying_evidence
+fda,CHEMBL2103840,,"""CHEMBL2103840""",reviewed_no_qualifying_evidence
+fda,CHEMBL2105721,,"""CHEMBL2105721""",reviewed_no_qualifying_evidence
+fda,CHEMBL2107384,,"""CHEMBL2107384""",reviewed_no_qualifying_evidence
+fda,CHEMBL2108029,,"""CHEMBL2108029""",reviewed_no_qualifying_evidence
+fda,CHEMBL2108581,,"""CHEMBL2108581""",reviewed_no_qualifying_evidence
+fda,CHEMBL2108811,,"""CHEMBL2108811""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109253,,"""CHEMBL2109253""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109264,,"""CHEMBL2109264""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109341,,"""CHEMBL2109341""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109342,,"""CHEMBL2109342""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109343,,"""CHEMBL2109343""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109351,,"""CHEMBL2109351""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109372,,"""CHEMBL2109372""",reviewed_no_qualifying_evidence
+fda,CHEMBL2109434,,"""CHEMBL2109434""",reviewed_no_qualifying_evidence
+fda,CHEMBL2110727,,"""CHEMBL2110727""",reviewed_no_qualifying_evidence
+fda,CHEMBL256907,,"""CHEMBL256907""",reviewed_no_qualifying_evidence
+fda,CHEMBL3128043,,"""CHEMBL3128043""",reviewed_no_qualifying_evidence
+fda,CHEMBL3348923,,"""CHEMBL3348923""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545027,,"""CHEMBL3545027""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545082,,"""CHEMBL3545082""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545083,,"""CHEMBL3545083""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545263,,"""CHEMBL3545263""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545283,,"""CHEMBL3545283""",reviewed_no_qualifying_evidence
+fda,CHEMBL3545420,,"""CHEMBL3545420""",reviewed_no_qualifying_evidence
+fda,CHEMBL3577124,,"""CHEMBL3577124""",reviewed_no_qualifying_evidence
+fda,CHEMBL384304,,"""CHEMBL384304""",reviewed_no_qualifying_evidence
+fda,CHEMBL3977543,,"""CHEMBL3977543""",reviewed_no_qualifying_evidence
+fda,CHEMBL3990038,,"""CHEMBL3990038""",reviewed_no_qualifying_evidence
+fda,CHEMBL428690,,"""CHEMBL428690""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297348,,"""CHEMBL4297348""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297555,,"""CHEMBL4297555""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297650,,"""CHEMBL4297650""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297788,,"""CHEMBL4297788""",reviewed_no_qualifying_evidence
+fda,CHEMBL4297809,,"""CHEMBL4297809""",reviewed_no_qualifying_evidence
+fda,CHEMBL4298084,,"""CHEMBL4298084""",reviewed_no_qualifying_evidence
+fda,CHEMBL4298092,,"""CHEMBL4298092""",reviewed_no_qualifying_evidence
+fda,CHEMBL4442620,,"""CHEMBL4442620""",reviewed_no_qualifying_evidence
+fda,CHEMBL445813,,"""CHEMBL445813""",reviewed_no_qualifying_evidence
+fda,CHEMBL4583691,,"""CHEMBL4583691""",reviewed_no_qualifying_evidence
+fda,CHEMBL4594419,,"""CHEMBL4594419""",reviewed_no_qualifying_evidence
+fda,CHEMBL4594503,,"""CHEMBL4594503""",reviewed_no_qualifying_evidence
+fda,CHEMBL4594505,,"""CHEMBL4594505""",reviewed_no_qualifying_evidence
+fda,CHEMBL4650393,,"""CHEMBL4650393""",reviewed_no_qualifying_evidence
+fda,CHEMBL488436,,"""CHEMBL488436""",reviewed_no_qualifying_evidence
+fda,CHEMBL5095029,,"""CHEMBL5095029""",reviewed_no_qualifying_evidence
+fda,CHEMBL5095292,,"""CHEMBL5095292""",reviewed_no_qualifying_evidence
+fda,CHEMBL5314407,,"""CHEMBL5314407""",reviewed_no_qualifying_evidence
+fda,CHEMBL564829,,"""CHEMBL564829""",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,,"""CHEMBL1200485""",retrieval_failed
+literature,CHEMBL1200485,HP:0000121,"(""CHEMBL1200485"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0001508,"(""CHEMBL1200485"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0001518,"(""CHEMBL1200485"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0001622,"(""CHEMBL1200485"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0002859,"(""CHEMBL1200485"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0003202,"(""CHEMBL1200485"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0004322,"(""CHEMBL1200485"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1200485,HP:0200067,"(""CHEMBL1200485"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,,"""CHEMBL1201608""",retrieval_failed
+literature,CHEMBL1201608,HP:0000121,"(""CHEMBL1201608"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0001508,"(""CHEMBL1201608"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0001518,"(""CHEMBL1201608"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0001622,"(""CHEMBL1201608"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0002859,"(""CHEMBL1201608"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0003202,"(""CHEMBL1201608"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0004322,"(""CHEMBL1201608"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1201608,HP:0200067,"(""CHEMBL1201608"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,,"""CHEMBL1230607""",retrieval_failed
+literature,CHEMBL1230607,HP:0000121,"(""CHEMBL1230607"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0001508,"(""CHEMBL1230607"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0001518,"(""CHEMBL1230607"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0001622,"(""CHEMBL1230607"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0002859,"(""CHEMBL1230607"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0003202,"(""CHEMBL1230607"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0004322,"(""CHEMBL1230607"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1230607,HP:0200067,"(""CHEMBL1230607"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,,"""CHEMBL14762""",retrieval_failed
+literature,CHEMBL14762,HP:0000121,"(""CHEMBL14762"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0001508,"(""CHEMBL14762"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0001518,"(""CHEMBL14762"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0001622,"(""CHEMBL14762"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0002859,"(""CHEMBL14762"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0003202,"(""CHEMBL14762"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0004322,"(""CHEMBL14762"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL14762,HP:0200067,"(""CHEMBL14762"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,,"""CHEMBL1614713""",retrieval_failed
+literature,CHEMBL1614713,HP:0000121,"(""CHEMBL1614713"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0001508,"(""CHEMBL1614713"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0001518,"(""CHEMBL1614713"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0001622,"(""CHEMBL1614713"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0002859,"(""CHEMBL1614713"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0003202,"(""CHEMBL1614713"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0004322,"(""CHEMBL1614713"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1614713,HP:0200067,"(""CHEMBL1614713"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,,"""CHEMBL1649931""",retrieval_failed
+literature,CHEMBL1649931,HP:0000121,"(""CHEMBL1649931"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0001508,"(""CHEMBL1649931"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0001518,"(""CHEMBL1649931"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0001622,"(""CHEMBL1649931"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0002859,"(""CHEMBL1649931"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0003202,"(""CHEMBL1649931"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0004322,"(""CHEMBL1649931"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1649931,HP:0200067,"(""CHEMBL1649931"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,,"""CHEMBL1668019""",retrieval_failed
+literature,CHEMBL1668019,HP:0000121,"(""CHEMBL1668019"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0001508,"(""CHEMBL1668019"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0001518,"(""CHEMBL1668019"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0001622,"(""CHEMBL1668019"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0002859,"(""CHEMBL1668019"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0003202,"(""CHEMBL1668019"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0004322,"(""CHEMBL1668019"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1668019,HP:0200067,"(""CHEMBL1668019"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,,"""CHEMBL1688243""",retrieval_failed
+literature,CHEMBL1688243,HP:0000121,"(""CHEMBL1688243"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0001508,"(""CHEMBL1688243"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0001518,"(""CHEMBL1688243"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0001622,"(""CHEMBL1688243"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0002859,"(""CHEMBL1688243"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0003202,"(""CHEMBL1688243"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0004322,"(""CHEMBL1688243"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1688243,HP:0200067,"(""CHEMBL1688243"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,,"""CHEMBL1742992""",retrieval_failed
+literature,CHEMBL1742992,HP:0000121,"(""CHEMBL1742992"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0001508,"(""CHEMBL1742992"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0001518,"(""CHEMBL1742992"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0001622,"(""CHEMBL1742992"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0002859,"(""CHEMBL1742992"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0003202,"(""CHEMBL1742992"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0004322,"(""CHEMBL1742992"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1742992,HP:0200067,"(""CHEMBL1742992"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,,"""CHEMBL1743020""",retrieval_failed
+literature,CHEMBL1743020,HP:0000121,"(""CHEMBL1743020"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0001508,"(""CHEMBL1743020"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0001518,"(""CHEMBL1743020"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0001622,"(""CHEMBL1743020"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0002859,"(""CHEMBL1743020"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0003202,"(""CHEMBL1743020"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0004322,"(""CHEMBL1743020"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743020,HP:0200067,"(""CHEMBL1743020"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,,"""CHEMBL1743053""",retrieval_failed
+literature,CHEMBL1743053,HP:0000121,"(""CHEMBL1743053"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0001508,"(""CHEMBL1743053"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0001518,"(""CHEMBL1743053"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0001622,"(""CHEMBL1743053"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0002859,"(""CHEMBL1743053"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0003202,"(""CHEMBL1743053"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0004322,"(""CHEMBL1743053"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743053,HP:0200067,"(""CHEMBL1743053"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,,"""CHEMBL1743078""",retrieval_failed
+literature,CHEMBL1743078,HP:0000121,"(""CHEMBL1743078"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0001508,"(""CHEMBL1743078"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0001518,"(""CHEMBL1743078"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0001622,"(""CHEMBL1743078"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0002859,"(""CHEMBL1743078"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0003202,"(""CHEMBL1743078"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0004322,"(""CHEMBL1743078"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1743078,HP:0200067,"(""CHEMBL1743078"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,,"""CHEMBL1944698""",retrieval_failed
+literature,CHEMBL1944698,HP:0000121,"(""CHEMBL1944698"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0001508,"(""CHEMBL1944698"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0001518,"(""CHEMBL1944698"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0001622,"(""CHEMBL1944698"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0002859,"(""CHEMBL1944698"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0003202,"(""CHEMBL1944698"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0004322,"(""CHEMBL1944698"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1944698,HP:0200067,"(""CHEMBL1944698"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,,"""CHEMBL1946170""",retrieval_failed
+literature,CHEMBL1946170,HP:0000121,"(""CHEMBL1946170"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0001508,"(""CHEMBL1946170"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0001518,"(""CHEMBL1946170"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0001622,"(""CHEMBL1946170"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0002859,"(""CHEMBL1946170"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0003202,"(""CHEMBL1946170"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0004322,"(""CHEMBL1946170"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1946170,HP:0200067,"(""CHEMBL1946170"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,,"""CHEMBL1950289""",retrieval_failed
+literature,CHEMBL1950289,HP:0000121,"(""CHEMBL1950289"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0001508,"(""CHEMBL1950289"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0001518,"(""CHEMBL1950289"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0001622,"(""CHEMBL1950289"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0002859,"(""CHEMBL1950289"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0003202,"(""CHEMBL1950289"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0004322,"(""CHEMBL1950289"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1950289,HP:0200067,"(""CHEMBL1950289"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,,"""CHEMBL1951914""",retrieval_failed
+literature,CHEMBL1951914,HP:0000121,"(""CHEMBL1951914"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0001508,"(""CHEMBL1951914"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0001518,"(""CHEMBL1951914"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0001622,"(""CHEMBL1951914"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0002859,"(""CHEMBL1951914"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0003202,"(""CHEMBL1951914"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0004322,"(""CHEMBL1951914"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL1951914,HP:0200067,"(""CHEMBL1951914"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,,"""CHEMBL197672""",retrieval_failed
+literature,CHEMBL197672,HP:0000121,"(""CHEMBL197672"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0001508,"(""CHEMBL197672"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0001518,"(""CHEMBL197672"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0001622,"(""CHEMBL197672"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0002859,"(""CHEMBL197672"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0003202,"(""CHEMBL197672"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0004322,"(""CHEMBL197672"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL197672,HP:0200067,"(""CHEMBL197672"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,,"""CHEMBL2103840""",retrieval_failed
+literature,CHEMBL2103840,HP:0000121,"(""CHEMBL2103840"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0001508,"(""CHEMBL2103840"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0001518,"(""CHEMBL2103840"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0001622,"(""CHEMBL2103840"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0002859,"(""CHEMBL2103840"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0003202,"(""CHEMBL2103840"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0004322,"(""CHEMBL2103840"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2103840,HP:0200067,"(""CHEMBL2103840"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,,"""CHEMBL2105721""",retrieval_failed
+literature,CHEMBL2105721,HP:0000121,"(""CHEMBL2105721"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0001508,"(""CHEMBL2105721"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0001518,"(""CHEMBL2105721"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0001622,"(""CHEMBL2105721"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0002859,"(""CHEMBL2105721"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0003202,"(""CHEMBL2105721"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0004322,"(""CHEMBL2105721"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2105721,HP:0200067,"(""CHEMBL2105721"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,,"""CHEMBL2107384""",retrieval_failed
+literature,CHEMBL2107384,HP:0000121,"(""CHEMBL2107384"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0001508,"(""CHEMBL2107384"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0001518,"(""CHEMBL2107384"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0001622,"(""CHEMBL2107384"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0002859,"(""CHEMBL2107384"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0003202,"(""CHEMBL2107384"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0004322,"(""CHEMBL2107384"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2107384,HP:0200067,"(""CHEMBL2107384"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,,"""CHEMBL2108029""",retrieval_failed
+literature,CHEMBL2108029,HP:0000121,"(""CHEMBL2108029"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0001508,"(""CHEMBL2108029"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0001518,"(""CHEMBL2108029"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0001622,"(""CHEMBL2108029"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0002859,"(""CHEMBL2108029"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0003202,"(""CHEMBL2108029"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0004322,"(""CHEMBL2108029"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108029,HP:0200067,"(""CHEMBL2108029"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,,"""CHEMBL2108581""",retrieval_failed
+literature,CHEMBL2108581,HP:0000121,"(""CHEMBL2108581"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0001508,"(""CHEMBL2108581"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0001518,"(""CHEMBL2108581"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0001622,"(""CHEMBL2108581"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0002859,"(""CHEMBL2108581"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0003202,"(""CHEMBL2108581"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0004322,"(""CHEMBL2108581"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108581,HP:0200067,"(""CHEMBL2108581"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,,"""CHEMBL2108811""",retrieval_failed
+literature,CHEMBL2108811,HP:0000121,"(""CHEMBL2108811"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0001508,"(""CHEMBL2108811"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0001518,"(""CHEMBL2108811"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0001622,"(""CHEMBL2108811"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0002859,"(""CHEMBL2108811"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0003202,"(""CHEMBL2108811"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0004322,"(""CHEMBL2108811"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2108811,HP:0200067,"(""CHEMBL2108811"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,,"""CHEMBL2109253""",retrieval_failed
+literature,CHEMBL2109253,HP:0000121,"(""CHEMBL2109253"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0001508,"(""CHEMBL2109253"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0001518,"(""CHEMBL2109253"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0001622,"(""CHEMBL2109253"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0002859,"(""CHEMBL2109253"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0003202,"(""CHEMBL2109253"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0004322,"(""CHEMBL2109253"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109253,HP:0200067,"(""CHEMBL2109253"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,,"""CHEMBL2109264""",retrieval_failed
+literature,CHEMBL2109264,HP:0000121,"(""CHEMBL2109264"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0001508,"(""CHEMBL2109264"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0001518,"(""CHEMBL2109264"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0001622,"(""CHEMBL2109264"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0002859,"(""CHEMBL2109264"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0003202,"(""CHEMBL2109264"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0004322,"(""CHEMBL2109264"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109264,HP:0200067,"(""CHEMBL2109264"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,,"""CHEMBL2109341""",retrieval_failed
+literature,CHEMBL2109341,HP:0000121,"(""CHEMBL2109341"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0001508,"(""CHEMBL2109341"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0001518,"(""CHEMBL2109341"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0001622,"(""CHEMBL2109341"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0002859,"(""CHEMBL2109341"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0003202,"(""CHEMBL2109341"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0004322,"(""CHEMBL2109341"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109341,HP:0200067,"(""CHEMBL2109341"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,,"""CHEMBL2109342""",retrieval_failed
+literature,CHEMBL2109342,HP:0000121,"(""CHEMBL2109342"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0001508,"(""CHEMBL2109342"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0001518,"(""CHEMBL2109342"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0001622,"(""CHEMBL2109342"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0002859,"(""CHEMBL2109342"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0003202,"(""CHEMBL2109342"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0004322,"(""CHEMBL2109342"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109342,HP:0200067,"(""CHEMBL2109342"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,,"""CHEMBL2109343""",retrieval_failed
+literature,CHEMBL2109343,HP:0000121,"(""CHEMBL2109343"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0001508,"(""CHEMBL2109343"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0001518,"(""CHEMBL2109343"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0001622,"(""CHEMBL2109343"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0002859,"(""CHEMBL2109343"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0003202,"(""CHEMBL2109343"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0004322,"(""CHEMBL2109343"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109343,HP:0200067,"(""CHEMBL2109343"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,,"""CHEMBL2109351""",retrieval_failed
+literature,CHEMBL2109351,HP:0000121,"(""CHEMBL2109351"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0001508,"(""CHEMBL2109351"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0001518,"(""CHEMBL2109351"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0001622,"(""CHEMBL2109351"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0002859,"(""CHEMBL2109351"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0003202,"(""CHEMBL2109351"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0004322,"(""CHEMBL2109351"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109351,HP:0200067,"(""CHEMBL2109351"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,,"""CHEMBL2109372""",retrieval_failed
+literature,CHEMBL2109372,HP:0000121,"(""CHEMBL2109372"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0001508,"(""CHEMBL2109372"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0001518,"(""CHEMBL2109372"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0001622,"(""CHEMBL2109372"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0002859,"(""CHEMBL2109372"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0003202,"(""CHEMBL2109372"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0004322,"(""CHEMBL2109372"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109372,HP:0200067,"(""CHEMBL2109372"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,,"""CHEMBL2109434""",retrieval_failed
+literature,CHEMBL2109434,HP:0000121,"(""CHEMBL2109434"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0001508,"(""CHEMBL2109434"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0001518,"(""CHEMBL2109434"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0001622,"(""CHEMBL2109434"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0002859,"(""CHEMBL2109434"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0003202,"(""CHEMBL2109434"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0004322,"(""CHEMBL2109434"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2109434,HP:0200067,"(""CHEMBL2109434"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,,"""CHEMBL2110727""",retrieval_failed
+literature,CHEMBL2110727,HP:0000121,"(""CHEMBL2110727"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0001508,"(""CHEMBL2110727"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0001518,"(""CHEMBL2110727"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0001622,"(""CHEMBL2110727"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0002859,"(""CHEMBL2110727"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0003202,"(""CHEMBL2110727"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0004322,"(""CHEMBL2110727"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL2110727,HP:0200067,"(""CHEMBL2110727"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,,"""CHEMBL256907""",retrieval_failed
+literature,CHEMBL256907,HP:0000121,"(""CHEMBL256907"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0001508,"(""CHEMBL256907"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0001518,"(""CHEMBL256907"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0001622,"(""CHEMBL256907"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0002859,"(""CHEMBL256907"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0003202,"(""CHEMBL256907"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0004322,"(""CHEMBL256907"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL256907,HP:0200067,"(""CHEMBL256907"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,,"""CHEMBL3128043""",retrieval_failed
+literature,CHEMBL3128043,HP:0000121,"(""CHEMBL3128043"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0001508,"(""CHEMBL3128043"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0001518,"(""CHEMBL3128043"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0001622,"(""CHEMBL3128043"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0002859,"(""CHEMBL3128043"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0003202,"(""CHEMBL3128043"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0004322,"(""CHEMBL3128043"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3128043,HP:0200067,"(""CHEMBL3128043"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,,"""CHEMBL3348923""",retrieval_failed
+literature,CHEMBL3348923,HP:0000121,"(""CHEMBL3348923"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0001508,"(""CHEMBL3348923"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0001518,"(""CHEMBL3348923"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0001622,"(""CHEMBL3348923"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0002859,"(""CHEMBL3348923"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0003202,"(""CHEMBL3348923"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0004322,"(""CHEMBL3348923"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3348923,HP:0200067,"(""CHEMBL3348923"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,,"""CHEMBL3545027""",retrieval_failed
+literature,CHEMBL3545027,HP:0000121,"(""CHEMBL3545027"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0001508,"(""CHEMBL3545027"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0001518,"(""CHEMBL3545027"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0001622,"(""CHEMBL3545027"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0002859,"(""CHEMBL3545027"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0003202,"(""CHEMBL3545027"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0004322,"(""CHEMBL3545027"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545027,HP:0200067,"(""CHEMBL3545027"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,,"""CHEMBL3545082""",retrieval_failed
+literature,CHEMBL3545082,HP:0000121,"(""CHEMBL3545082"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0001508,"(""CHEMBL3545082"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0001518,"(""CHEMBL3545082"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0001622,"(""CHEMBL3545082"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0002859,"(""CHEMBL3545082"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0003202,"(""CHEMBL3545082"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0004322,"(""CHEMBL3545082"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545082,HP:0200067,"(""CHEMBL3545082"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,,"""CHEMBL3545083""",retrieval_failed
+literature,CHEMBL3545083,HP:0000121,"(""CHEMBL3545083"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0001508,"(""CHEMBL3545083"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0001518,"(""CHEMBL3545083"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0001622,"(""CHEMBL3545083"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0002859,"(""CHEMBL3545083"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0003202,"(""CHEMBL3545083"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0004322,"(""CHEMBL3545083"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545083,HP:0200067,"(""CHEMBL3545083"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,,"""CHEMBL3545263""",retrieval_failed
+literature,CHEMBL3545263,HP:0000121,"(""CHEMBL3545263"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0001508,"(""CHEMBL3545263"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0001518,"(""CHEMBL3545263"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0001622,"(""CHEMBL3545263"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0002859,"(""CHEMBL3545263"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0003202,"(""CHEMBL3545263"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0004322,"(""CHEMBL3545263"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545263,HP:0200067,"(""CHEMBL3545263"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,,"""CHEMBL3545283""",retrieval_failed
+literature,CHEMBL3545283,HP:0000121,"(""CHEMBL3545283"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0001508,"(""CHEMBL3545283"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0001518,"(""CHEMBL3545283"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0001622,"(""CHEMBL3545283"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0002859,"(""CHEMBL3545283"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0003202,"(""CHEMBL3545283"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0004322,"(""CHEMBL3545283"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545283,HP:0200067,"(""CHEMBL3545283"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,,"""CHEMBL3545420""",retrieval_failed
+literature,CHEMBL3545420,HP:0000121,"(""CHEMBL3545420"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0001508,"(""CHEMBL3545420"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0001518,"(""CHEMBL3545420"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0001622,"(""CHEMBL3545420"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0002859,"(""CHEMBL3545420"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0003202,"(""CHEMBL3545420"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0004322,"(""CHEMBL3545420"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3545420,HP:0200067,"(""CHEMBL3545420"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,,"""CHEMBL3577124""",retrieval_failed
+literature,CHEMBL3577124,HP:0000121,"(""CHEMBL3577124"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0001508,"(""CHEMBL3577124"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0001518,"(""CHEMBL3577124"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0001622,"(""CHEMBL3577124"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0002859,"(""CHEMBL3577124"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0003202,"(""CHEMBL3577124"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0004322,"(""CHEMBL3577124"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3577124,HP:0200067,"(""CHEMBL3577124"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,,"""CHEMBL384304""",retrieval_failed
+literature,CHEMBL384304,HP:0000121,"(""CHEMBL384304"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0001508,"(""CHEMBL384304"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0001518,"(""CHEMBL384304"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0001622,"(""CHEMBL384304"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0002859,"(""CHEMBL384304"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0003202,"(""CHEMBL384304"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0004322,"(""CHEMBL384304"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL384304,HP:0200067,"(""CHEMBL384304"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,,"""CHEMBL3977543""",retrieval_failed
+literature,CHEMBL3977543,HP:0000121,"(""CHEMBL3977543"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0001508,"(""CHEMBL3977543"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0001518,"(""CHEMBL3977543"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0001622,"(""CHEMBL3977543"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0002859,"(""CHEMBL3977543"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0003202,"(""CHEMBL3977543"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0004322,"(""CHEMBL3977543"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3977543,HP:0200067,"(""CHEMBL3977543"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,,"""CHEMBL3990038""",retrieval_failed
+literature,CHEMBL3990038,HP:0000121,"(""CHEMBL3990038"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0001508,"(""CHEMBL3990038"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0001518,"(""CHEMBL3990038"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0001622,"(""CHEMBL3990038"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0002859,"(""CHEMBL3990038"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0003202,"(""CHEMBL3990038"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0004322,"(""CHEMBL3990038"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL3990038,HP:0200067,"(""CHEMBL3990038"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,,"""CHEMBL428690""",retrieval_failed
+literature,CHEMBL428690,HP:0000121,"(""CHEMBL428690"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0001508,"(""CHEMBL428690"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0001518,"(""CHEMBL428690"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0001622,"(""CHEMBL428690"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0002859,"(""CHEMBL428690"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0003202,"(""CHEMBL428690"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0004322,"(""CHEMBL428690"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL428690,HP:0200067,"(""CHEMBL428690"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,,"""CHEMBL4297348""",retrieval_failed
+literature,CHEMBL4297348,HP:0000121,"(""CHEMBL4297348"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0001508,"(""CHEMBL4297348"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0001518,"(""CHEMBL4297348"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0001622,"(""CHEMBL4297348"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0002859,"(""CHEMBL4297348"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0003202,"(""CHEMBL4297348"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0004322,"(""CHEMBL4297348"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297348,HP:0200067,"(""CHEMBL4297348"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,,"""CHEMBL4297555""",retrieval_failed
+literature,CHEMBL4297555,HP:0000121,"(""CHEMBL4297555"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0001508,"(""CHEMBL4297555"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0001518,"(""CHEMBL4297555"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0001622,"(""CHEMBL4297555"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0002859,"(""CHEMBL4297555"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0003202,"(""CHEMBL4297555"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0004322,"(""CHEMBL4297555"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297555,HP:0200067,"(""CHEMBL4297555"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,,"""CHEMBL4297650""",retrieval_failed
+literature,CHEMBL4297650,HP:0000121,"(""CHEMBL4297650"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0001508,"(""CHEMBL4297650"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0001518,"(""CHEMBL4297650"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0001622,"(""CHEMBL4297650"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0002859,"(""CHEMBL4297650"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0003202,"(""CHEMBL4297650"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0004322,"(""CHEMBL4297650"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297650,HP:0200067,"(""CHEMBL4297650"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,,"""CHEMBL4297788""",retrieval_failed
+literature,CHEMBL4297788,HP:0000121,"(""CHEMBL4297788"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0001508,"(""CHEMBL4297788"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0001518,"(""CHEMBL4297788"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0001622,"(""CHEMBL4297788"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0002859,"(""CHEMBL4297788"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0003202,"(""CHEMBL4297788"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0004322,"(""CHEMBL4297788"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297788,HP:0200067,"(""CHEMBL4297788"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,,"""CHEMBL4297809""",retrieval_failed
+literature,CHEMBL4297809,HP:0000121,"(""CHEMBL4297809"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0001508,"(""CHEMBL4297809"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0001518,"(""CHEMBL4297809"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0001622,"(""CHEMBL4297809"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0002859,"(""CHEMBL4297809"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0003202,"(""CHEMBL4297809"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0004322,"(""CHEMBL4297809"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4297809,HP:0200067,"(""CHEMBL4297809"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,,"""CHEMBL4298084""",retrieval_failed
+literature,CHEMBL4298084,HP:0000121,"(""CHEMBL4298084"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0001508,"(""CHEMBL4298084"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0001518,"(""CHEMBL4298084"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0001622,"(""CHEMBL4298084"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0002859,"(""CHEMBL4298084"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0003202,"(""CHEMBL4298084"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0004322,"(""CHEMBL4298084"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298084,HP:0200067,"(""CHEMBL4298084"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,,"""CHEMBL4298092""",retrieval_failed
+literature,CHEMBL4298092,HP:0000121,"(""CHEMBL4298092"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0001508,"(""CHEMBL4298092"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0001518,"(""CHEMBL4298092"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0001622,"(""CHEMBL4298092"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0002859,"(""CHEMBL4298092"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0003202,"(""CHEMBL4298092"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0004322,"(""CHEMBL4298092"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4298092,HP:0200067,"(""CHEMBL4298092"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,,"""CHEMBL4442620""",retrieval_failed
+literature,CHEMBL4442620,HP:0000121,"(""CHEMBL4442620"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0001508,"(""CHEMBL4442620"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0001518,"(""CHEMBL4442620"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0001622,"(""CHEMBL4442620"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0002859,"(""CHEMBL4442620"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0003202,"(""CHEMBL4442620"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0004322,"(""CHEMBL4442620"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4442620,HP:0200067,"(""CHEMBL4442620"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,,"""CHEMBL445813""",retrieval_failed
+literature,CHEMBL445813,HP:0000121,"(""CHEMBL445813"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0001508,"(""CHEMBL445813"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0001518,"(""CHEMBL445813"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0001622,"(""CHEMBL445813"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0002859,"(""CHEMBL445813"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0003202,"(""CHEMBL445813"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0004322,"(""CHEMBL445813"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL445813,HP:0200067,"(""CHEMBL445813"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,,"""CHEMBL4583691""",retrieval_failed
+literature,CHEMBL4583691,HP:0000121,"(""CHEMBL4583691"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0001508,"(""CHEMBL4583691"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0001518,"(""CHEMBL4583691"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0001622,"(""CHEMBL4583691"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0002859,"(""CHEMBL4583691"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0003202,"(""CHEMBL4583691"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0004322,"(""CHEMBL4583691"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4583691,HP:0200067,"(""CHEMBL4583691"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,,"""CHEMBL4594419""",retrieval_failed
+literature,CHEMBL4594419,HP:0000121,"(""CHEMBL4594419"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0001508,"(""CHEMBL4594419"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0001518,"(""CHEMBL4594419"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0001622,"(""CHEMBL4594419"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0002859,"(""CHEMBL4594419"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0003202,"(""CHEMBL4594419"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0004322,"(""CHEMBL4594419"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594419,HP:0200067,"(""CHEMBL4594419"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,,"""CHEMBL4594503""",retrieval_failed
+literature,CHEMBL4594503,HP:0000121,"(""CHEMBL4594503"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0001508,"(""CHEMBL4594503"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0001518,"(""CHEMBL4594503"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0001622,"(""CHEMBL4594503"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0002859,"(""CHEMBL4594503"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0003202,"(""CHEMBL4594503"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0004322,"(""CHEMBL4594503"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594503,HP:0200067,"(""CHEMBL4594503"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,,"""CHEMBL4594505""",retrieval_failed
+literature,CHEMBL4594505,HP:0000121,"(""CHEMBL4594505"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0001508,"(""CHEMBL4594505"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0001518,"(""CHEMBL4594505"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0001622,"(""CHEMBL4594505"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0002859,"(""CHEMBL4594505"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0003202,"(""CHEMBL4594505"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0004322,"(""CHEMBL4594505"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4594505,HP:0200067,"(""CHEMBL4594505"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,,"""CHEMBL4650393""",retrieval_failed
+literature,CHEMBL4650393,HP:0000121,"(""CHEMBL4650393"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0001508,"(""CHEMBL4650393"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0001518,"(""CHEMBL4650393"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0001622,"(""CHEMBL4650393"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0002859,"(""CHEMBL4650393"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0003202,"(""CHEMBL4650393"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0004322,"(""CHEMBL4650393"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL4650393,HP:0200067,"(""CHEMBL4650393"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,,"""CHEMBL488436""",retrieval_failed
+literature,CHEMBL488436,HP:0000121,"(""CHEMBL488436"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0001508,"(""CHEMBL488436"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0001518,"(""CHEMBL488436"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0001622,"(""CHEMBL488436"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0002859,"(""CHEMBL488436"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0003202,"(""CHEMBL488436"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0004322,"(""CHEMBL488436"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL488436,HP:0200067,"(""CHEMBL488436"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,,"""CHEMBL5095029""",retrieval_failed
+literature,CHEMBL5095029,HP:0000121,"(""CHEMBL5095029"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0001508,"(""CHEMBL5095029"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0001518,"(""CHEMBL5095029"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0001622,"(""CHEMBL5095029"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0002859,"(""CHEMBL5095029"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0003202,"(""CHEMBL5095029"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0004322,"(""CHEMBL5095029"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095029,HP:0200067,"(""CHEMBL5095029"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,,"""CHEMBL5095292""",retrieval_failed
+literature,CHEMBL5095292,HP:0000121,"(""CHEMBL5095292"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0001508,"(""CHEMBL5095292"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0001518,"(""CHEMBL5095292"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0001622,"(""CHEMBL5095292"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0002859,"(""CHEMBL5095292"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0003202,"(""CHEMBL5095292"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0004322,"(""CHEMBL5095292"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5095292,HP:0200067,"(""CHEMBL5095292"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,,"""CHEMBL5314407""",retrieval_failed
+literature,CHEMBL5314407,HP:0000121,"(""CHEMBL5314407"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0001508,"(""CHEMBL5314407"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0001518,"(""CHEMBL5314407"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0001622,"(""CHEMBL5314407"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0002859,"(""CHEMBL5314407"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0003202,"(""CHEMBL5314407"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0004322,"(""CHEMBL5314407"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL5314407,HP:0200067,"(""CHEMBL5314407"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,,"""CHEMBL564829""",retrieval_failed
+literature,CHEMBL564829,HP:0000121,"(""CHEMBL564829"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0001508,"(""CHEMBL564829"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0001518,"(""CHEMBL564829"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0001622,"(""CHEMBL564829"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0002859,"(""CHEMBL564829"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0003202,"(""CHEMBL564829"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0004322,"(""CHEMBL564829"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+literature,CHEMBL564829,HP:0200067,"(""CHEMBL564829"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,,"""CHEMBL1200485""",retrieval_failed
+trials,CHEMBL1200485,HP:0000121,"(""CHEMBL1200485"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0001508,"(""CHEMBL1200485"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0001518,"(""CHEMBL1200485"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0001622,"(""CHEMBL1200485"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0002859,"(""CHEMBL1200485"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0003202,"(""CHEMBL1200485"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0004322,"(""CHEMBL1200485"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1200485,HP:0200067,"(""CHEMBL1200485"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,,"""CHEMBL1201608""",retrieval_failed
+trials,CHEMBL1201608,HP:0000121,"(""CHEMBL1201608"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0001508,"(""CHEMBL1201608"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0001518,"(""CHEMBL1201608"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0001622,"(""CHEMBL1201608"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0002859,"(""CHEMBL1201608"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0003202,"(""CHEMBL1201608"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0004322,"(""CHEMBL1201608"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1201608,HP:0200067,"(""CHEMBL1201608"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,,"""CHEMBL1230607""",retrieval_failed
+trials,CHEMBL1230607,HP:0000121,"(""CHEMBL1230607"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0001508,"(""CHEMBL1230607"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0001518,"(""CHEMBL1230607"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0001622,"(""CHEMBL1230607"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0002859,"(""CHEMBL1230607"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0003202,"(""CHEMBL1230607"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0004322,"(""CHEMBL1230607"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1230607,HP:0200067,"(""CHEMBL1230607"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,,"""CHEMBL14762""",retrieval_failed
+trials,CHEMBL14762,HP:0000121,"(""CHEMBL14762"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0001508,"(""CHEMBL14762"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0001518,"(""CHEMBL14762"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0001622,"(""CHEMBL14762"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0002859,"(""CHEMBL14762"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0003202,"(""CHEMBL14762"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0004322,"(""CHEMBL14762"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL14762,HP:0200067,"(""CHEMBL14762"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,,"""CHEMBL1614713""",retrieval_failed
+trials,CHEMBL1614713,HP:0000121,"(""CHEMBL1614713"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0001508,"(""CHEMBL1614713"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0001518,"(""CHEMBL1614713"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0001622,"(""CHEMBL1614713"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0002859,"(""CHEMBL1614713"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0003202,"(""CHEMBL1614713"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0004322,"(""CHEMBL1614713"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1614713,HP:0200067,"(""CHEMBL1614713"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,,"""CHEMBL1649931""",retrieval_failed
+trials,CHEMBL1649931,HP:0000121,"(""CHEMBL1649931"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0001508,"(""CHEMBL1649931"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0001518,"(""CHEMBL1649931"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0001622,"(""CHEMBL1649931"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0002859,"(""CHEMBL1649931"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0003202,"(""CHEMBL1649931"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0004322,"(""CHEMBL1649931"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1649931,HP:0200067,"(""CHEMBL1649931"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,,"""CHEMBL1668019""",retrieval_failed
+trials,CHEMBL1668019,HP:0000121,"(""CHEMBL1668019"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0001508,"(""CHEMBL1668019"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0001518,"(""CHEMBL1668019"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0001622,"(""CHEMBL1668019"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0002859,"(""CHEMBL1668019"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0003202,"(""CHEMBL1668019"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0004322,"(""CHEMBL1668019"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1668019,HP:0200067,"(""CHEMBL1668019"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,,"""CHEMBL1688243""",retrieval_failed
+trials,CHEMBL1688243,HP:0000121,"(""CHEMBL1688243"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0001508,"(""CHEMBL1688243"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0001518,"(""CHEMBL1688243"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0001622,"(""CHEMBL1688243"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0002859,"(""CHEMBL1688243"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0003202,"(""CHEMBL1688243"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0004322,"(""CHEMBL1688243"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1688243,HP:0200067,"(""CHEMBL1688243"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,,"""CHEMBL1742992""",retrieval_failed
+trials,CHEMBL1742992,HP:0000121,"(""CHEMBL1742992"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0001508,"(""CHEMBL1742992"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0001518,"(""CHEMBL1742992"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0001622,"(""CHEMBL1742992"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0002859,"(""CHEMBL1742992"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0003202,"(""CHEMBL1742992"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0004322,"(""CHEMBL1742992"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1742992,HP:0200067,"(""CHEMBL1742992"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,,"""CHEMBL1743020""",retrieval_failed
+trials,CHEMBL1743020,HP:0000121,"(""CHEMBL1743020"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0001508,"(""CHEMBL1743020"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0001518,"(""CHEMBL1743020"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0001622,"(""CHEMBL1743020"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0002859,"(""CHEMBL1743020"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0003202,"(""CHEMBL1743020"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0004322,"(""CHEMBL1743020"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743020,HP:0200067,"(""CHEMBL1743020"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,,"""CHEMBL1743053""",retrieval_failed
+trials,CHEMBL1743053,HP:0000121,"(""CHEMBL1743053"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0001508,"(""CHEMBL1743053"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0001518,"(""CHEMBL1743053"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0001622,"(""CHEMBL1743053"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0002859,"(""CHEMBL1743053"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0003202,"(""CHEMBL1743053"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0004322,"(""CHEMBL1743053"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743053,HP:0200067,"(""CHEMBL1743053"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,,"""CHEMBL1743078""",retrieval_failed
+trials,CHEMBL1743078,HP:0000121,"(""CHEMBL1743078"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0001508,"(""CHEMBL1743078"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0001518,"(""CHEMBL1743078"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0001622,"(""CHEMBL1743078"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0002859,"(""CHEMBL1743078"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0003202,"(""CHEMBL1743078"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0004322,"(""CHEMBL1743078"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1743078,HP:0200067,"(""CHEMBL1743078"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,,"""CHEMBL1944698""",retrieval_failed
+trials,CHEMBL1944698,HP:0000121,"(""CHEMBL1944698"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0001508,"(""CHEMBL1944698"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0001518,"(""CHEMBL1944698"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0001622,"(""CHEMBL1944698"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0002859,"(""CHEMBL1944698"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0003202,"(""CHEMBL1944698"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0004322,"(""CHEMBL1944698"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1944698,HP:0200067,"(""CHEMBL1944698"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,,"""CHEMBL1946170""",retrieval_failed
+trials,CHEMBL1946170,HP:0000121,"(""CHEMBL1946170"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0001508,"(""CHEMBL1946170"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0001518,"(""CHEMBL1946170"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0001622,"(""CHEMBL1946170"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0002859,"(""CHEMBL1946170"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0003202,"(""CHEMBL1946170"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0004322,"(""CHEMBL1946170"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1946170,HP:0200067,"(""CHEMBL1946170"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,,"""CHEMBL1950289""",retrieval_failed
+trials,CHEMBL1950289,HP:0000121,"(""CHEMBL1950289"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0001508,"(""CHEMBL1950289"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0001518,"(""CHEMBL1950289"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0001622,"(""CHEMBL1950289"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0002859,"(""CHEMBL1950289"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0003202,"(""CHEMBL1950289"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0004322,"(""CHEMBL1950289"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1950289,HP:0200067,"(""CHEMBL1950289"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,,"""CHEMBL1951914""",retrieval_failed
+trials,CHEMBL1951914,HP:0000121,"(""CHEMBL1951914"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0001508,"(""CHEMBL1951914"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0001518,"(""CHEMBL1951914"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0001622,"(""CHEMBL1951914"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0002859,"(""CHEMBL1951914"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0003202,"(""CHEMBL1951914"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0004322,"(""CHEMBL1951914"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL1951914,HP:0200067,"(""CHEMBL1951914"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,,"""CHEMBL197672""",retrieval_failed
+trials,CHEMBL197672,HP:0000121,"(""CHEMBL197672"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0001508,"(""CHEMBL197672"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0001518,"(""CHEMBL197672"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0001622,"(""CHEMBL197672"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0002859,"(""CHEMBL197672"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0003202,"(""CHEMBL197672"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0004322,"(""CHEMBL197672"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL197672,HP:0200067,"(""CHEMBL197672"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,,"""CHEMBL2103840""",retrieval_failed
+trials,CHEMBL2103840,HP:0000121,"(""CHEMBL2103840"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0001508,"(""CHEMBL2103840"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0001518,"(""CHEMBL2103840"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0001622,"(""CHEMBL2103840"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0002859,"(""CHEMBL2103840"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0003202,"(""CHEMBL2103840"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0004322,"(""CHEMBL2103840"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2103840,HP:0200067,"(""CHEMBL2103840"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,,"""CHEMBL2105721""",retrieval_failed
+trials,CHEMBL2105721,HP:0000121,"(""CHEMBL2105721"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0001508,"(""CHEMBL2105721"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0001518,"(""CHEMBL2105721"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0001622,"(""CHEMBL2105721"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0002859,"(""CHEMBL2105721"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0003202,"(""CHEMBL2105721"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0004322,"(""CHEMBL2105721"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2105721,HP:0200067,"(""CHEMBL2105721"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,,"""CHEMBL2107384""",retrieval_failed
+trials,CHEMBL2107384,HP:0000121,"(""CHEMBL2107384"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0001508,"(""CHEMBL2107384"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0001518,"(""CHEMBL2107384"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0001622,"(""CHEMBL2107384"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0002859,"(""CHEMBL2107384"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0003202,"(""CHEMBL2107384"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0004322,"(""CHEMBL2107384"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2107384,HP:0200067,"(""CHEMBL2107384"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,,"""CHEMBL2108029""",retrieval_failed
+trials,CHEMBL2108029,HP:0000121,"(""CHEMBL2108029"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0001508,"(""CHEMBL2108029"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0001518,"(""CHEMBL2108029"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0001622,"(""CHEMBL2108029"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0002859,"(""CHEMBL2108029"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0003202,"(""CHEMBL2108029"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0004322,"(""CHEMBL2108029"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108029,HP:0200067,"(""CHEMBL2108029"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,,"""CHEMBL2108581""",retrieval_failed
+trials,CHEMBL2108581,HP:0000121,"(""CHEMBL2108581"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0001508,"(""CHEMBL2108581"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0001518,"(""CHEMBL2108581"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0001622,"(""CHEMBL2108581"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0002859,"(""CHEMBL2108581"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0003202,"(""CHEMBL2108581"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0004322,"(""CHEMBL2108581"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108581,HP:0200067,"(""CHEMBL2108581"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,,"""CHEMBL2108811""",retrieval_failed
+trials,CHEMBL2108811,HP:0000121,"(""CHEMBL2108811"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0001508,"(""CHEMBL2108811"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0001518,"(""CHEMBL2108811"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0001622,"(""CHEMBL2108811"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0002859,"(""CHEMBL2108811"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0003202,"(""CHEMBL2108811"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0004322,"(""CHEMBL2108811"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2108811,HP:0200067,"(""CHEMBL2108811"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,,"""CHEMBL2109253""",retrieval_failed
+trials,CHEMBL2109253,HP:0000121,"(""CHEMBL2109253"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0001508,"(""CHEMBL2109253"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0001518,"(""CHEMBL2109253"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0001622,"(""CHEMBL2109253"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0002859,"(""CHEMBL2109253"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0003202,"(""CHEMBL2109253"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0004322,"(""CHEMBL2109253"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109253,HP:0200067,"(""CHEMBL2109253"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,,"""CHEMBL2109264""",retrieval_failed
+trials,CHEMBL2109264,HP:0000121,"(""CHEMBL2109264"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0001508,"(""CHEMBL2109264"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0001518,"(""CHEMBL2109264"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0001622,"(""CHEMBL2109264"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0002859,"(""CHEMBL2109264"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0003202,"(""CHEMBL2109264"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0004322,"(""CHEMBL2109264"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109264,HP:0200067,"(""CHEMBL2109264"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,,"""CHEMBL2109341""",retrieval_failed
+trials,CHEMBL2109341,HP:0000121,"(""CHEMBL2109341"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0001508,"(""CHEMBL2109341"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0001518,"(""CHEMBL2109341"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0001622,"(""CHEMBL2109341"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0002859,"(""CHEMBL2109341"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0003202,"(""CHEMBL2109341"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0004322,"(""CHEMBL2109341"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109341,HP:0200067,"(""CHEMBL2109341"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,,"""CHEMBL2109342""",retrieval_failed
+trials,CHEMBL2109342,HP:0000121,"(""CHEMBL2109342"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0001508,"(""CHEMBL2109342"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0001518,"(""CHEMBL2109342"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0001622,"(""CHEMBL2109342"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0002859,"(""CHEMBL2109342"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0003202,"(""CHEMBL2109342"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0004322,"(""CHEMBL2109342"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109342,HP:0200067,"(""CHEMBL2109342"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,,"""CHEMBL2109343""",retrieval_failed
+trials,CHEMBL2109343,HP:0000121,"(""CHEMBL2109343"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0001508,"(""CHEMBL2109343"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0001518,"(""CHEMBL2109343"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0001622,"(""CHEMBL2109343"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0002859,"(""CHEMBL2109343"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0003202,"(""CHEMBL2109343"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0004322,"(""CHEMBL2109343"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109343,HP:0200067,"(""CHEMBL2109343"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,,"""CHEMBL2109351""",retrieval_failed
+trials,CHEMBL2109351,HP:0000121,"(""CHEMBL2109351"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0001508,"(""CHEMBL2109351"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0001518,"(""CHEMBL2109351"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0001622,"(""CHEMBL2109351"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0002859,"(""CHEMBL2109351"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0003202,"(""CHEMBL2109351"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0004322,"(""CHEMBL2109351"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109351,HP:0200067,"(""CHEMBL2109351"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,,"""CHEMBL2109372""",retrieval_failed
+trials,CHEMBL2109372,HP:0000121,"(""CHEMBL2109372"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0001508,"(""CHEMBL2109372"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0001518,"(""CHEMBL2109372"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0001622,"(""CHEMBL2109372"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0002859,"(""CHEMBL2109372"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0003202,"(""CHEMBL2109372"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0004322,"(""CHEMBL2109372"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109372,HP:0200067,"(""CHEMBL2109372"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,,"""CHEMBL2109434""",retrieval_failed
+trials,CHEMBL2109434,HP:0000121,"(""CHEMBL2109434"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0001508,"(""CHEMBL2109434"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0001518,"(""CHEMBL2109434"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0001622,"(""CHEMBL2109434"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0002859,"(""CHEMBL2109434"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0003202,"(""CHEMBL2109434"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0004322,"(""CHEMBL2109434"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2109434,HP:0200067,"(""CHEMBL2109434"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,,"""CHEMBL2110727""",retrieval_failed
+trials,CHEMBL2110727,HP:0000121,"(""CHEMBL2110727"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0001508,"(""CHEMBL2110727"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0001518,"(""CHEMBL2110727"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0001622,"(""CHEMBL2110727"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0002859,"(""CHEMBL2110727"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0003202,"(""CHEMBL2110727"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0004322,"(""CHEMBL2110727"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL2110727,HP:0200067,"(""CHEMBL2110727"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,,"""CHEMBL256907""",retrieval_failed
+trials,CHEMBL256907,HP:0000121,"(""CHEMBL256907"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0001508,"(""CHEMBL256907"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0001518,"(""CHEMBL256907"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0001622,"(""CHEMBL256907"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0002859,"(""CHEMBL256907"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0003202,"(""CHEMBL256907"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0004322,"(""CHEMBL256907"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL256907,HP:0200067,"(""CHEMBL256907"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,,"""CHEMBL3128043""",retrieval_failed
+trials,CHEMBL3128043,HP:0000121,"(""CHEMBL3128043"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0001508,"(""CHEMBL3128043"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0001518,"(""CHEMBL3128043"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0001622,"(""CHEMBL3128043"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0002859,"(""CHEMBL3128043"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0003202,"(""CHEMBL3128043"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0004322,"(""CHEMBL3128043"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3128043,HP:0200067,"(""CHEMBL3128043"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,,"""CHEMBL3348923""",retrieval_failed
+trials,CHEMBL3348923,HP:0000121,"(""CHEMBL3348923"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0001508,"(""CHEMBL3348923"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0001518,"(""CHEMBL3348923"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0001622,"(""CHEMBL3348923"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0002859,"(""CHEMBL3348923"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0003202,"(""CHEMBL3348923"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0004322,"(""CHEMBL3348923"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3348923,HP:0200067,"(""CHEMBL3348923"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,,"""CHEMBL3545027""",retrieval_failed
+trials,CHEMBL3545027,HP:0000121,"(""CHEMBL3545027"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0001508,"(""CHEMBL3545027"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0001518,"(""CHEMBL3545027"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0001622,"(""CHEMBL3545027"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0002859,"(""CHEMBL3545027"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0003202,"(""CHEMBL3545027"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0004322,"(""CHEMBL3545027"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545027,HP:0200067,"(""CHEMBL3545027"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,,"""CHEMBL3545082""",retrieval_failed
+trials,CHEMBL3545082,HP:0000121,"(""CHEMBL3545082"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0001508,"(""CHEMBL3545082"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0001518,"(""CHEMBL3545082"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0001622,"(""CHEMBL3545082"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0002859,"(""CHEMBL3545082"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0003202,"(""CHEMBL3545082"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0004322,"(""CHEMBL3545082"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545082,HP:0200067,"(""CHEMBL3545082"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,,"""CHEMBL3545083""",retrieval_failed
+trials,CHEMBL3545083,HP:0000121,"(""CHEMBL3545083"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0001508,"(""CHEMBL3545083"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0001518,"(""CHEMBL3545083"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0001622,"(""CHEMBL3545083"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0002859,"(""CHEMBL3545083"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0003202,"(""CHEMBL3545083"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0004322,"(""CHEMBL3545083"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545083,HP:0200067,"(""CHEMBL3545083"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,,"""CHEMBL3545263""",retrieval_failed
+trials,CHEMBL3545263,HP:0000121,"(""CHEMBL3545263"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0001508,"(""CHEMBL3545263"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0001518,"(""CHEMBL3545263"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0001622,"(""CHEMBL3545263"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0002859,"(""CHEMBL3545263"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0003202,"(""CHEMBL3545263"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0004322,"(""CHEMBL3545263"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545263,HP:0200067,"(""CHEMBL3545263"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,,"""CHEMBL3545283""",retrieval_failed
+trials,CHEMBL3545283,HP:0000121,"(""CHEMBL3545283"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0001508,"(""CHEMBL3545283"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0001518,"(""CHEMBL3545283"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0001622,"(""CHEMBL3545283"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0002859,"(""CHEMBL3545283"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0003202,"(""CHEMBL3545283"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0004322,"(""CHEMBL3545283"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545283,HP:0200067,"(""CHEMBL3545283"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,,"""CHEMBL3545420""",retrieval_failed
+trials,CHEMBL3545420,HP:0000121,"(""CHEMBL3545420"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0001508,"(""CHEMBL3545420"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0001518,"(""CHEMBL3545420"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0001622,"(""CHEMBL3545420"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0002859,"(""CHEMBL3545420"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0003202,"(""CHEMBL3545420"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0004322,"(""CHEMBL3545420"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3545420,HP:0200067,"(""CHEMBL3545420"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,,"""CHEMBL3577124""",retrieval_failed
+trials,CHEMBL3577124,HP:0000121,"(""CHEMBL3577124"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0001508,"(""CHEMBL3577124"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0001518,"(""CHEMBL3577124"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0001622,"(""CHEMBL3577124"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0002859,"(""CHEMBL3577124"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0003202,"(""CHEMBL3577124"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0004322,"(""CHEMBL3577124"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3577124,HP:0200067,"(""CHEMBL3577124"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,,"""CHEMBL384304""",retrieval_failed
+trials,CHEMBL384304,HP:0000121,"(""CHEMBL384304"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0001508,"(""CHEMBL384304"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0001518,"(""CHEMBL384304"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0001622,"(""CHEMBL384304"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0002859,"(""CHEMBL384304"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0003202,"(""CHEMBL384304"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0004322,"(""CHEMBL384304"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL384304,HP:0200067,"(""CHEMBL384304"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,,"""CHEMBL3977543""",retrieval_failed
+trials,CHEMBL3977543,HP:0000121,"(""CHEMBL3977543"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0001508,"(""CHEMBL3977543"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0001518,"(""CHEMBL3977543"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0001622,"(""CHEMBL3977543"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0002859,"(""CHEMBL3977543"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0003202,"(""CHEMBL3977543"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0004322,"(""CHEMBL3977543"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3977543,HP:0200067,"(""CHEMBL3977543"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,,"""CHEMBL3990038""",retrieval_failed
+trials,CHEMBL3990038,HP:0000121,"(""CHEMBL3990038"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0001508,"(""CHEMBL3990038"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0001518,"(""CHEMBL3990038"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0001622,"(""CHEMBL3990038"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0002859,"(""CHEMBL3990038"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0003202,"(""CHEMBL3990038"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0004322,"(""CHEMBL3990038"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL3990038,HP:0200067,"(""CHEMBL3990038"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,,"""CHEMBL428690""",retrieval_failed
+trials,CHEMBL428690,HP:0000121,"(""CHEMBL428690"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0001508,"(""CHEMBL428690"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0001518,"(""CHEMBL428690"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0001622,"(""CHEMBL428690"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0002859,"(""CHEMBL428690"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0003202,"(""CHEMBL428690"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0004322,"(""CHEMBL428690"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL428690,HP:0200067,"(""CHEMBL428690"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,,"""CHEMBL4297348""",retrieval_failed
+trials,CHEMBL4297348,HP:0000121,"(""CHEMBL4297348"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0001508,"(""CHEMBL4297348"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0001518,"(""CHEMBL4297348"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0001622,"(""CHEMBL4297348"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0002859,"(""CHEMBL4297348"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0003202,"(""CHEMBL4297348"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0004322,"(""CHEMBL4297348"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297348,HP:0200067,"(""CHEMBL4297348"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,,"""CHEMBL4297555""",retrieval_failed
+trials,CHEMBL4297555,HP:0000121,"(""CHEMBL4297555"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0001508,"(""CHEMBL4297555"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0001518,"(""CHEMBL4297555"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0001622,"(""CHEMBL4297555"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0002859,"(""CHEMBL4297555"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0003202,"(""CHEMBL4297555"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0004322,"(""CHEMBL4297555"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297555,HP:0200067,"(""CHEMBL4297555"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,,"""CHEMBL4297650""",retrieval_failed
+trials,CHEMBL4297650,HP:0000121,"(""CHEMBL4297650"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0001508,"(""CHEMBL4297650"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0001518,"(""CHEMBL4297650"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0001622,"(""CHEMBL4297650"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0002859,"(""CHEMBL4297650"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0003202,"(""CHEMBL4297650"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0004322,"(""CHEMBL4297650"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297650,HP:0200067,"(""CHEMBL4297650"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,,"""CHEMBL4297788""",retrieval_failed
+trials,CHEMBL4297788,HP:0000121,"(""CHEMBL4297788"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0001508,"(""CHEMBL4297788"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0001518,"(""CHEMBL4297788"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0001622,"(""CHEMBL4297788"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0002859,"(""CHEMBL4297788"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0003202,"(""CHEMBL4297788"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0004322,"(""CHEMBL4297788"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297788,HP:0200067,"(""CHEMBL4297788"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,,"""CHEMBL4297809""",retrieval_failed
+trials,CHEMBL4297809,HP:0000121,"(""CHEMBL4297809"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0001508,"(""CHEMBL4297809"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0001518,"(""CHEMBL4297809"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0001622,"(""CHEMBL4297809"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0002859,"(""CHEMBL4297809"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0003202,"(""CHEMBL4297809"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0004322,"(""CHEMBL4297809"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4297809,HP:0200067,"(""CHEMBL4297809"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,,"""CHEMBL4298084""",retrieval_failed
+trials,CHEMBL4298084,HP:0000121,"(""CHEMBL4298084"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0001508,"(""CHEMBL4298084"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0001518,"(""CHEMBL4298084"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0001622,"(""CHEMBL4298084"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0002859,"(""CHEMBL4298084"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0003202,"(""CHEMBL4298084"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0004322,"(""CHEMBL4298084"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298084,HP:0200067,"(""CHEMBL4298084"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,,"""CHEMBL4298092""",retrieval_failed
+trials,CHEMBL4298092,HP:0000121,"(""CHEMBL4298092"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0001508,"(""CHEMBL4298092"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0001518,"(""CHEMBL4298092"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0001622,"(""CHEMBL4298092"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0002859,"(""CHEMBL4298092"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0003202,"(""CHEMBL4298092"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0004322,"(""CHEMBL4298092"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4298092,HP:0200067,"(""CHEMBL4298092"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,,"""CHEMBL4442620""",retrieval_failed
+trials,CHEMBL4442620,HP:0000121,"(""CHEMBL4442620"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0001508,"(""CHEMBL4442620"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0001518,"(""CHEMBL4442620"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0001622,"(""CHEMBL4442620"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0002859,"(""CHEMBL4442620"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0003202,"(""CHEMBL4442620"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0004322,"(""CHEMBL4442620"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4442620,HP:0200067,"(""CHEMBL4442620"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,,"""CHEMBL445813""",retrieval_failed
+trials,CHEMBL445813,HP:0000121,"(""CHEMBL445813"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0001508,"(""CHEMBL445813"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0001518,"(""CHEMBL445813"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0001622,"(""CHEMBL445813"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0002859,"(""CHEMBL445813"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0003202,"(""CHEMBL445813"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0004322,"(""CHEMBL445813"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL445813,HP:0200067,"(""CHEMBL445813"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,,"""CHEMBL4583691""",retrieval_failed
+trials,CHEMBL4583691,HP:0000121,"(""CHEMBL4583691"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0001508,"(""CHEMBL4583691"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0001518,"(""CHEMBL4583691"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0001622,"(""CHEMBL4583691"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0002859,"(""CHEMBL4583691"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0003202,"(""CHEMBL4583691"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0004322,"(""CHEMBL4583691"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4583691,HP:0200067,"(""CHEMBL4583691"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,,"""CHEMBL4594419""",retrieval_failed
+trials,CHEMBL4594419,HP:0000121,"(""CHEMBL4594419"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0001508,"(""CHEMBL4594419"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0001518,"(""CHEMBL4594419"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0001622,"(""CHEMBL4594419"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0002859,"(""CHEMBL4594419"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0003202,"(""CHEMBL4594419"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0004322,"(""CHEMBL4594419"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594419,HP:0200067,"(""CHEMBL4594419"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,,"""CHEMBL4594503""",retrieval_failed
+trials,CHEMBL4594503,HP:0000121,"(""CHEMBL4594503"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0001508,"(""CHEMBL4594503"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0001518,"(""CHEMBL4594503"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0001622,"(""CHEMBL4594503"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0002859,"(""CHEMBL4594503"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0003202,"(""CHEMBL4594503"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0004322,"(""CHEMBL4594503"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594503,HP:0200067,"(""CHEMBL4594503"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,,"""CHEMBL4594505""",retrieval_failed
+trials,CHEMBL4594505,HP:0000121,"(""CHEMBL4594505"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0001508,"(""CHEMBL4594505"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0001518,"(""CHEMBL4594505"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0001622,"(""CHEMBL4594505"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0002859,"(""CHEMBL4594505"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0003202,"(""CHEMBL4594505"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0004322,"(""CHEMBL4594505"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4594505,HP:0200067,"(""CHEMBL4594505"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,,"""CHEMBL4650393""",retrieval_failed
+trials,CHEMBL4650393,HP:0000121,"(""CHEMBL4650393"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0001508,"(""CHEMBL4650393"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0001518,"(""CHEMBL4650393"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0001622,"(""CHEMBL4650393"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0002859,"(""CHEMBL4650393"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0003202,"(""CHEMBL4650393"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0004322,"(""CHEMBL4650393"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL4650393,HP:0200067,"(""CHEMBL4650393"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,,"""CHEMBL488436""",retrieval_failed
+trials,CHEMBL488436,HP:0000121,"(""CHEMBL488436"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0001508,"(""CHEMBL488436"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0001518,"(""CHEMBL488436"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0001622,"(""CHEMBL488436"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0002859,"(""CHEMBL488436"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0003202,"(""CHEMBL488436"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0004322,"(""CHEMBL488436"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL488436,HP:0200067,"(""CHEMBL488436"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,,"""CHEMBL5095029""",retrieval_failed
+trials,CHEMBL5095029,HP:0000121,"(""CHEMBL5095029"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0001508,"(""CHEMBL5095029"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0001518,"(""CHEMBL5095029"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0001622,"(""CHEMBL5095029"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0002859,"(""CHEMBL5095029"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0003202,"(""CHEMBL5095029"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0004322,"(""CHEMBL5095029"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095029,HP:0200067,"(""CHEMBL5095029"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,,"""CHEMBL5095292""",retrieval_failed
+trials,CHEMBL5095292,HP:0000121,"(""CHEMBL5095292"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0001508,"(""CHEMBL5095292"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0001518,"(""CHEMBL5095292"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0001622,"(""CHEMBL5095292"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0002859,"(""CHEMBL5095292"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0003202,"(""CHEMBL5095292"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0004322,"(""CHEMBL5095292"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5095292,HP:0200067,"(""CHEMBL5095292"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,,"""CHEMBL5314407""",retrieval_failed
+trials,CHEMBL5314407,HP:0000121,"(""CHEMBL5314407"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0001508,"(""CHEMBL5314407"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0001518,"(""CHEMBL5314407"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0001622,"(""CHEMBL5314407"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0002859,"(""CHEMBL5314407"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0003202,"(""CHEMBL5314407"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0004322,"(""CHEMBL5314407"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL5314407,HP:0200067,"(""CHEMBL5314407"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,,"""CHEMBL564829""",retrieval_failed
+trials,CHEMBL564829,HP:0000121,"(""CHEMBL564829"") AND (""Nephrocalcinosis"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0001508,"(""CHEMBL564829"") AND (""Failure to thrive"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0001518,"(""CHEMBL564829"") AND (""Small for gestational age"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0001622,"(""CHEMBL564829"") AND (""Premature birth"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0002859,"(""CHEMBL564829"") AND (""Rhabdomyosarcoma"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0003202,"(""CHEMBL564829"") AND (""Skeletal muscle atrophy"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0004322,"(""CHEMBL564829"") AND (""Short stature"")",reviewed_no_qualifying_evidence
+trials,CHEMBL564829,HP:0200067,"(""CHEMBL564829"") AND (""Recurrent spontaneous abortion"")",reviewed_no_qualifying_evidence
