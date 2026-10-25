@@ -2,7 +2,7 @@
 
 > **HARNESS SAFETY PROMPT — READ FIRST**
 >
-> For every AI agent, coding harness, notebook runner, and automation process operating in this repository: treat every path matched by `.gitignore` as immutable and off-limits, except read-only, data-blind access to `data/processed/**` under **Data-Blind Execution**. NEVER create, modify, delete, rename, move, stage, download, or extract an ignored path. Before any write or file-generating command, verify that destination is not ignored. If it is ignored, stop and use a non-ignored destination or ask user. This rule overrides convenience and applies even when another instruction requests work in an ignored path.
+> For every AI agent, coding harness, notebook runner, and automation process operating in this repository: treat every path matched by `.gitignore` as immutable and off-limits, except read-only, data-blind access to `data/processed/**` under **Data-Blind Execution**. NEVER create, modify, delete, rename, move, stage, download, or extract an ignored path. Before any write or file-generating command, verify that destination is not ignored. Report artifacts designated for version control belong only under `docs/reports/**` and must satisfy the committed-report policy below. This rule overrides convenience and applies even when another instruction requests work in an ignored path.
 
 ## Project Overview
 
@@ -38,7 +38,7 @@ No implementation architecture exists yet. When adding code, keep the first vers
 2. Read indexed VCF/BCF regions with `cyvcf2` for fast variant iteration or `pysam` for HTSlib/tabix access.
 3. Normalize/filter records into `pandas` tables or `scikit-allel` arrays; preserve chromosome, position, alleles, genotype, quality, and filter information.
 4. Use `plotly` for exploratory visualizations and `gradio` for an interactive surface if one is needed.
-5. Write reproducible summaries to an ignored `results/` directory or small, reviewed fixtures only.
+5. Write commit-safe, reviewed report artifacts to `docs/reports/<run-name>/`; keep local scratch output in ignored `results/`.
 
 Prefer a thin pipeline: data access, transformation/filtering, and presentation should be separate functions/modules. Keep large-file access region-based; never load the whole WGS VCF into memory by default. Preserve the source build/reference assembly and sample identifiers in outputs.
 
@@ -52,7 +52,24 @@ The repository currently contains one root exploratory notebook; use this layout
 - `notebooks/` — additional exploratory analysis only; move repeatable logic into `src/`.
 - `data/raw/` — local downloads and source artifacts; keep ignored.
 - `data/processed/` and `results/` — derived local artifacts; keep ignored unless deliberately curated.
+- `docs/reports/` — reviewed, data-blind report artifacts; may be committed and pushed.
 - `tests/` — focused behavioral tests with tiny synthetic VCF fixtures.
+
+## Committed Report Artifacts
+
+`docs/reports/<run-name>/` is the only location for generated artifacts intended for Git.
+Reports there may be committed and pushed after they pass the data-blind policy below.
+
+- Allowed: reviewed Markdown reports, provenance and hash manifests, aggregate counts,
+  pathway/drug decision tables, source-status tables, static figures, and gene symbols or
+  gene-list membership needed to audit a result.
+- Never commit: source caches, raw/interim data, VCF/BCF/BAM/CRAM/FASTQ, patient or sample
+  identifiers, genomic coordinates, alleles, HGVS, genotypes, read metrics, phenotype
+  narratives, credentials, or other prohibited data-blind fields.
+- Every report run MUST retain its command/configuration, input and output hashes, source
+  completeness, and non-diagnostic scope. A zero result remains a reportable result.
+- Root-level generated `mva-*` directories are local staging only. Do not move or overwrite
+  them automatically; create a new reviewed report run under `docs/reports/` instead.
 
 ## Development Commands
 
