@@ -265,4 +265,4 @@ docs/reports/*/compass-verify*/
 skills-lock.json
 
 # Abandoned exploratory notebook (superseded by notebooks/ versions).
-mva_variant_annotation_exploration[abadoned].ipynb
+mva_variant_annotation_exploration\[abadoned\].ipynb
