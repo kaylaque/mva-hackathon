@@ -1,0 +1,28 @@
+rank,pathway,number_of_articles,HP1,HP2,HP3,HP4,HP5,HP6,HP7,HP8,number_of_articles_with_any_HP,number_of_HP_covered
+1,Spindle assembly / mitotic checkpoint,58,5,0,7,1,1,0,1,5,15,6
+2,Chromosome segregation,34,3,0,6,0,1,0,1,6,13,5
+3,Cell cycle,26,3,0,3,0,0,0,0,3,8,3
+4,Apoptosis,16,1,0,4,0,0,0,1,2,6,4
+5,APC/C-mediated cell-cycle protein degradation,12,2,0,2,0,0,0,1,2,5,4
+6,Sodium-coupled phosphate transport,12,0,8,6,4,0,0,0,0,11,3
+7,p53 signaling / regulation,10,1,0,0,0,0,0,0,0,1,1
+8,Ubiquitin-mediated protein degradation,7,1,0,1,0,1,0,0,0,2,3
+9,mRNA / RNA splicing,6,2,1,3,1,0,0,0,0,5,4
+10,Proteasomal degradation,6,1,1,1,0,1,0,0,0,3,4
+11,DNA repair,5,1,0,3,0,0,0,0,0,3,2
+12,Tight junction,5,0,3,0,2,0,0,0,0,3,2
+13,DNA replication,4,0,0,3,0,0,0,1,0,3,2
+14,Oocyte meiosis,4,0,0,0,0,0,0,0,1,1,1
+15,Homology-directed / homologous recombination repair,3,1,0,2,0,0,0,0,0,2,2
+16,MAPK / RAS-MAPK signaling,3,3,0,1,1,0,0,0,0,3,3
+17,Mismatch repair,3,2,0,0,0,0,0,0,0,2,1
+18,Vitamin D metabolism,3,0,3,1,1,0,0,0,0,3,3
+19,cAMP / PTH1R-Gs signaling,2,0,1,2,0,0,0,0,0,2,2
+20,G-alpha-q / G-alpha-11 signaling,2,0,1,2,0,0,0,0,0,2,2
+21,Insulin receptor signaling,2,1,1,1,0,0,0,0,0,2,3
+22,NF-kappa B signaling,2,1,0,0,0,1,0,0,0,2,2
+23,RAD18-SLF1/2-SMC5/6 genome stability pathway,2,0,0,2,0,0,0,0,0,2,1
+24,Sister chromatid cohesion,2,0,0,2,0,0,0,1,0,2,2
+25,HIF / hypoxia signaling,1,1,0,0,0,0,0,0,0,1,1
+26,Interferon signaling,1,1,0,0,0,0,0,0,0,1,1
+27,Minor spliceosome pathway,1,0,0,1,0,0,0,0,0,1,1
