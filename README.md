@@ -72,35 +72,104 @@ records through one content-addressed cache, and writes tables that state explic
 supported, what is only context, and what is unresolved.
 
 ```bash
-# All destinations must be outside every Git repository.
+# Commit-safe reports go under docs/reports/<run-name>/.
+# Keep imported source data and the HTTP response cache outside Git.
 uv run python scripts/analyze_pathway_results.py \
   --reuse-pathway-dir data/processed/track2/pathway \
   --david-dir /external/immutable/david-import \
-  --output-dir /external/postanalysis-$(date -u +%Y%m%d-%H%M%S)
+  --output-dir docs/reports/postanalysis-$(date -u +%Y%m%d-%H%M%S)
 
 uv run python scripts/run_compass.py \
-  --postanalysis-dir /external/postanalysis-<stamp> \
+  --postanalysis-dir docs/reports/postanalysis-<stamp> \
   --network-dir data/processed/track2 \
-  --output-dir /external/compass-<stamp> \
+  --output-dir docs/reports/compass-<stamp> \
   --cache-dir /external/compass-cache
+```
 
+```bash
 # Supply source-grounded review, then finalize decisions without repeating public requests.
 uv run python scripts/run_compass.py \
-  --postanalysis-dir /external/postanalysis-<stamp> \
+  --postanalysis-dir docs/reports/postanalysis-<stamp> \
   --network-dir data/processed/track2 \
-  --output-dir /external/compass-<stamp> \
+  --output-dir docs/reports/compass-<stamp> \
   --cache-dir /external/compass-cache \
   --reviewed-evidence /external/reviewed_evidence.csv \
   --resume
 
 # Replay from the cache alone: no HTTP is issued and the stable tables are identical.
 uv run python scripts/run_compass.py \
-  --postanalysis-dir /external/postanalysis-<stamp> \
-  --output-dir /external/compass-verify-<stamp> \
+  --postanalysis-dir docs/reports/postanalysis-<stamp> \
+  --output-dir docs/reports/compass-verify-<stamp> \
   --cache-dir /external/compass-cache \
   --reviewed-evidence /external/reviewed_evidence.csv \
   --offline
 ```
+The default uses the validated `0.05` policy. For a separately versioned DAVID sensitivity
+run, reuse the verified immutable import and set the *same* cutoff for post-analysis and
+Compass. g:Profiler remains at its saved `0.05` policy. For example, a `0.90` exploratory
+inventory (not a significance claim or treatment recommendation):
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/analyze_pathway_results.py \
+  --reuse-pathway-dir data/processed/track2/pathway \
+  --david-dir /external/verified-david-import \
+  --analysis-threshold 0.90 \
+  --output-dir docs/reports/postanalysis-benjamini-090
+
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/run_compass.py \
+  --postanalysis-dir docs/reports/postanalysis-benjamini-090 \
+  --network-dir data/processed/track2 \
+  --output-dir docs/reports/compass-benjamini-090 \
+  --cache-dir /external/compass-public-cache \
+  --reviewed-evidence /external/reviewed_evidence.csv \
+  --selection-profile david_relaxed \
+  --david-benjamini-threshold 0.90 \
+  --drug-scope relaxed_pathway \
+  --drug-filter all \
+  --drug-filter direction_compatible \
+  --drug-filter no_cited_hazard \
+  --drug-filter decision_ready
+```
+
+The versioned Compass report partitions stable-ID DAVID terms at `0.05`, `0.10`, and the
+selected cutoff. Only exploratory terms surviving the context and observed-member gates
+nominate drug-query targets; pharmacology never promotes a held or rejected rationale. `target_drug_review.csv` retains returned drug rows; each requested filter writes
+`target_drug_review_<filter>.csv`. Unavailable public responses produce exit `2` and remain
+explicit in the source ledger rather than being treated as negative findings.
+
+
+### Post-Compass drug–HPO evidence enrichment
+
+Enrichment reads an existing relaxed `hsa05170` Compass snapshot and a reviewed,
+non-ignored code-only HPO file; it does not change Compass decisions or source inputs.
+Keep the public-response cache outside Git. MCP may help discover candidate terms, but
+cached direct public source records drive decisions; no MCP installation is required.
+
+```bash
+uv run python scripts/run_drug_hpo_evidence.py \
+  --compass-dir docs/reports/compass-benjamini-090 \
+  --hpo-codes docs/reports/hpo-codes.txt \
+  --cache-dir /external/compass-drug-hpo-cache \
+  --output-dir docs/reports/compass-drug-hpo-$(date -u +%Y%m%d-%H%M%S) \
+  --max-workers 8
+```
+
+The output is a new, atomically published run covering every canonical drug in the supplied
+Compass snapshot; original duplicate drug–target rows remain distinct. `--max-workers`
+bounds independent network retrievals. `--resume` only accepts matching input hashes;
+`--offline` uses cached records only. Results are research prioritization, not diagnosis,
+treatment advice, or evidence of MVA efficacy. Exit `2` means at least one required source
+scope is incomplete; exit `1` reports invalid inputs.
+In the verified 2026-10-23 replay of the `0.90` branch, eight stable-ID DAVID terms pass
+the statistical gate: seven GO cellular-component/molecular-function annotations are
+context rather than biological-process pathways, and KEGG `hsa05170` is admitted as
+`ELIGIBLE_EXPLORATORY` (Benjamini 0.687). Eligibility is now statistics plus observed
+membership — mechanism-panel membership no longer gates a term, and P2 no longer ranks by
+MVA relevance. The admitted term yields 26 pharmacology targets and 65 drug rows; all 65
+stay `HOLD` with unresolved directionality and unknown hazard, so `decision_ready` is `0`.
+The `0.10` branch still admits nothing because its single passing term is a GO cellular
+component. Panel membership continues to label rationales and seed candidates, but absence
+from the panel is not by itself a reason to stop a term.
 
 Exit codes: `0` completed processing (scientific nulls and unresolved biology included),
 `2` a required public source was incomplete, `1` unsafe or invalid inputs. A new run refuses
