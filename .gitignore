@@ -185,6 +185,9 @@ cython_debug/
 *.env
 data/raw/
 results/
+
+# Root-level generated report staging. Commit reviewed reports only from docs/reports/.
+/mva-*/
 *.vcf
 *.vcf.gz
 *.vcf.gz.tbi
@@ -226,11 +229,40 @@ data/processed/track2/pathway/
 /data/processed/track2/pathway_david/
 data/interim/pathway_cache/
 
-# Size policy: no file larger than 8 MB may ever be committed.
-# Raw/interim genomic data stays out of Git; enforced by pre-commit hook (.git/hooks/pre-commit).
+# Committed reports under docs/reports/ are exempt from the local-artifact size policy.
+# Raw/interim genomic data stays out of Git.
 
 # Public reference archives and extracted tool databases remain local.
 database/refs/
 
 # Local patient input and public reference databases.
 data/input/
+
+# Publication policy (hackathon rules: no patient-derived data may be published).
+# Variant-level and phenotype-level artifacts stay out of Git even if generated
+# under an allowed directory.
+data/processed/variant_evidence_master.csv
+data/processed/rare_candidates.csv
+data/processed/gene_inheritance_summary.csv
+data/processed/track2/02_phase1_gene_mechanism_matrix.csv
+MVA_PATIENT_PROFILE_REPORT.md
+docs/MVA_PATIENT_PROFILE_REPORT.md
+docs/reports/HPO.txt
+
+# DAVID native/external artifacts are non-versioned by policy.
+docs/reports/mva-david-replay-*/
+
+# Transient subfolders inside otherwise-committed report runs.
+docs/reports/*/cache/
+docs/reports/*/logs/
+docs/reports/*/runtime/
+docs/reports/*/compass-verify*/
+**/.DS_Store
+
+# Local agent-session scaffolding and tooling state.
+.agents/
+.claude/
+skills-lock.json
+
+# Abandoned exploratory notebook (superseded by notebooks/ versions).
+mva_variant_annotation_exploration[abadoned].ipynb
