@@ -12,13 +12,10 @@ from datetime import UTC, datetime
 import hashlib
 import json
 from pathlib import Path
-import re
 import tempfile
 from typing import Any
 
 import pandas as pd
-
-from mva_hackathon.mva_gene_sets import CORE_MVA_CAUSAL_GENES
 
 _REQUIRED_COLUMNS = (
     "SYMBOL",
@@ -366,12 +363,6 @@ class PathwayWorkflow:
         results["CONTRIBUTING_GENE_SET"] = results["CONTRIBUTING_GENES"].fillna("").map(
             lambda value: frozenset(gene for gene in value.split(";") if gene)
         )
-        pattern = re.compile(r"MITOT|SPINDLE|CHROMOSOME SEGREGAT|ANEUPLOID|CHECKPOINT|COHESIN|CENTROSOME", re.I)
-        results["CORE_MVA_GENE_OVERLAP"] = results["CONTRIBUTING_GENE_SET"].map(
-            lambda genes: ";".join(sorted(genes & CORE_MVA_CAUSAL_GENES))
-        )
-        results["TERM_NAME_MVA_MATCH"] = results["TERM_NAME"].fillna("").map(lambda value: bool(pattern.search(value)))
-        results["MVA_RELEVANT"] = results["CORE_MVA_GENE_OVERLAP"].ne("") | results["TERM_NAME_MVA_MATCH"]
         results["OBSERVATIONAL_PHENOTYPE_ANNOTATION"] = results["TERM_ID"].fillna("").str.startswith("HP:")
         results["REDUNDANT_OF"] = pd.NA
         representatives: list[tuple[str, frozenset[str]]] = []
@@ -390,8 +381,8 @@ class PathwayWorkflow:
             else:
                 results.at[index, "REDUNDANT_OF"] = redundant
         return results.sort_values(
-            ["MVA_RELEVANT", "BH_Q", "FOLD_ENRICHMENT", "INTERSECTION_SIZE", "SOURCE", "TERM_ID"],
-            ascending=[False, True, False, False, True, True],
+            ["BH_Q", "FOLD_ENRICHMENT", "INTERSECTION_SIZE", "SOURCE", "TERM_ID"],
+            ascending=[True, False, False, True, True],
             kind="stable",
         ).drop(columns="CONTRIBUTING_GENE_SET").reset_index(drop=True)
 

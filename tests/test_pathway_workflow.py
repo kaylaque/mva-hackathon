@@ -184,8 +184,8 @@ class PathwayEnrichmentTests(unittest.TestCase):
 
 
 class PathwayPrioritizationTests(unittest.TestCase):
-    def test_p2_marks_core_gene_terms_and_clusters_redundant_terms(self) -> None:
-        """P2 keeps a deterministic representative without inventing a weighted score."""
+    def test_p2_keeps_significance_order_and_clusters_redundant_terms(self) -> None:
+        """P2 ranks by provider statistics alone and never adds an MVA relevance score."""
         enrichment = pd.DataFrame(
             [
                 {"SOURCE": "REAC", "TERM_ID": "R1", "TERM_NAME": "Mitotic spindle checkpoint", "BH_Q": 0.01, "FOLD_ENRICHMENT": 5.0, "INTERSECTION_SIZE": 2, "CONTRIBUTING_GENES": "BUB1B;MAD1L1"},
@@ -195,7 +195,9 @@ class PathwayPrioritizationTests(unittest.TestCase):
 
         results = PathwayWorkflow(PathwayWorkflowConfig(offline=True)).run_p2(enrichment)
 
-        self.assertTrue(results.loc[results["TERM_ID"] == "R1", "MVA_RELEVANT"].item())
+        self.assertEqual(list(results["TERM_ID"]), ["R1", "G1"])
+        self.assertNotIn("MVA_RELEVANT", results.columns)
+        self.assertNotIn("CORE_MVA_GENE_OVERLAP", results.columns)
         self.assertEqual(results.loc[results["TERM_ID"] == "G1", "REDUNDANT_OF"].item(), "R1")
 
 

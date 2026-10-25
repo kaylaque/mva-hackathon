@@ -43,7 +43,6 @@ _REQUIRED_IMPORTS = (
     "david_comparison_report.md",
 )
 _HEX64 = set("0123456789abcdef")
-_THRESHOLD = 0.05
 _MECHANISM_PANEL = CORE_MVA_CAUSAL_GENES | SAC_CORE_GENES | CHROMOSOME_COHESIN_GENES
 _EVIDENCE_COLUMNS = (
     "EVIDENCE_ID", "ONTOLOGY", "TERM_ID", "MATCH_STATUS", "GPROFILER_ROWS_JSON", "DAVID_ROWS_JSON",
@@ -72,6 +71,15 @@ _OUTPUT_FILES = (
 
 def _fail(message: str, error: Exception | None = None) -> None:
     raise ValueError(message) from error
+
+def _analysis_threshold(value: float) -> float:
+    try:
+        threshold = float(value)
+    except (TypeError, ValueError) as error:
+        _fail("analysis threshold must be finite and in (0, 1]", error)
+    if not math.isfinite(threshold) or not 0 < threshold <= 1:
+        _fail("analysis threshold must be finite and in (0, 1]")
+    return threshold
 
 
 def _sha256(path: Path) -> str:
@@ -210,7 +218,7 @@ def _read_import(david_dir: Path, baseline: dict[str, Any]) -> tuple[dict[str, A
     return receipt, chart, clusters, version_dir, {name: hashes[name] for name in _REQUIRED_IMPORTS}
 
 
-def _state(rows: list[dict[str, Any]], column: str) -> str:
+def _state(rows: list[dict[str, Any]], column: str, threshold: float) -> str:
     """Summarize a provider statistic column without hiding malformed values.
 
     Every present value is validated first, so one missing value never masks a
@@ -235,7 +243,7 @@ def _state(rows: list[dict[str, Any]], column: str) -> str:
         values.append(number)
     if missing or not values:
         return "unknown"
-    significant = [value <= _THRESHOLD for value in values]
+    significant = [value <= threshold for value in values]
     return "significant" if all(significant) else "not_significant" if not any(significant) else "mixed"
 
 
@@ -346,7 +354,13 @@ def _cluster_context(frame: pd.DataFrame, mapping: dict[str, str], submitted: se
     return symbols, "cluster_observed"
 
 
-def _build_evidence(p1: pd.DataFrame, chart: pd.DataFrame, mapping: dict[str, str], submitted: set[str]) -> tuple[pd.DataFrame, pd.DataFrame]:
+def _build_evidence(
+    p1: pd.DataFrame,
+    chart: pd.DataFrame,
+    mapping: dict[str, str],
+    submitted: set[str],
+    david_threshold: float,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     reverse_mapping = _reverse_symbols(mapping)
     comparison = _comparison(p1, chart, mapping, sorted(submitted))
     evidence: list[dict[str, Any]] = []
@@ -356,8 +370,8 @@ def _build_evidence(p1: pd.DataFrame, chart: pd.DataFrame, mapping: dict[str, st
         g_rows, d_rows = _rows(source["GPROFILER_ROWS_JSON"]), _rows(source["DAVID_ROWS_JSON"])
         g_set, g_status = _membership(g_rows, "g:Profiler", mapping, submitted)
         d_set, d_status = _membership(d_rows, "DAVID", mapping, submitted)
-        g_state = _state(g_rows, "BH_Q") if g_rows else "not_comparable"
-        d_state = _state(d_rows, "Benjamini") if d_rows else "not_comparable"
+        g_state = _state(g_rows, "BH_Q", 0.05) if g_rows else "not_comparable"
+        d_state = _state(d_rows, "Benjamini", david_threshold) if d_rows else "not_comparable"
         # Overlap is only defined for two complete nonempty provider sets.
         jaccard: float | None = None
         if source["MATCH_STATUS"] == "shared" and g_status == d_status == "complete":
@@ -470,6 +484,7 @@ def _write_report(
         "efficacy evidence, not a diagnostic finding, and not independent replication.", "",
         "## Definitions used", "",
         "- **Pathway-supported**: a provider reported the term below its own adjusted-q threshold; each provider is judged on its own statistics.",
+        f"- **DAVID sensitivity threshold**: Benjamini <= {provenance['analysis_threshold']}; g:Profiler BH_Q remains at 0.05.",
         "- **Nonspecific for an MVA mechanism**: the term is not itself a spindle-assembly-checkpoint, chromosome-segregation or cohesin process, so it is context rather than mechanism.",
         "- **Modification annotation**: membership in a post-translational-modification term names members, not measured activity.",
         "- **not_comparable**: the other provider produced no row for this term, so no cross-provider statement is made.",
@@ -553,18 +568,27 @@ def _write_csv(frame: pd.DataFrame, path: Path) -> None:
     frame.to_csv(path, index=False)
 
 
-def analyze_pathway_results(baseline_dir: Path, david_dir: Path, output_dir: Path) -> dict[str, Any]:
+def analyze_pathway_results(
+    baseline_dir: Path,
+    david_dir: Path,
+    output_dir: Path,
+    *,
+    analysis_threshold: float = 0.05,
+) -> dict[str, Any]:
     """Verify saved artifacts and write an offline, auditable post-analysis.
 
     Tables are generated in an invocation-owned staging directory beside the
     destination and published by a single rename only after every artifact and its
     hashed provenance are present.  A failure leaves the destination untouched.
     """
+    david_threshold = _analysis_threshold(analysis_threshold)
     baseline_dir, david_dir = baseline_dir.resolve(), david_dir.resolve()
     output = _validate_output(output_dir, baseline_dir, david_dir)
     p0, p1, baseline = _read_baseline(baseline_dir)
     receipt, chart, clusters, import_dir, input_hashes = _read_import(david_dir, baseline)
-    evidence, genes = _build_evidence(p1, chart, baseline["_mapping"], set(baseline["_foreground"]))
+    evidence, genes = _build_evidence(
+        p1, chart, baseline["_mapping"], set(baseline["_foreground"]), david_threshold
+    )
     cluster_summary = _cluster_summary(clusters, evidence, baseline["_mapping"], set(baseline["_foreground"]))
     categories = receipt.get("interface", {}).get("selected_categories", [])
     discordance = _discordance(evidence, categories if isinstance(categories, list) else [])
@@ -584,7 +608,7 @@ def analyze_pathway_results(baseline_dir: Path, david_dir: Path, output_dir: Pat
         provenance = {
             "schema_version": 1, "run_key": baseline["run_key"], "import_version": import_dir.name,
             "baseline_projections": baseline["baseline_projections"]["sha256"], "external_input_sha256": input_hashes,
-            "analysis_threshold": _THRESHOLD, "status": "completed",
+            "analysis_threshold": david_threshold, "status": "completed",
             "output_sha256": {},
         }
         _write_report(staging / "integrated_pathway_report.md", receipt, evidence, cluster_summary, genes, discordance, provenance)
@@ -601,4 +625,10 @@ def analyze_pathway_results(baseline_dir: Path, david_dir: Path, output_dir: Pat
     except Exception:
         shutil.rmtree(staging, ignore_errors=True)
         raise
-    return {"status": "completed", "output_dir": str(output), "evidence_terms": len(evidence), "clusters": len(cluster_summary)}
+    return {
+        "status": "completed",
+        "output_dir": str(output),
+        "analysis_threshold": david_threshold,
+        "evidence_terms": len(evidence),
+        "clusters": len(cluster_summary),
+    }

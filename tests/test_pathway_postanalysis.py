@@ -19,13 +19,15 @@ def test_same_title_different_stable_ids_stay_separate() -> None:
         {"SOURCE": "GO:BP", "TERM_ID": "GO:0000002", "TERM_NAME": "one shared title", "BH_Q": 0.01, "CONTRIBUTING_GENES": "BUB1B"},
     ])
 
-    evidence, _ = _build_evidence(p1, pd.DataFrame(columns=["Category", "Term", "Benjamini"]), {"BUB1B": "ENSG_A"}, {"ENSG_A"})
+    evidence, _ = _build_evidence(p1, pd.DataFrame(columns=["Category", "Term", "Benjamini"]), {"BUB1B": "ENSG_A"}, {"ENSG_A"}, 0.05)
 
     assert set(evidence["TERM_ID"]) == {"GO:0000001", "GO:0000002"}
     assert evidence["EVIDENCE_ID"].is_unique
 
 
-def _imported_fixture(root: Path, *, empty: bool = False) -> tuple[Path, Path]:
+def _imported_fixture(
+    root: Path, *, empty: bool = False, david_benjamini: tuple[float, ...] = (0.04,)
+) -> tuple[Path, Path]:
     """Build a synthetic baseline plus a verified empty-or-populated DAVID import."""
     import hashlib
     import json
@@ -55,8 +57,22 @@ def _imported_fixture(root: Path, *, empty: bool = False) -> tuple[Path, Path]:
         chart.write_text("Category,Term,Count,P-Value,Benjamini,User Ids\n", encoding="utf-8")
         clusters.write_text("Cluster,Cluster Enrichment Score,Category,Term,Full Term,Count,P-Value,Benjamini\n", encoding="utf-8")
     else:
-        chart.write_text("Category,Term,Count,P-Value,Benjamini,User Ids\nGOTERM_BP_DIRECT,GO:0000001~DAVID title,2,0.01,0.04,ENSG_A\nGOTERM_BP_DIRECT,GO:0000001~DAVID title,2,0.01,0.04,ENSG_B\n", encoding="utf-8")
-        clusters.write_text("Cluster,Cluster Enrichment Score,Category,Term,Full Term,Count,P-Value,Benjamini\n1,2.1,GOTERM_BP_DIRECT,DAVID title,GO:0000001~DAVID title,2,0.01,0.04\n1,2.1,GOTERM_BP_DIRECT,DAVID title,GO:0000001~DAVID title,2,0.01,0.04\n", encoding="utf-8")
+        chart_rows = "\n".join(
+            f"GOTERM_BP_DIRECT,GO:000000{index}~DAVID title {index},2,0.01,{value},ENSG_A"
+            for index, value in enumerate(david_benjamini, 1)
+        )
+        cluster_rows = "\n".join(
+            f"1,2.1,GOTERM_BP_DIRECT,DAVID title {index},GO:000000{index}~DAVID title {index},2,0.01,{value}"
+            for index, value in enumerate(david_benjamini, 1)
+        )
+        chart.write_text(
+            f"Category,Term,Count,P-Value,Benjamini,User Ids\n{chart_rows}\n", encoding="utf-8"
+        )
+        clusters.write_text(
+            "Cluster,Cluster Enrichment Score,Category,Term,Full Term,Count,P-Value,Benjamini\n"
+            f"{cluster_rows}\n",
+            encoding="utf-8",
+        )
     digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     receipt = {
         "schema_version": 1, "run_key": manifest["run_key"], "list_sha256": manifest["list_sha256"], "namespace": "ENSEMBL_GENE_ID", "taxon": 9606,
@@ -96,6 +112,24 @@ def test_empty_confirmed_exports_publish_header_only_artifacts(tmp_path: Path) -
     assert "# Integrated pathway report" in report
     assert not re.search(r"\bnan\b", report.lower())
     assert "none: no DAVID row met its own Benjamini threshold" in report
+
+def test_david_analysis_threshold_controls_only_david_states(tmp_path: Path) -> None:
+    import pandas as pd
+
+    from mva_hackathon.pathway_postanalysis import analyze_pathway_results
+
+    baseline, david = _imported_fixture(tmp_path, david_benjamini=(0.04, 0.08, 0.11))
+    default = analyze_pathway_results(baseline, david, tmp_path / "default")
+    relaxed = analyze_pathway_results(
+        baseline, david, tmp_path / "relaxed", analysis_threshold=0.10
+    )
+
+    assert default["analysis_threshold"] == 0.05
+    assert relaxed["analysis_threshold"] == 0.10
+    default_evidence = pd.read_csv(tmp_path / "default" / "integrated_pathway_evidence.csv")
+    relaxed_evidence = pd.read_csv(tmp_path / "relaxed" / "integrated_pathway_evidence.csv")
+    assert list(default_evidence.loc[default_evidence["DAVID_ROWS_JSON"].str.contains("0.08"), "DAVID_SIGNIFICANCE"]) == ["not_significant"]
+    assert list(relaxed_evidence["DAVID_SIGNIFICANCE"]) == ["significant", "significant", "not_significant"]
 
 
 def test_tampered_import_and_mismatched_baseline_are_refused(tmp_path: Path) -> None:
@@ -253,7 +287,7 @@ def test_cli_requires_all_three_paths() -> None:
 def test_repeated_adjusted_values_are_mixed_without_selecting_a_minimum() -> None:
     from mva_hackathon.pathway_postanalysis import _state, _tier
 
-    state = _state([{"BH_Q": 0.01}, {"BH_Q": 0.2}], "BH_Q")
+    state = _state([{"BH_Q": 0.01}, {"BH_Q": 0.2}], "BH_Q", 0.05)
 
     assert state == "mixed"
     assert _tier("shared", state, "significant") == "review_required"
@@ -297,6 +331,7 @@ def test_unmapped_significant_rows_remain_distinct_and_reach_discordance_review(
         chart,
         {"BUB1B": "ENSG_A", "TRIP13": "ENSG_B"},
         {"ENSG_A", "ENSG_B"},
+        0.05,
     )
     review = _discordance(evidence, ["GOTERM_BP_DIRECT"])
 
@@ -330,6 +365,7 @@ def test_contributor_unions_keep_partial_memberships_without_calculating_jaccard
         chart,
         {"BUB1B": "ENSG_A", "TRIP13": "ENSG_B"},
         {"ENSG_A", "ENSG_B"},
+        0.05,
     )
 
     row = evidence.iloc[0]
@@ -355,6 +391,7 @@ def test_complete_disjoint_contributors_have_zero_jaccard() -> None:
         }]),
         {"BUB1B": "ENSG_A", "TRIP13": "ENSG_B"},
         {"ENSG_A", "ENSG_B"},
+        0.05,
     )
 
     row = evidence.iloc[0]
@@ -368,7 +405,7 @@ def test_missing_adjusted_value_does_not_hide_later_invalid_value() -> None:
     from mva_hackathon.pathway_postanalysis import _state
 
     with pytest.raises(ValueError, match="BH_Q"):
-        _state([{"BH_Q": None}, {"BH_Q": float("inf")}], "BH_Q")
+        _state([{"BH_Q": None}, {"BH_Q": float("inf")}], "BH_Q", 0.05)
 
 
 def test_cluster_summary_uses_full_terms_and_cluster_native_significance() -> None:
