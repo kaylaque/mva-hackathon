@@ -1,0 +1,25 @@
+{
+  "analysis_threshold": 0.05,
+  "baseline_projections": {
+    "p0_gene_qc.csv": "4b977f06add4b2c4be16fd63f5c7b9cabb82fb95aafa5bd4ff9abb503b212bcb",
+    "p1_enrichment_results.csv": "faee884061e8d76b11c85d7060d88f4725f575d6a87755db770cba1bbae6a8e6"
+  },
+  "external_input_sha256": {
+    "david_chart.csv": "ea5d71ba4ae488d409d077341cc113cf405dca6c608d246467c4ec2152f33693",
+    "david_clusters.csv": "fd3e3f82b321678c6b2ec3ccfb32ff569e98a78bb2e1260725c5ca49c3e601a0",
+    "david_comparison_report.md": "e5a045dc1f4077ef05e255b18a4d0bb300f6511d7486dd84c8726f8563385f70",
+    "provider_term_comparison.csv": "6c484937a5364c7960fe0787f4310c17e166c1a8cbfbb3a83cdda5f2aa1b7baa",
+    "receipt.json": "648c921581b0823186b3228057998f84174f4a15dedc40f6be55fb44eb31f3f9"
+  },
+  "import_version": "648c921581b0823186b3228057998f84174f4a15dedc40f6be55fb44eb31f3f9",
+  "output_sha256": {
+    "david_cluster_summary.csv": "d7555cf4000616c5d07dc911ed2820bc749cd29accda3083e35ad5f4272b9b46",
+    "gene_pathway_support.csv": "dacf893faaebe288bf4117ed4f25746f65888d21c911c7d91581291eb6d97626",
+    "integrated_pathway_evidence.csv": "a9b9714ae3c9283a6cd360318351b782570111580aa297f68b7cdaff03fc3c26",
+    "integrated_pathway_report.md": "5aff3601acdfef3738e687437ff5c34b5b58c5c808b1578a0619c70f31887eac",
+    "provider_discordance_review.csv": "d352b5c2606bb305aa5a82d5391a95ee509b42d6f550a5ac9e076c47eb311c37"
+  },
+  "run_key": "2acba21c73a0c6236cd2cf701f3097601632e3faff27906e21250379ddc3bf11",
+  "schema_version": 1,
+  "status": "completed"
+}
