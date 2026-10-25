@@ -31,6 +31,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reviewed-evidence", type=Path, default=None, help="schema-validated reviewed evidence CSV")
     parser.add_argument("--resume", action="store_true", help="continue an existing output directory")
     parser.add_argument("--offline", action="store_true", help="use only verified cached public responses")
+    parser.add_argument("--selection-profile", choices=("validated", "david_relaxed"), default="validated")
+    parser.add_argument("--david-benjamini-threshold", type=float, default=0.05)
+    parser.add_argument("--drug-scope", choices=("decision_ready", "relaxed_pathway"), default="decision_ready")
+    parser.add_argument("--drug-filter", choices=("all", "direction_compatible", "no_cited_hazard", "decision_ready"), action="append", default=None)
     return parser.parse_args()
 
 
@@ -45,11 +49,15 @@ def main() -> int:
             reviewed_evidence=args.reviewed_evidence,
             resume=args.resume,
             offline=args.offline,
+            selection_profile=args.selection_profile,
+            drug_scope=args.drug_scope,
+            david_benjamini_threshold=args.david_benjamini_threshold,
+            drug_filters=tuple(args.drug_filter or ("all",)),
         )
     except (OSError, ValueError) as error:
         print(f"compass failed: {error}", file=sys.stderr)
         return 1
-    print(json.dumps({"status": result["status"], "output_dir": result["output_dir"]}, sort_keys=True))
+    print(json.dumps(result, sort_keys=True))
     return 2 if result["status"] == "source_incomplete" else 0
 
 

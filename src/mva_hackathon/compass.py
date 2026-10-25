@@ -26,6 +26,7 @@ import csv
 from datetime import UTC, datetime
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -63,8 +64,8 @@ STOP_UNMAPPED = "STOP_UNMAPPED"
 STOP_NOT_SIGNIFICANT = "STOP_NOT_SIGNIFICANT"
 HOLD_STATISTICS = "HOLD_STATISTICS"
 HOLD_MEMBERSHIP = "HOLD_MEMBERSHIP"
-HOLD_RELEVANCE = "HOLD_RELEVANCE"
 ELIGIBLE = "ELIGIBLE"
+ELIGIBLE_EXPLORATORY = "ELIGIBLE_EXPLORATORY"
 
 DECISION_REJECT = "REJECT"
 DECISION_HOLD = "HOLD"
@@ -99,13 +100,14 @@ MECHANISM_EVIDENCE_COLUMNS = (
 )
 RATIONALE_COLUMNS = (
     "RATIONALE_ID", "TARGET_SYMBOL", "TERM_ID", "HYPOTHESIS_SOURCE", "PATHWAY_ENRICHMENT_SUPPORT",
-    "OBSERVED_MEMBERSHIP", "EXPANDED_MEMBERSHIP", "NETWORK_MEMBERSHIP", "PROTEIN_ROLE",
+    "OBSERVED_MEMBERSHIP", "EXPLORATORY_DAVID_OBSERVED_TERM_IDS", "EXPANDED_MEMBERSHIP", "NETWORK_MEMBERSHIP", "PROTEIN_ROLE",
     "DISEASE_STATE_DIRECTION", "DESIRED_TARGET_CHANGE", "CONTEXT", "EVIDENCE_IDS", "COUNTEREVIDENCE_IDS",
     "DECISION", "REASON_CODES",
 )
 DRUG_REVIEW_COLUMNS = (
     "RATIONALE_ID", "TARGET_SYMBOL", "DRUG_ID", "DRUG_NAME", "SOURCE_RECORD_IDS", "ACTION_TYPE",
     "ACTION_DIRECTION", "DIRECTIONALITY_FIT", "HAZARD_STATUS", "EVIDENCE_IDS", "DECISION", "REASON_CODES",
+    "SELECTION_PROFILE", "PATHWAY_EVIDENCE_LEVEL", "EVIDENCE_GAPS",
 )
 LEDGER_COLUMNS = ("ENTITY_TYPE", "ENTITY_ID", "STAGE", "DECISION", "REASON_CODES", "EVIDENCE_IDS")
 TEST_PLAN_COLUMNS = (
@@ -331,13 +333,24 @@ def _reconstruct_components(
 # --------------------------------------------------------------------------- eligibility
 
 
-def _entity_type(ontology: str) -> str:
+def _entity_type(ontology: str, record: pd.Series, provider: str) -> str:
     if ontology in PATHWAY_ONTOLOGIES:
         return ENTITY_PATHWAY
     if ontology in PROCESS_ONTOLOGIES:
+        if ontology == "GO":
+            column = "GPROFILER_ROWS_JSON" if provider == "g:Profiler" else "DAVID_ROWS_JSON"
+            try:
+                rows = json.loads(_text(record.get(column)) or "[]")
+            except json.JSONDecodeError:
+                rows = []
+            if isinstance(rows, list) and any(
+                isinstance(entry, dict) and _text(entry.get("Category") or entry.get("SOURCE"))
+                .upper().replace(":", "_").startswith(("GOTERM_CC", "GOTERM_MF", "GO_CC", "GO_MF"))
+                for entry in rows
+            ):
+                return ENTITY_CONTEXT
         return ENTITY_PROCESS
     return ENTITY_CONTEXT
-
 
 def _provider_rows(record: pd.Series, provider: str) -> int:
     column = "GPROFILER_ROWS_JSON" if provider == "g:Profiler" else "DAVID_ROWS_JSON"
@@ -348,8 +361,33 @@ def _provider_rows(record: pd.Series, provider: str) -> int:
     return len(value) if isinstance(value, list) else 0
 
 
-def build_eligibility(evidence: pd.DataFrame, support: pd.DataFrame) -> pd.DataFrame:
+def _validate_profile(selection_profile: str, threshold: float) -> float:
+    if selection_profile not in {"validated", "david_relaxed"}:
+        raise ValueError(f"unsupported selection profile: {selection_profile}")
+    if not math.isfinite(threshold) or not 0 < threshold <= 1:
+        raise ValueError("DAVID Benjamini threshold must be finite and in (0, 1]")
+    if selection_profile == "validated" and threshold != SIGNIFICANCE_THRESHOLD:
+        raise ValueError("validated requires the default DAVID Benjamini threshold")
+    if selection_profile == "david_relaxed" and threshold <= SIGNIFICANCE_THRESHOLD:
+        raise ValueError("david_relaxed requires a DAVID Benjamini threshold greater than 0.05")
+    return threshold
+
+def _threshold_label(threshold: float) -> str:
+    """Keep the recorded numeric cutoff readable without rounding away precision."""
+    return format(threshold, ".15g").ljust(4, "0")
+
+
+
+def build_eligibility(
+    evidence: pd.DataFrame,
+    support: pd.DataFrame,
+    *,
+    selection_profile: str = "validated",
+    david_benjamini_threshold: float = SIGNIFICANCE_THRESHOLD,
+) -> pd.DataFrame:
     """One row per saved annotation per observing provider, each judged on its own statistics."""
+    threshold = _validate_profile(selection_profile, david_benjamini_threshold)
+    threshold_code = _threshold_label(threshold).replace(".", "_")
     observed_genes: dict[tuple[str, str], set[str]] = {}
     for _, row in support.iterrows():
         term_id = _text(row.get("TERM_ID"))
@@ -357,73 +395,37 @@ def build_eligibility(evidence: pd.DataFrame, support: pd.DataFrame) -> pd.DataF
             observed_genes.setdefault((_text(row.get("ONTOLOGY")), term_id), set()).add(_text(row.get("GENE_SYMBOL")).upper())
     records: list[dict[str, Any]] = []
     for _, row in evidence.iterrows():
-        evidence_id = _text(row.get("EVIDENCE_ID"))
-        ontology = _text(row.get("ONTOLOGY")).upper()
-        term_id = _text(row.get("TERM_ID"))
-        entity_type = _entity_type(ontology)
+        evidence_id, ontology, term_id = _text(row.get("EVIDENCE_ID")), _text(row.get("ONTOLOGY")).upper(), _text(row.get("TERM_ID"))
         gene_names = sorted(observed_genes.get((ontology, term_id), set()))
-        for provider, significance_column, status_column in (
-            ("g:Profiler", "GPROFILER_SIGNIFICANCE", "GPROFILER_CONTRIBUTOR_STATUS"),
-            ("DAVID", "DAVID_SIGNIFICANCE", "DAVID_CONTRIBUTOR_STATUS"),
-        ):
+        for provider, significance_column, status_column in (("g:Profiler", "GPROFILER_SIGNIFICANCE", "GPROFILER_CONTRIBUTOR_STATUS"), ("DAVID", "DAVID_SIGNIFICANCE", "DAVID_CONTRIBUTOR_STATUS")):
             if _provider_rows(row, provider) == 0:
-                # A provider that produced no row for this term contributes nothing to the gate.
                 continue
-            significance = _text(row.get(significance_column)) or "unknown"
-            contributor_status = _text(row.get(status_column)) or "unavailable"
-            membership_status = "observed" if gene_names else "unavailable"
+            entity_type = _entity_type(ontology, row, provider)
+            significance, contributor_status = _text(row.get(significance_column)) or "unknown", _text(row.get(status_column)) or "unavailable"
             reasons: list[str] = []
+            decision: str | None = None
+            exploratory = provider == "DAVID" and selection_profile == "david_relaxed" and _clears_threshold(row, provider, threshold) and not _clears_threshold(row, provider, SIGNIFICANCE_THRESHOLD)
             if not term_id or _text(row.get("MATCH_STATUS")) == "unmapped_term":
-                decision = STOP_UNMAPPED
-                reasons.append("NO_SUPPORTED_STABLE_IDENTIFIER")
-            elif significance == "unknown":
-                decision = HOLD_STATISTICS
-                reasons.append("CORRECTED_SIGNIFICANCE_UNKNOWN")
-            elif significance == "mixed":
-                decision = HOLD_STATISTICS
-                reasons.append("REPEATED_CORRECTED_VALUES_DISAGREE")
-            elif significance == "not_comparable":
-                decision = STOP_NOT_SIGNIFICANT
-                reasons.append("PROVIDER_PRODUCED_NO_ROW_FOR_THIS_TERM")
-            elif significance != "significant" or not _clears_threshold(row, provider):
-                decision = STOP_NOT_SIGNIFICANT
-                reasons.append("ABOVE_PROVIDER_THRESHOLD")
+                decision, reasons = STOP_UNMAPPED, ["NO_SUPPORTED_STABLE_IDENTIFIER"]
+            elif significance in {"unknown", "mixed"}:
+                decision, reasons = HOLD_STATISTICS, ["CORRECTED_SIGNIFICANCE_UNKNOWN" if significance == "unknown" else "REPEATED_CORRECTED_VALUES_DISAGREE"]
+            elif not exploratory and (significance != "significant" or not _clears_threshold(row, provider, SIGNIFICANCE_THRESHOLD)):
+                decision, reasons = STOP_NOT_SIGNIFICANT, ["ABOVE_PROVIDER_THRESHOLD"]
             elif entity_type == ENTITY_CONTEXT:
-                decision = STOP_NOT_SIGNIFICANT
-                reasons.append("ANNOTATION_CONTEXT_NOT_A_PATHWAY")
-            elif contributor_status in {"unavailable", "absent"}:
-                decision = HOLD_MEMBERSHIP
-                reasons.append("CONTRIBUTOR_SET_UNAVAILABLE")
-            elif not gene_names:
-                decision = HOLD_MEMBERSHIP
-                reasons.append("NO_OBSERVED_MEMBER_GENE")
-            elif not (set(gene_names) & MECHANISM_PRIOR_PANEL):
-                decision = HOLD_RELEVANCE
-                reasons.append("NO_CITED_MVA_ROLE_TITLE_ALONE_IS_NOT_A_GATE")
+                decision, reasons = STOP_NOT_SIGNIFICANT, ["ANNOTATION_CONTEXT_NOT_A_PATHWAY"]
+            elif contributor_status in {"unavailable", "absent"} or not gene_names:
+                decision, reasons = HOLD_MEMBERSHIP, ["CONTRIBUTOR_SET_UNAVAILABLE" if contributor_status in {"unavailable", "absent"} else "NO_OBSERVED_MEMBER_GENE"]
             else:
-                decision = ELIGIBLE
-                reasons.append("PROVIDER_SIGNIFICANCE_AND_OBSERVED_PANEL_MEMBER")
-            records.append({
-                "EVIDENCE_ID": f"{evidence_id}::{provider.replace(':', '').replace(' ', '_').lower()}",
-                "PROVIDER": provider,
-                "ONTOLOGY": ontology,
-                "TERM_ID": term_id,
-                "TERM_NAME": _term_name(row, provider),
-                "ENTITY_TYPE": entity_type,
-                "SIGNIFICANCE": significance,
-                "CONTRIBUTOR_STATUS": contributor_status,
-                "MEMBERSHIP_STATUS": membership_status,
-                "DECISION": decision,
-                "REASON_CODES": ";".join(reasons),
-                "EVIDENCE_IDS": evidence_id,
-            })
+                decision = ELIGIBLE_EXPLORATORY if exploratory else ELIGIBLE
+                significance = "exploratory_relaxed" if exploratory else significance
+                reasons = [f"DAVID_BENJAMINI_{threshold_code}_EXPLORATORY" if exploratory else "PROVIDER_SIGNIFICANCE_AND_OBSERVED_MEMBER"]
+            records.append({"EVIDENCE_ID": f"{evidence_id}::{provider.replace(':', '').replace(' ', '_').lower()}", "PROVIDER": provider, "ONTOLOGY": ontology, "TERM_ID": term_id, "TERM_NAME": _term_name(row, provider), "ENTITY_TYPE": entity_type, "SIGNIFICANCE": significance, "CONTRIBUTOR_STATUS": contributor_status, "MEMBERSHIP_STATUS": "observed" if gene_names else "unavailable", "DECISION": decision, "REASON_CODES": ";".join(reasons), "EVIDENCE_IDS": evidence_id})
     return pd.DataFrame(records, columns=ELIGIBILITY_COLUMNS)
 
 
-def _clears_threshold(row: pd.Series, provider: str) -> bool:
+def _clears_threshold(row: pd.Series, provider: str, threshold: float) -> bool:
     """Check the provider's own native corrected statistic, never a pooled value."""
-    column = "GPROFILER_ROWS_JSON" if provider == "g:Profiler" else "DAVID_ROWS_JSON"
-    value_column = "BH_Q" if provider == "g:Profiler" else "Benjamini"
+    column, value_column = ("GPROFILER_ROWS_JSON", "BH_Q") if provider == "g:Profiler" else ("DAVID_ROWS_JSON", "Benjamini")
     try:
         rows = json.loads(_text(row.get(column)) or "[]")
     except json.JSONDecodeError:
@@ -431,16 +433,37 @@ def _clears_threshold(row: pd.Series, provider: str) -> bool:
     if not isinstance(rows, list) or not rows:
         return False
     for entry in rows:
-        if not isinstance(entry, dict):
-            return False
-        raw = entry.get(value_column)
         try:
-            number = float(raw)
+            number = float(entry.get(value_column)) if isinstance(entry, dict) else float("nan")
         except (TypeError, ValueError):
             return False
-        if number > SIGNIFICANCE_THRESHOLD:
+        if not math.isfinite(number) or number > threshold:
             return False
     return True
+
+def _david_term_counts(evidence: pd.DataFrame, eligibility: pd.DataFrame, cutoff: float) -> dict[str, int]:
+    """Partition stable-ID DAVID terms by native corrected value and downstream gate."""
+    david = eligibility.loc[eligibility["PROVIDER"].eq("DAVID") & eligibility["TERM_ID"].map(_text).ne("")]
+    by_id = evidence.set_index("EVIDENCE_ID")
+    counts = {"input": len(david), "validated_at_005": 0, "at_010": 0,
+              "newly_in_cutoff": 0, "above_cutoff": 0, "unknown_statistic": 0}
+    for evidence_id in david["EVIDENCE_IDS"]:
+        row = by_id.loc[evidence_id]
+        if _clears_threshold(row, "DAVID", 0.10):
+            counts["at_010"] += 1
+        if _clears_threshold(row, "DAVID", SIGNIFICANCE_THRESHOLD):
+            counts["validated_at_005"] += 1
+        elif _clears_threshold(row, "DAVID", cutoff):
+            counts["newly_in_cutoff"] += 1
+        elif _clears_threshold(row, "DAVID", 1.0):
+            counts["above_cutoff"] += 1
+        else:
+            counts["unknown_statistic"] += 1
+    admitted = david["DECISION"].isin({ELIGIBLE, ELIGIBLE_EXPLORATORY})
+    counts["eligible_exploratory"] = int(david["DECISION"].eq(ELIGIBLE_EXPLORATORY).sum())
+    counts["gated_at_cutoff"] = counts["validated_at_005"] + counts["newly_in_cutoff"] - int(admitted.sum())
+    return counts
+
 
 
 def _term_name(row: pd.Series, provider: str) -> str:
@@ -465,6 +488,7 @@ def fetch_expanded_members(
     support: pd.DataFrame,
     cache_dir: Path,
     *,
+    selection_profile: str = "validated",
     offline: bool = False,
     transport: sources.Transport | None = None,
 ) -> tuple[pd.DataFrame, list[dict[str, Any]], list[str]]:
@@ -474,7 +498,7 @@ def fetch_expanded_members(
     failures: list[str] = []
     eligible: dict[tuple[str, str], str] = {}
     for _, row in eligibility.iterrows():
-        if _text(row.get("DECISION")) == ELIGIBLE:
+        if _text(row.get("DECISION")) in {ELIGIBLE, ELIGIBLE_EXPLORATORY if selection_profile == "david_relaxed" else ELIGIBLE}:
             eligible[(_text(row.get("ONTOLOGY")), _text(row.get("TERM_ID")))] = _text(row.get("EVIDENCE_ID"))
     for _, row in support.iterrows():
         term_id = _text(row.get("TERM_ID"))
@@ -712,47 +736,63 @@ def load_reviewed_evidence(path: Path | None) -> tuple[pd.DataFrame, str]:
     return frame, hashlib.sha256(reviewed_path.read_bytes()).hexdigest()
 
 
-def fetch_drug_review(
-    rationales: pd.DataFrame,
-    cache_dir: Path,
-    *,
-    offline: bool = False,
-    transport: sources.Transport | None = None,
-) -> tuple[pd.DataFrame, list[dict[str, Any]], list[str]]:
-    """Query pharmacology only for rationales whose desired direction is known."""
-    rows: list[dict[str, Any]] = []
-    status_rows: list[dict[str, Any]] = []
-    failures: list[str] = []
+def fetch_drug_review(rationales: pd.DataFrame, cache_dir: Path, *, drug_scope: str = "decision_ready", selection_profile: str = "validated", david_benjamini_threshold: float = SIGNIFICANCE_THRESHOLD, offline: bool = False, transport: sources.Transport | None = None) -> tuple[pd.DataFrame, list[dict[str, Any]], list[str]]:
+    """Query decision-ready targets or explicitly tagged relaxed DAVID members."""
+    if drug_scope not in {"decision_ready", "relaxed_pathway"}:
+        raise ValueError(f"unsupported drug scope: {drug_scope}")
     eligible = rationales.loc[rationales["DECISION"].isin([DECISION_TEST_FIRST, DECISION_ADVANCE])]
+    if drug_scope == "relaxed_pathway":
+        eligible = rationales.loc[rationales["EXPLORATORY_DAVID_OBSERVED_TERM_IDS"].map(_text).ne("")]
+    evidence_level = f"RELAXED_DAVID_BENJAMINI_{_threshold_label(david_benjamini_threshold).replace('.', '_')}" if drug_scope == "relaxed_pathway" else "VALIDATED"
+    rows: list[dict[str, Any]] = []
+    statuses: list[dict[str, Any]] = []
+    failures: list[str] = []
     for _, rationale in eligible.iterrows():
         symbol = _text(rationale["TARGET_SYMBOL"])
         envelope = sources.fetch_drug_evidence(symbol, cache_dir, offline=offline, transport=transport)
-        status_rows.append(_source_status_row(envelope, "pharmacology", "ChEMBL+Open Targets", symbol))
-        if envelope["status"] in {sources.STATUS_UNAVAILABLE, sources.STATUS_INVALID_RESPONSE, sources.STATUS_OFFLINE_MISS}:
+        statuses.append(_source_status_row(envelope, "pharmacology", "ChEMBL+Open Targets", symbol))
+        if envelope["status"] in {sources.STATUS_UNAVAILABLE, sources.STATUS_INVALID_RESPONSE, sources.STATUS_OFFLINE_MISS} or not envelope["complete"]:
             failures.append(f"Pharmacology:{symbol}")
-        hazard = _text(rationale["REASON_CODES"]).find("CITED_CONTEXTUAL_HAZARD") >= 0
+        rationale_reasons = set(_text(rationale.get("REASON_CODES")).split(";"))
+        hazard = bool(_text(rationale.get("COUNTEREVIDENCE_IDS"))) or "CITED_CONTEXTUAL_HAZARD" in rationale_reasons
         for record in envelope["records"]:
             assessment = assess_target_action(
                 _text(rationale["DESIRED_TARGET_CHANGE"]),
                 _text(record.get("ACTION_TYPE")) or None,
                 disease_direction=_text(rationale["DISEASE_STATE_DIRECTION"]) or "UNKNOWN",
+                evidence_conflict="EVIDENCE_CONFLICT" in rationale_reasons,
                 hazard_present=True if hazard else None,
             )
+            decision = assessment["decision"]
+            if _text(rationale["DECISION"]) == DECISION_REJECT:
+                decision = DECISION_REJECT
+            elif _text(rationale["DECISION"]) == DECISION_HOLD and decision in {DECISION_TEST_FIRST, DECISION_ADVANCE}:
+                decision = DECISION_HOLD
+            reasons = list(assessment["reason_codes"])
+            if decision != assessment["decision"]:
+                reasons.append(f"RATIONALE_{decision}")
+            gaps = sorted((rationale_reasons | set(reasons)) & {
+                "SAFETY_UNKNOWN", "SAFETY_UNRECORDED", "SOURCE_INCOMPLETE",
+                "AWAITING_ROLE_EVIDENCE", "DIRECTION_UNKNOWN", "MODEL_UNSPECIFIED",
+            })
             rows.append({
                 "RATIONALE_ID": _text(rationale["RATIONALE_ID"]),
                 "TARGET_SYMBOL": symbol,
                 "DRUG_ID": _text(record.get("DRUG_ID")),
-                "DRUG_NAME": _text(record.get("DRUG_NAME")) or _text(record.get("DRUG_ID")),
+                "DRUG_NAME": _text(record.get("DRUG_NAME")),
                 "SOURCE_RECORD_IDS": _text(record.get("SOURCE_RECORD_ID")),
                 "ACTION_TYPE": _text(record.get("ACTION_TYPE")) or "UNKNOWN",
                 "ACTION_DIRECTION": assessment["action_direction"],
                 "DIRECTIONALITY_FIT": assessment["directionality_fit"],
                 "HAZARD_STATUS": assessment["hazard_status"],
                 "EVIDENCE_IDS": f"ME-{_digest(['pharmacology', symbol, record.get('DRUG_ID'), record.get('SOURCE')])[:16]}",
-                "DECISION": assessment["decision"],
-                "REASON_CODES": ";".join(assessment["reason_codes"] + [f"ASSAY_STATUS={_text(record.get('ASSAY_STATUS')) or 'ASSAY_UNAVAILABLE'}"]),
+                "DECISION": decision,
+                "REASON_CODES": ";".join(reasons),
+                "SELECTION_PROFILE": selection_profile,
+                "PATHWAY_EVIDENCE_LEVEL": evidence_level,
+                "EVIDENCE_GAPS": ";".join(gaps) or "NONE",
             })
-    return pd.DataFrame(rows, columns=DRUG_REVIEW_COLUMNS), status_rows, failures
+    return pd.DataFrame(rows, columns=DRUG_REVIEW_COLUMNS), statuses, failures
 
 
 # --------------------------------------------------------------------------- pure decisions
@@ -763,6 +803,19 @@ def _reviewed_for(evidence: pd.DataFrame, symbol: str) -> pd.DataFrame:
         return evidence
     mask = evidence["TARGET_SYMBOL"].str.upper().eq(symbol) & evidence["REVIEW_STATUS"].str.upper().eq("REVIEWED")
     return evidence.loc[mask]
+
+def filter_drug_candidates(drug_review: pd.DataFrame, filter_name: str) -> pd.DataFrame:
+    """Apply explicit, auditable candidate filters without changing row order."""
+    if filter_name == "all":
+        return drug_review.copy()
+    if filter_name == "direction_compatible":
+        return drug_review.loc[drug_review["DIRECTIONALITY_FIT"].eq("COMPATIBLE_DIRECTION")].copy()
+    if filter_name == "no_cited_hazard":
+        return drug_review.loc[~drug_review["HAZARD_STATUS"].eq("cited_hazard")].copy()
+    if filter_name == "decision_ready":
+        return drug_review.loc[drug_review["DECISION"].isin({DECISION_TEST_FIRST, DECISION_ADVANCE})].copy()
+    raise ValueError(f"unsupported drug filter: {filter_name}")
+
 
 
 def _disease_direction(claims: pd.DataFrame) -> tuple[str, bool]:
@@ -781,27 +834,29 @@ def build_rationales(
     protein_roles: pd.DataFrame,
     evidence: pd.DataFrame,
     network_memberships: pd.DataFrame,
+    *,
+    selection_profile: str = "validated",
 ) -> pd.DataFrame:
     """Pure target rationales: what is supported, what is context, and what is unresolved."""
-    eligible_terms = {
-        (_text(row["ONTOLOGY"]), _text(row["TERM_ID"]))
-        for _, row in eligibility.iterrows()
-        if _text(row["DECISION"]) == ELIGIBLE
-    }
+    eligible_terms = {(_text(row["ONTOLOGY"]), _text(row["TERM_ID"])) for _, row in eligibility.iterrows() if _text(row["DECISION"]) in {ELIGIBLE, ELIGIBLE_EXPLORATORY}}
+    exploratory_terms = {(_text(row["ONTOLOGY"]), _text(row["TERM_ID"])) for _, row in eligibility.iterrows() if _text(row["DECISION"]) == ELIGIBLE_EXPLORATORY and _text(row["PROVIDER"]) == "DAVID"}
     observed: dict[str, set[str]] = {}
     expanded: dict[str, set[str]] = {}
     term_for: dict[str, set[str]] = {}
+    exploratory_observed: dict[str, list[str]] = {}
     if not memberships.empty:
         for _, row in memberships.iterrows():
-            symbol = _text(row["TARGET_SYMBOL"]).upper()
-            key = (_text(row["ONTOLOGY"]), _text(row["TERM_ID"]))
+            symbol, term_id = _text(row["TARGET_SYMBOL"]).upper(), _text(row["TERM_ID"])
+            key = (_text(row["ONTOLOGY"]), term_id)
             if key not in eligible_terms:
                 continue
-            term_for.setdefault(symbol, set()).add(_text(row["TERM_ID"]))
+            term_for.setdefault(symbol, set()).add(term_id)
             if _text(row["MEMBERSHIP_KIND"]) == "OBSERVED_INTERSECTION":
-                observed.setdefault(symbol, set()).add(_text(row["TERM_ID"]))
+                observed.setdefault(symbol, set()).add(term_id)
+                if key in exploratory_terms and _text(row["PROVIDER"]) == "DAVID":
+                    exploratory_observed.setdefault(symbol, []).append(term_id)
             else:
-                expanded.setdefault(symbol, set()).add(_text(row["TERM_ID"]))
+                expanded.setdefault(symbol, set()).add(term_id)
     network_symbols = {_text(value).upper() for value in network_memberships.get("TARGET_SYMBOL", pd.Series(dtype=object)) if _text(value)}
     role_status = {
         _text(row["TARGET_SYMBOL"]).upper(): _text(row["SOURCE_STATUS"])
@@ -897,6 +952,7 @@ def build_rationales(
             "HYPOTHESIS_SOURCE": "|".join(labels),
             "PATHWAY_ENRICHMENT_SUPPORT": LABEL_PATHWAY_SUPPORTED if pathway_supported else "NOT_IN_OBSERVED_INTERSECTION",
             "OBSERVED_MEMBERSHIP": pathway_supported,
+            "EXPLORATORY_DAVID_OBSERVED_TERM_IDS": ";".join(dict.fromkeys(exploratory_observed.get(symbol, []))),
             "EXPANDED_MEMBERSHIP": bool(expanded.get(symbol)),
             "NETWORK_MEMBERSHIP": network_member,
             "PROTEIN_ROLE": role_text.get(symbol, ""),
@@ -1031,8 +1087,12 @@ def _write_report(
     held = rationales.loc[rationales["DECISION"].eq(DECISION_HOLD)]
     rejected = rationales.loc[rationales["DECISION"].eq(DECISION_REJECT)]
     reviewed = evidence.loc[evidence["REVIEW_STATUS"].str.upper().eq("REVIEWED")]
+    profile = provenance["identity"]["selection_profile"]
+    cutoff = _threshold_label(provenance["identity"]["david_benjamini_threshold"])
+    branch = f"RELAXED DAVID BENJAMINI {cutoff} EXPLORATION" if profile == "david_relaxed" else "VALIDATED DAVID BENJAMINI 0.05"
+    david_counts = provenance["david_term_counts"]
     lines = [
-        "# Compass report", "",
+        f"# Compass report — Benjamini-{cutoff.replace('.', '')}" if profile == "david_relaxed" else "# Compass report", "",
         "Research-exploration evidence integration. Nothing here is a diagnosis, a clinical",
         "recommendation, or experimental proof. Annotation is not efficacy; membership is not",
         "activity; an approved drug is not an approved treatment for this disease.", "",
@@ -1045,11 +1105,18 @@ def _write_report(
         "",
         "A target may carry several labels; one shared source is never independent replication.", "",
         "## Pathway evidence", "",
+        f"### {branch}",
         f"- saved annotations evaluated: {len(eligibility)} eligibility rows",
-        f"- eligible pathways or processes: {int(eligibility['DECISION'].eq(ELIGIBLE).sum())}",
-        f"- observed enrichment members: {int(memberships['MEMBERSHIP_KIND'].eq('OBSERVED_INTERSECTION').sum()) if not memberships.empty else 0}",
-        f"- expanded public database members: {int(memberships['MEMBERSHIP_KIND'].eq('EXPANDED_DATABASE_MEMBER').sum()) if not memberships.empty else 0}",
-        "- expanded membership never implies the gene was part of the original enrichment intersection",
+        f"- stable-ID DAVID input terms: {david_counts['input']}",
+        f"- DAVID terms at validated cutoff (<=0.05): {david_counts['validated_at_005']}",
+        f"- DAVID terms at earlier exploratory cutoff (<=0.10): {david_counts['at_010']}; g:Profiler remains at its saved 0.05 rule.",
+        f"- newly in DAVID cutoff (0.05,{cutoff}]: {david_counts['newly_in_cutoff']}; eligible after gates: {david_counts['eligible_exploratory']}",
+        f"- DAVID terms above {cutoff}: {david_counts['above_cutoff']}; unknown statistic: {david_counts['unknown_statistic']}; held or context-gated at cutoff: {david_counts['gated_at_cutoff']}",
+        f"- held rationales: {int(rationales['DECISION'].eq(DECISION_HOLD).sum())}",
+        f"- distinct exploratory targets queried: {int(source_status['STAGE'].eq('pharmacology').sum())}",
+        f"- drug rows returned by available public sources: {len(drug_review)}; source incompleteness is listed below; candidates are not treatment recommendations",
+        f"- Only DAVID terms with Benjamini <={cutoff} could pass the statistical gate; context and observed-membership gates also apply.",
+        "- Exploratory threshold changes do not strengthen evidence or imply treatment benefit." if profile == "david_relaxed" else "- The validated 0.05 rule remains unchanged.",
         "",
         "### Held and stopped annotations",
         "",
@@ -1133,7 +1200,7 @@ def _write_report(
 # --------------------------------------------------------------------------- orchestration
 
 
-def _fixed_identity(postanalysis: dict[str, Any], network: dict[str, Any]) -> dict[str, Any]:
+def _fixed_identity(postanalysis: dict[str, Any], network: dict[str, Any], selection_profile: str = "validated", david_benjamini_threshold: float = SIGNIFICANCE_THRESHOLD, drug_scope: str = "decision_ready", drug_filters: Sequence[str] = ("all",)) -> dict[str, Any]:
     """Identity that must match for a resumed run to write into the same destination."""
     return {
         "schema_version": SCHEMA_VERSION,
@@ -1141,7 +1208,11 @@ def _fixed_identity(postanalysis: dict[str, Any], network: dict[str, Any]) -> di
         "network_projection_hash": network.get("projection_hash", ""),
         "panel_hash": _digest(sorted(MECHANISM_PRIOR_PANEL)),
         "significance_threshold": SIGNIFICANCE_THRESHOLD,
-        "selection_rules": "per-provider-significance+observed-panel-member",
+        "david_benjamini_threshold": david_benjamini_threshold,
+        "selection_rules": "per-provider-significance+observed-member",
+        "selection_profile": selection_profile,
+        "drug_scope": drug_scope,
+        "drug_filters": list(drug_filters),
     }
 
 
@@ -1172,6 +1243,10 @@ def run_compass(
     resume: bool = False,
     offline: bool = False,
     transport: sources.Transport | None = None,
+    selection_profile: str = "validated",
+    david_benjamini_threshold: float = SIGNIFICANCE_THRESHOLD,
+    drug_scope: str = "decision_ready",
+    drug_filters: Sequence[str] = ("all",),
 ) -> dict[str, Any]:
     """Consolidate saved evidence and public records into auditable research decisions."""
     output = _validate_output(output_dir)
@@ -1180,7 +1255,14 @@ def run_compass(
         _fail("output directory already exists; use --resume to continue an earlier run")
     postanalysis = load_postanalysis(postanalysis_dir)
     network = load_network_projections(network_dir)
-    identity = _fixed_identity(postanalysis, network)
+    _validate_profile(selection_profile, david_benjamini_threshold)
+    if drug_scope not in {"decision_ready", "relaxed_pathway"}:
+        raise ValueError(f"unsupported drug scope: {drug_scope}")
+    if (selection_profile == "david_relaxed") != (drug_scope == "relaxed_pathway"):
+        raise ValueError("david_relaxed requires relaxed_pathway, and relaxed_pathway requires david_relaxed")
+    if len(set(drug_filters)) != len(drug_filters):
+        raise ValueError("duplicate drug filter names are not allowed")
+    identity = _fixed_identity(postanalysis, network, selection_profile, david_benjamini_threshold, drug_scope, drug_filters)
     previous: dict[str, Any] = {}
     if resume and provenance_path.is_file():
         try:
@@ -1191,9 +1273,11 @@ def run_compass(
             _fail("resumed inputs differ from the recorded run; use a new output destination")
 
     reviewed, reviewed_hash = load_reviewed_evidence(reviewed_evidence)
-    eligibility = build_eligibility(postanalysis["evidence"], postanalysis["support"])
+    eligibility = build_eligibility(postanalysis["evidence"], postanalysis["support"], selection_profile=selection_profile, david_benjamini_threshold=david_benjamini_threshold)
+    david_counts = _david_term_counts(postanalysis["evidence"], eligibility, david_benjamini_threshold)
     memberships, membership_status, membership_failures = fetch_expanded_members(
-        eligibility, postanalysis["support"], Path(cache_dir), offline=offline, transport=transport
+        eligibility, postanalysis["support"], Path(cache_dir), selection_profile=selection_profile,
+        offline=offline, transport=transport
     )
     reported = set(MECHANISM_PRIOR_PANEL) | (set(memberships["TARGET_SYMBOL"]) if not memberships.empty else set())
     canonical, identity_status, identity_status_rows, identity_failures = canonicalize_targets(
@@ -1208,8 +1292,13 @@ def run_compass(
     )
     evidence = pd.concat([literature, reviewed], ignore_index=True) if not reviewed.empty else literature
     evidence = _table(evidence, MECHANISM_EVIDENCE_COLUMNS)
-    rationales = build_rationales(eligibility, memberships, protein_roles, evidence, network["memberships"])
-    drug_review, drug_status, drug_failures = fetch_drug_review(rationales, Path(cache_dir), offline=offline, transport=transport)
+    rationales = build_rationales(
+        eligibility, memberships, protein_roles, evidence, network["memberships"], selection_profile=selection_profile
+    )
+    drug_review, drug_status, drug_failures = fetch_drug_review(
+        rationales, Path(cache_dir), drug_scope=drug_scope, selection_profile=selection_profile,
+        david_benjamini_threshold=david_benjamini_threshold, offline=offline, transport=transport
+    )
     ledger = build_rejection_ledger(eligibility, rationales, drug_review, network["memberships"])
     test_plans = build_test_plans(rationales, evidence)
     source_status = pd.DataFrame(
@@ -1234,6 +1323,10 @@ def run_compass(
             "target_test_plan.csv": test_plans,
             "source_status.csv": source_status,
         }
+        filter_frames = {
+            f"target_drug_review_{name}.csv": filter_drug_candidates(drug_review, name)
+            for name in drug_filters
+        }
         for name, frame in frames.items():
             _write_csv(_table(frame, {
                 "pathway_eligibility.csv": ELIGIBILITY_COLUMNS,
@@ -1246,6 +1339,8 @@ def run_compass(
                 "target_test_plan.csv": TEST_PLAN_COLUMNS,
                 "source_status.csv": SOURCE_STATUS_COLUMNS,
             }[name]), staging / name)
+        for name, frame in filter_frames.items():
+            _write_csv(frame, staging / name)
         generated_at = datetime.now(UTC).isoformat()
         provenance = {
             "schema_version": SCHEMA_VERSION,
@@ -1260,6 +1355,7 @@ def run_compass(
             "offline": offline,
             "source_failures": sorted(failures),
             "public_requests": sorted({_text(value) for value in source_status["REQUEST_ID"] if _text(value)}),
+            "david_term_counts": david_counts,
             "output_sha256": {},
         }
         _write_report(
@@ -1267,7 +1363,10 @@ def run_compass(
             rationales, drug_review, ledger, test_plans, source_status, network, provenance,
         )
         published = [name for name in _COMPASS_TABLES if name != "compass_report.md"]
-        provenance["output_sha256"] = {name: _sha256(staging / name) for name in published + ["compass_report.md"]}
+        provenance["output_sha256"] = {
+            name: _sha256(staging / name)
+            for name in published + list(filter_frames) + ["compass_report.md"]
+        }
         (staging / "compass_provenance.json").write_text(json.dumps(provenance, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         missing = [name for name in _COMPASS_TABLES if not (staging / name).is_file()]
         if missing:
@@ -1281,11 +1380,16 @@ def run_compass(
         "output_dir": str(output),
         "eligibility_rows": len(eligibility),
         "eligible_terms": int(eligibility["DECISION"].eq(ELIGIBLE).sum()),
+        "exploratory_eligible_terms": int(eligibility["DECISION"].eq(ELIGIBLE_EXPLORATORY).sum()),
         "rationale_rows": len(rationales),
         "test_first": int(rationales["DECISION"].eq(DECISION_TEST_FIRST).sum()),
         "advance_research": int(rationales["DECISION"].eq(DECISION_ADVANCE).sum()),
         "hold": int(rationales["DECISION"].eq(DECISION_HOLD).sum()),
         "reject": int(rationales["DECISION"].eq(DECISION_REJECT).sum()),
         "drug_rows": len(drug_review),
+        "broad_drug_rows": len(drug_review) if drug_scope == "broad_pathway" else 0,
+        "drug_filter_counts": {name: len(filter_frames[f"target_drug_review_{name}.csv"]) for name in drug_filters},
+        "david_term_counts": david_counts,
+        "pharmacology_targets_queried": len(drug_status),
         "source_failures": sorted(failures),
     }

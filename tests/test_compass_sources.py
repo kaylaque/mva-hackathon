@@ -84,6 +84,27 @@ def test_offline_cache_miss_is_not_a_negative_result(tmp_path: Path) -> None:
     assert envelope["complete"] is False
 
 
+
+def test_public_cached_request_replays_cache_and_distinguishes_empty_from_offline_miss(tmp_path: Path) -> None:
+    endpoint = "https://example.org/public"
+    params = {"q": "identifier"}
+    transport = FakeTransport([("example.org", Response({"records": []}))])
+    first = sources.perform_cached_request(
+        "TEST", endpoint, "GET", params, cache_dir=_cache(tmp_path), offline=False, transport=transport
+    )
+    replay = sources.perform_cached_request(
+        "TEST", endpoint, "GET", params, cache_dir=_cache(tmp_path), offline=True,
+        transport=lambda *args, **kwargs: pytest.fail("cache replay must not call transport"),
+    )
+    miss = sources.perform_cached_request(
+        "TEST", endpoint, "GET", {"q": "missing"}, cache_dir=_cache(tmp_path), offline=True, transport=None
+    )
+
+    assert first["status"] == sources.STATUS_OK
+    assert replay["status"] == sources.STATUS_OK
+    assert replay["payload"] == {"records": []}
+    assert miss["status"] == sources.STATUS_OFFLINE_MISS
+    assert replay["status"] != sources.STATUS_EMPTY
 def test_corrupt_cache_is_never_trusted(tmp_path: Path) -> None:
     routes = [
         ("ontology/go/terms", Response(GO_TERM)),
@@ -394,6 +415,27 @@ def test_uniprot_prefers_the_exact_primary_symbol_and_keeps_evidence_classes(tmp
     assert record["SPECIES"] == "Homo sapiens"
 
 
+def test_readthrough_underscore_symbol_is_queryable(tmp_path: Path) -> None:
+    """HGNC readthrough symbols such as APOBEC3A_B are valid, not malformed."""
+    def esearch(method: str, url: str, params: object = None) -> Response:
+        return Response({"esearchresult": {"count": "0", "idlist": []}})
+
+    protein = sources.fetch_protein_evidence(
+        "APOBEC3A_B",
+        _cache(tmp_path / "protein"),
+        transport=FakeTransport([
+            ("rest.uniprot.org", Response({"results": []})),
+            ("annotation/search", Response({"results": [], "pageInfo": {"total": 0, "resultsPerPage": 100}})),
+        ]),
+    )
+    literature = sources.fetch_literature(
+        "APOBEC3A_B", _cache(tmp_path / "literature"), transport=FakeTransport([("esearch.fcgi", esearch)])
+    )
+
+    assert "a gene symbol is required" not in protein["reason"]
+    assert "a gene symbol is required" not in literature["reason"]
+
+
 def test_uniprot_ambiguous_and_empty_results_are_separate_statuses(tmp_path: Path) -> None:
     ambiguous = {"results": [UNIPROT_BUB1B["results"][0], {**UNIPROT_BUB1B["results"][0], "primaryAccession": "A0A000"}]}
     envelope = sources.fetch_protein_evidence("BUB1B", _cache(tmp_path / "amb"), transport=FakeTransport([("rest.uniprot.org", Response(ambiguous))]))
@@ -476,6 +518,8 @@ def test_drug_evidence_pages_mechanisms_and_keeps_missing_assays_unavailable(tmp
             return Response(targets)
         if "mechanism.json" in url:
             return Response(mechanisms)
+        if "molecule/CHEMBL_A.json" in url:
+            return Response({"molecule_chembl_id": "CHEMBL_A", "pref_name": "Drug A"})
         if "activity.json" in url:
             return Response(activities)
         if "opentargets" in url:
@@ -491,6 +535,40 @@ def test_drug_evidence_pages_mechanisms_and_keeps_missing_assays_unavailable(tmp
     assert record["POTENCY"] == []
     assert record["ENSEMBL_GENE_ID"] == "ENSG00000156970"
 
+
+
+def test_drug_evidence_resolves_each_chembl_molecule_name_once(tmp_path: Path) -> None:
+    docs = {"response": {"numFound": 1, "docs": [{"symbol": "BUB1B", "alias_symbol": [], "prev_symbol": [], "ensembl_gene_id": "ENSG00000156970", "uniprot_ids": ["O60566"], "hgnc_id": "HGNC:1149"}]}}
+    targets = {"targets": [{"target_chembl_id": "CHEMBL1234", "target_components": [{"accession": "O60566"}]}], "page_meta": {"next": None}}
+    mechanisms = {"mechanisms": [
+        {"mec_id": "M1", "molecule_chembl_id": "CHEMBL_A", "action_type": "INHIBITOR", "mechanism_of_action": "BUB1B inhibitor", "max_phase": 1},
+        {"mec_id": "M2", "molecule_chembl_id": "CHEMBL_A", "action_type": "AGONIST", "mechanism_of_action": "BUB1B agonist", "max_phase": 1},
+    ], "page_meta": {"next": None}}
+    molecule = {"molecule_chembl_id": "CHEMBL_A", "pref_name": "Drug A"}
+    activities = {"activities": [], "page_meta": {"next": None}}
+    ot = {"data": {"target": {"id": "ENSG00000156970", "approvedSymbol": "BUB1B", "drugAndClinicalCandidates": {"rows": []}}}}
+
+    def routes(method: str, url: str, params: object = None) -> Response:
+        if "genenames" in url:
+            return Response(docs)
+        if "target.json" in url:
+            return Response(targets)
+        if "mechanism.json" in url:
+            return Response(mechanisms)
+        if "molecule/CHEMBL_A.json" in url:
+            return Response(molecule)
+        if "activity.json" in url:
+            return Response(activities)
+        if "opentargets" in url:
+            return Response(ot)
+        raise AssertionError(url)
+
+    transport = FakeTransport([("genenames", routes), ("ebi.ac.uk", routes), ("opentargets", Response(ot))])
+    envelope = sources.fetch_drug_evidence("BUB1B", _cache(tmp_path), transport=transport)
+
+    assert envelope["complete"] is True
+    assert [record["DRUG_NAME"] for record in envelope["records"]] == ["Drug A", "Drug A"]
+    assert sum("molecule/CHEMBL_A.json" in url for _, url, _ in transport.calls) == 1
 
 def test_replayed_cache_issues_no_http_calls(tmp_path: Path) -> None:
     transport = FakeTransport([("rest.uniprot.org", Response(UNIPROT_BUB1B)), ("annotation/search", Response({"results": [], "pageInfo": {"total": 0, "resultsPerPage": 100}}))])

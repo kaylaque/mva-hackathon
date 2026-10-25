@@ -26,7 +26,6 @@ from mva_hackathon.compass import (
     DECISION_REJECT,
     DECISION_TEST_FIRST,
     ELIGIBLE,
-    HOLD_RELEVANCE,
     STOP_NOT_SIGNIFICANT,
     MECHANISM_PRIOR_PANEL,
     build_eligibility,
@@ -94,6 +93,10 @@ class FakeTransport:
             return Response({"targets": [{"target_chembl_id": "CHEMBL1", "pref_name": "BUB1B", "target_type": "SINGLE PROTEIN", "organism": "Homo sapiens", "target_components": [{"accession": "O60566"}]}], "page_meta": {"next": None}})
         if "mechanism.json" in url:
             return Response({"mechanisms": [{"mec_id": "M1", "molecule_chembl_id": "CHEMBL_OK", "action_type": "ACTIVATOR", "mechanism_of_action": "activator"}, {"mec_id": "M2", "molecule_chembl_id": "CHEMBL_BAD", "action_type": "INHIBITOR", "mechanism_of_action": "inhibitor"}], "page_meta": {"next": None}})
+        if "molecule/CHEMBL_OK.json" in url:
+            return Response({"molecule_chembl_id": "CHEMBL_OK", "pref_name": "Drug Ok"})
+        if "molecule/CHEMBL_BAD.json" in url:
+            return Response({"molecule_chembl_id": "CHEMBL_BAD", "pref_name": "Drug Bad"})
         if "activity.json" in url:
             return Response({"activities": [], "page_meta": {"next": None}})
         if "opentargets" in url:
@@ -222,18 +225,193 @@ def test_eligibility_judges_each_provider_separately(tmp_path: Path) -> None:
     assert len(unmapped) >= 1
     assert unmapped["EVIDENCE_ID"].is_unique
 
+def test_david_relaxed_admits_only_benjamini_010_observed_panel_pathways() -> None:
+    evidence = pd.DataFrame([
+        _glue("EV-04", "REACTOME", "R-HSA-04", "david_only", [], [{"Term": "validated", "Benjamini": 0.04}], "not_comparable", "significant"),
+        _glue("EV-08", "REACTOME", "R-HSA-08", "david_only", [], [{"Term": "relaxed", "Benjamini": 0.08}], "not_comparable", "significant"),
+        _glue("EV-11", "REACTOME", "R-HSA-11", "david_only", [], [{"Term": "stopped", "Benjamini": 0.11}], "not_comparable", "not_significant"),
+        _glue("EV-GP", "REACTOME", "R-HSA-GP", "gprofiler_only", [{"TERM_NAME": "g:Profiler", "BH_Q": 0.08}], [], "not_significant", "not_comparable"),
+    ])
+    support = pd.DataFrame([
+        {"EVIDENCE_ID": evidence_id, "ONTOLOGY": "REACTOME", "TERM_ID": term_id, "PROVIDER": provider, "GENE_SYMBOL": "BUB1B", "MEMBERSHIP_STATUS": "observed"}
+        for evidence_id, term_id, provider in (
+            ("EV-04", "R-HSA-04", "DAVID"),
+            ("EV-08", "R-HSA-08", "DAVID"),
+            ("EV-11", "R-HSA-11", "DAVID"),
+            ("EV-GP", "R-HSA-GP", "g:Profiler"),
+        )
+    ])
 
-def test_relevance_is_not_granted_by_a_title(tmp_path: Path) -> None:
+    validated = build_eligibility(evidence, support)
+    relaxed = build_eligibility(
+        evidence, support, selection_profile="david_relaxed", david_benjamini_threshold=0.10
+    ).set_index("EVIDENCE_IDS")
+
+    assert set(validated.loc[validated["DECISION"].eq(ELIGIBLE), "EVIDENCE_IDS"]) == {"EV-04"}
+    assert relaxed.loc["EV-04", "DECISION"] == ELIGIBLE
+    assert relaxed.loc["EV-08", "DECISION"] == "ELIGIBLE_EXPLORATORY"
+    assert relaxed.loc["EV-08", "SIGNIFICANCE"] == "exploratory_relaxed"
+    assert "DAVID_BENJAMINI_0_10_EXPLORATORY" in relaxed.loc["EV-08", "REASON_CODES"]
+    assert relaxed.loc["EV-11", "DECISION"] == STOP_NOT_SIGNIFICANT
+    assert relaxed.loc["EV-GP", "DECISION"] == STOP_NOT_SIGNIFICANT
+
+def test_ninety_percent_david_profile_keeps_provider_and_cutoff_boundaries() -> None:
+    evidence = pd.DataFrame([
+        _glue("EV-80", "REACTOME", "R-HSA-80", "david_only", [], [{"Term": "exploratory", "Benjamini": 0.80}], "not_comparable", "significant"),
+        _glue("EV-92", "REACTOME", "R-HSA-92", "david_only", [], [{"Term": "outside", "Benjamini": 0.92}], "not_comparable", "not_significant"),
+        _glue("EV-G", "REACTOME", "R-HSA-G", "gprofiler_only", [{"TERM_NAME": "unvalidated", "BH_Q": 0.80}], [], "not_significant", "not_comparable"),
+    ])
+    support = pd.DataFrame([
+        {"EVIDENCE_ID": evidence_id, "ONTOLOGY": "REACTOME", "TERM_ID": term_id, "PROVIDER": provider, "GENE_SYMBOL": "BUB1B", "MEMBERSHIP_STATUS": "observed"}
+        for evidence_id, term_id, provider in (
+            ("EV-80", "R-HSA-80", "DAVID"),
+            ("EV-92", "R-HSA-92", "DAVID"),
+            ("EV-G", "R-HSA-G", "g:Profiler"),
+        )
+    ])
+    rows = build_eligibility(
+        evidence, support, selection_profile="david_relaxed", david_benjamini_threshold=0.90
+    ).set_index("EVIDENCE_IDS")
+    assert rows.loc["EV-80", "DECISION"] == "ELIGIBLE_EXPLORATORY"
+    assert "DAVID_BENJAMINI_0_90_EXPLORATORY" in rows.loc["EV-80", "REASON_CODES"]
+    assert rows.loc["EV-92", "DECISION"] == STOP_NOT_SIGNIFICANT
+    assert rows.loc["EV-G", "DECISION"] == STOP_NOT_SIGNIFICANT
+
+
+
+@pytest.mark.parametrize("category,expected", [
+    ("GOTERM_CC_DIRECT", STOP_NOT_SIGNIFICANT),
+    ("GOTERM_MF_DIRECT", STOP_NOT_SIGNIFICANT),
+    ("GOTERM_BP_DIRECT", "ELIGIBLE_EXPLORATORY"),
+])
+def test_go_annotation_aspect_cannot_nominate_non_process_drugs(category: str, expected: str) -> None:
+    evidence = pd.DataFrame([
+        _glue("EV-GO", "GO", "GO:0007059", "david_only", [],
+              [{"Category": category, "Term": "synthetic annotation", "Benjamini": 0.80}],
+              "not_comparable", "significant"),
+    ])
+    support = pd.DataFrame([{
+        "EVIDENCE_ID": "EV-GO", "ONTOLOGY": "GO", "TERM_ID": "GO:0007059",
+        "PROVIDER": "DAVID", "GENE_SYMBOL": "BUB1B", "MEMBERSHIP_STATUS": "observed",
+    }])
+    row = build_eligibility(
+        evidence, support, selection_profile="david_relaxed", david_benjamini_threshold=0.90
+    ).iloc[0]
+    assert row["DECISION"] == expected
+    if expected == STOP_NOT_SIGNIFICANT:
+        assert row["ENTITY_TYPE"] == compass.ENTITY_CONTEXT
+        assert "ANNOTATION_CONTEXT_NOT_A_PATHWAY" in row["REASON_CODES"]
+
+
+@pytest.mark.parametrize("threshold", (0, -0.01, 1.01, float("inf")))
+def test_invalid_david_relaxed_threshold_is_rejected_before_row_processing(threshold: float) -> None:
+    with pytest.raises(ValueError, match="threshold"):
+        build_eligibility(pd.DataFrame(), pd.DataFrame(), selection_profile="david_relaxed", david_benjamini_threshold=threshold)
+
+
+def test_drug_candidate_filters_preserve_defined_subsets() -> None:
+    frame = pd.DataFrame([
+        {"DIRECTIONALITY_FIT": "COMPATIBLE_DIRECTION", "HAZARD_STATUS": "unknown", "DECISION": "TEST_FIRST"},
+        {"DIRECTIONALITY_FIT": "MECHANISTIC_HAZARD", "HAZARD_STATUS": "cited_hazard", "DECISION": "REJECT"},
+    ])
+    assert len(compass.filter_drug_candidates(frame, "all")) == 2
+    assert len(compass.filter_drug_candidates(frame, "direction_compatible")) == 1
+    assert len(compass.filter_drug_candidates(frame, "no_cited_hazard")) == 1
+    assert len(compass.filter_drug_candidates(frame, "decision_ready")) == 1
+
+def test_exploratory_drugs_do_not_override_hazards_or_held_rationales(tmp_path: Path) -> None:
+    rationales = pd.DataFrame([
+        {"RATIONALE_ID": "RAT-H", "TARGET_SYMBOL": "BUB1B", "DECISION": DECISION_REJECT,
+         "REASON_CODES": "CITED_CONTEXTUAL_HAZARD", "COUNTEREVIDENCE_IDS": "ME-H",
+         "EXPLORATORY_DAVID_OBSERVED_TERM_IDS": "hsa00080",
+         "DESIRED_TARGET_CHANGE": "RESTORE_NORMAL", "DISEASE_STATE_DIRECTION": "REDUCED_FUNCTION"},
+        {"RATIONALE_ID": "RAT-U", "TARGET_SYMBOL": "BUB1B", "DECISION": DECISION_HOLD,
+         "REASON_CODES": "SAFETY_UNRECORDED", "COUNTEREVIDENCE_IDS": "",
+         "EXPLORATORY_DAVID_OBSERVED_TERM_IDS": "hsa00080",
+         "DESIRED_TARGET_CHANGE": "RESTORE_NORMAL", "DISEASE_STATE_DIRECTION": "REDUCED_FUNCTION"},
+    ])
+    drugs, _, _ = compass.fetch_drug_review(
+        rationales, tmp_path / "cache", selection_profile="david_relaxed",
+        david_benjamini_threshold=0.90, drug_scope="relaxed_pathway", transport=FakeTransport(),
+    )
+    assert not drugs.empty
+    assert set(drugs.loc[drugs.RATIONALE_ID.eq("RAT-H"), "DECISION"]) == {DECISION_REJECT}
+    assert set(drugs.loc[drugs.RATIONALE_ID.eq("RAT-H"), "HAZARD_STATUS"]) == {"cited_hazard"}
+    assert "RAT-H" not in set(compass.filter_drug_candidates(drugs, "no_cited_hazard").RATIONALE_ID)
+    assert set(drugs.loc[drugs.RATIONALE_ID.eq("RAT-U"), "DECISION"]).issubset({DECISION_HOLD, DECISION_REJECT})
+    assert not compass.filter_drug_candidates(drugs, "decision_ready").shape[0]
+    assert "NONE" not in set(drugs.loc[drugs.RATIONALE_ID.eq("RAT-U"), "EVIDENCE_GAPS"])
+
+
+def test_incomplete_drug_identity_lookup_marks_compass_source_incomplete(tmp_path: Path, monkeypatch) -> None:
+    rationales = pd.DataFrame([{
+        "RATIONALE_ID": "R1",
+        "TARGET_SYMBOL": "BUB1B",
+        "DECISION": DECISION_HOLD,
+        "REASON_CODES": "",
+        "COUNTEREVIDENCE_IDS": "",
+        "EXPLORATORY_DAVID_OBSERVED_TERM_IDS": "hsa05170",
+        "DESIRED_TARGET_CHANGE": "RESTORE_NORMAL",
+        "DISEASE_STATE_DIRECTION": "REDUCED_FUNCTION",
+    }])
+    monkeypatch.setattr(
+        sources,
+        "fetch_drug_evidence",
+        lambda *_args, **_kwargs: {
+            "status": sources.STATUS_OK,
+            "records": [],
+            "complete": False,
+            "source": "CHEMBL+OPEN_TARGETS",
+            "request_id": "identity",
+            "response_sha256": "",
+            "retrieved_at": "",
+            "reason": "molecule name unavailable",
+        },
+    )
+
+    _, statuses, failures = compass.fetch_drug_review(
+        rationales, tmp_path / "cache", selection_profile="david_relaxed",
+        david_benjamini_threshold=0.90, drug_scope="relaxed_pathway",
+    )
+
+    assert statuses[0]["COMPLETE"] is False
+    assert failures == ["Pharmacology:BUB1B"]
+
+
+
+
+def test_eligibility_does_not_require_a_mechanism_panel_member(tmp_path: Path) -> None:
+    """An observed contributor outside the MVA panel no longer blocks an eligible term."""
     postanalysis = load_postanalysis(write_postanalysis(tmp_path / "post"))
     support = postanalysis["support"].copy()
-    # The significant, significant-metadata term now has a non-panel contributor only.
+    # The significant term now has a non-panel contributor only.
     support.loc[0, "GENE_SYMBOL"] = "RPL13"
     eligibility = build_eligibility(postanalysis["evidence"], support)
     row = eligibility.loc[eligibility["EVIDENCE_ID"].eq("EV-1::gprofiler")].iloc[0]
 
     assert row["SIGNIFICANCE"] == "significant"
-    assert row["DECISION"] == HOLD_RELEVANCE
-    assert "NO_CITED_MVA_ROLE_TITLE_ALONE_IS_NOT_A_GATE" in row["REASON_CODES"]
+    assert row["DECISION"] == ELIGIBLE
+    assert "PROVIDER_SIGNIFICANCE_AND_OBSERVED_MEMBER" in row["REASON_CODES"]
+    assert row["MEMBERSHIP_STATUS"] == "observed"
+
+
+def test_exploratory_term_without_panel_member_is_eligible() -> None:
+    """The relaxed profile also admits on statistics plus observed membership alone."""
+    evidence = pd.DataFrame([
+        _glue("EV-NP", "REACTOME", "R-HSA-NP", "david_only", [],
+              [{"Term": "non-panel pathway", "Benjamini": 0.08}],
+              "not_comparable", "significant"),
+    ])
+    support = pd.DataFrame([{
+        "EVIDENCE_ID": "EV-NP", "ONTOLOGY": "REACTOME", "TERM_ID": "R-HSA-NP",
+        "PROVIDER": "DAVID", "GENE_SYMBOL": "RPL13", "MEMBERSHIP_STATUS": "observed",
+    }])
+    row = build_eligibility(
+        evidence, support, selection_profile="david_relaxed", david_benjamini_threshold=0.10
+    ).iloc[0]
+
+    assert row["DECISION"] == "ELIGIBLE_EXPLORATORY"
+    assert "DAVID_BENJAMINI_0_10_EXPLORATORY" in row["REASON_CODES"]
 
 
 # --------------------------------------------------------------------------- rationales
@@ -393,6 +571,41 @@ def test_run_compass_writes_every_contract_and_source_ledger(artifacts: dict[str
     report = (artifacts["output"] / "compass_report.md").read_text()
     assert "PATHWAY_SUPPORTED" in report and "MECHANISM_PRIOR" in report
     assert "not a treatment proposal" in report
+
+
+def test_ninety_percent_compass_report_and_drug_rows_are_distinct(artifacts: dict[str, Path]) -> None:
+    evidence_path = artifacts["postanalysis"] / "integrated_pathway_evidence.csv"
+    support_path = artifacts["postanalysis"] / "gene_pathway_support.csv"
+    evidence = pd.read_csv(evidence_path)
+    evidence = pd.concat([evidence, pd.DataFrame([
+        _glue("EV-80", "KEGG", "hsa00080", "david_only", [], [{"Term": "exploratory", "Benjamini": 0.80}], "not_comparable", "significant"),
+        _glue("EV-92", "KEGG", "hsa00092", "david_only", [], [{"Term": "outside", "Benjamini": 0.92}], "not_comparable", "not_significant"),
+    ])], ignore_index=True)
+    evidence.to_csv(evidence_path, index=False)
+    support = pd.read_csv(support_path)
+    support.loc[len(support)] = {"EVIDENCE_ID": "EV-80", "ONTOLOGY": "KEGG", "TERM_ID": "hsa00080", "PROVIDER": "DAVID", "GENE_SYMBOL": "BUB1B", "MEMBERSHIP_STATUS": "observed"}
+    support.to_csv(support_path, index=False)
+
+    result = run_compass(
+        artifacts["postanalysis"], artifacts["network"], artifacts["output"],
+        cache_dir=artifacts["cache"], reviewed_evidence=artifacts["reviewed"], transport=FakeTransport(),
+        selection_profile="david_relaxed", david_benjamini_threshold=0.90, drug_scope="relaxed_pathway",
+    )
+    assert result["status"] == "completed"
+    assert result["david_term_counts"] == {
+        "input": 5, "validated_at_005": 3, "at_010": 3,
+        "newly_in_cutoff": 1, "above_cutoff": 1, "unknown_statistic": 0,
+        "eligible_exploratory": 1, "gated_at_cutoff": 1,
+    }
+    assert result["pharmacology_targets_queried"] == 1
+    report = (artifacts["output"] / "compass_report.md").read_text()
+    assert "RELAXED DAVID BENJAMINI 0.90 EXPLORATION" in report
+    assert "0.05,0.90" in report
+    assert "RELAXED DAVID BENJAMINI 0.10 EXPLORATION" not in report
+    rows = pd.read_csv(artifacts["output"] / "target_drug_review.csv")
+    assert not rows.empty
+    assert set(rows["PATHWAY_EVIDENCE_LEVEL"]) == {"RELAXED_DAVID_BENJAMINI_0_90"}
+    assert set(rows["TARGET_SYMBOL"]) == {"BUB1B"}
 
 
 def test_offline_miss_is_reported_as_source_incomplete(artifacts: dict[str, Path]) -> None:

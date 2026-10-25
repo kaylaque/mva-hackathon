@@ -201,7 +201,7 @@ def _retry_after(response: Any) -> float | None:
     return value if 0 < value <= 60 else None
 
 
-def _perform(
+def perform_cached_request(
     source: str,
     endpoint: str,
     method: str,
@@ -389,7 +389,7 @@ def _reactome_walk(
                 # Already expanded: a repeated reference is not missing coverage.
                 continue
             visited.add(db_id)
-            resolved = _perform("REACTOME", f"{_REACTOME_CONTENT}/data/query/{db_id}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+            resolved = perform_cached_request("REACTOME", f"{_REACTOME_CONTENT}/data/query/{db_id}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
             if resolved["status"] != STATUS_OK or not isinstance(resolved["payload"], dict):
                 complete = False
                 continue
@@ -429,7 +429,7 @@ def _reactome_membership(term: str, cache_dir: Path, *, offline: bool, transport
     stable = term.upper()
     if re.fullmatch(r"R-HSA-\d+", stable) is None:
         return _envelope(STATUS_UNAVAILABLE, [], source="REACTOME", reason="a human Reactome stable identifier (R-HSA-*) is required")
-    event = _perform("REACTOME", f"{_REACTOME_CONTENT}/data/query/{stable}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+    event = perform_cached_request("REACTOME", f"{_REACTOME_CONTENT}/data/query/{stable}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
     if event["status"] != STATUS_OK:
         return _forward(event, "REACTOME")
     payload = event["payload"]
@@ -437,7 +437,7 @@ def _reactome_membership(term: str, cache_dir: Path, *, offline: bool, transport
         return _envelope(STATUS_INVALID_RESPONSE, [], source="REACTOME", reason="unrecognized Reactome event payload")
     if _text(payload.get("speciesName")).lower() != "homo sapiens":
         return _envelope(STATUS_UNAVAILABLE, [], source="REACTOME", reason="only human events are supported")
-    participants = _perform("REACTOME", f"{_REACTOME_CONTENT}/data/participants/{stable}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+    participants = perform_cached_request("REACTOME", f"{_REACTOME_CONTENT}/data/participants/{stable}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
     if participants["status"] != STATUS_OK:
         return _forward(participants, "REACTOME")
     body = participants["payload"]
@@ -474,7 +474,7 @@ def _go_pages(
             complete = False
             break
         seen_pages.add(page)
-        response = _perform("QUICKGO", endpoint, "GET", {**params, "page": page}, cache_dir=cache_dir, offline=offline, transport=transport)
+        response = perform_cached_request("QUICKGO", endpoint, "GET", {**params, "page": page}, cache_dir=cache_dir, offline=offline, transport=transport)
         last = response
         if response["status"] != STATUS_OK:
             return rows, False, response
@@ -545,7 +545,7 @@ def _go_membership(term: str, cache_dir: Path, *, offline: bool, transport: Tran
     go_id = term.upper()
     if re.fullmatch(r"GO:\d{7}", go_id) is None:
         return _envelope(STATUS_UNAVAILABLE, [], source="GO", reason="a GO identifier is required for GO membership")
-    identity = _perform("QUICKGO", f"{_QUICKGO}/ontology/go/terms/{go_id}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+    identity = perform_cached_request("QUICKGO", f"{_QUICKGO}/ontology/go/terms/{go_id}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
     if identity["status"] != STATUS_OK:
         return _forward(identity, "GO")
     payload = identity["payload"]
@@ -605,10 +605,10 @@ def _kegg_membership(term: str, cache_dir: Path, *, offline: bool, transport: Tr
     identifier = term.lower()
     if re.fullmatch(r"hsa\d{5}", identifier) is None:
         return _envelope(STATUS_UNAVAILABLE, [], source="KEGG", reason="a human KEGG pathway identifier (hsa#####) is required")
-    definition = _perform("KEGG", f"{_KEGG}/get/{identifier}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport, expect_json=False)
+    definition = perform_cached_request("KEGG", f"{_KEGG}/get/{identifier}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport, expect_json=False)
     if definition["status"] != STATUS_OK:
         return _forward(definition, "KEGG")
-    links = _perform("KEGG", f"{_KEGG}/link/hsa/{identifier}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport, expect_json=False)
+    links = perform_cached_request("KEGG", f"{_KEGG}/link/hsa/{identifier}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport, expect_json=False)
     if links["status"] != STATUS_OK:
         return _forward(links, "KEGG")
     definition_text = _text(definition["payload"].get("text"))
@@ -673,7 +673,7 @@ def _wikipathways_membership(term: str, cache_dir: Path, *, offline: bool, trans
     wp_id = term.upper()
     if re.fullmatch(r"WP\d+", wp_id) is None:
         return _envelope(STATUS_UNAVAILABLE, [], source="WIKIPATHWAYS", reason="a WikiPathways identifier (WP####) is required")
-    response = _perform("WIKIPATHWAYS", f"{_WIKIPATHWAYS}/{wp_id}/{wp_id}.json", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+    response = perform_cached_request("WIKIPATHWAYS", f"{_WIKIPATHWAYS}/{wp_id}/{wp_id}.json", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
     if response["status"] != STATUS_OK:
         return _forward(response, "WIKIPATHWAYS")
     payload = response["payload"]
@@ -776,13 +776,13 @@ def fetch_gene_identity(
     clean = _text(symbol).upper()
     if not clean:
         return _envelope(STATUS_UNAVAILABLE, [], source="HGNC", reason="a gene symbol is required")
-    exact = _perform("HGNC", f"{_HGNC}/{clean}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+    exact = perform_cached_request("HGNC", f"{_HGNC}/{clean}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
     if exact["status"] not in {STATUS_OK, STATUS_EMPTY}:
         return _forward(exact, "HGNC")
     resolution = "exact_symbol"
     response = exact
     if not _hgnc_docs(exact["payload"]):
-        alias = _perform("HGNC", f"{_HGNC_ALIAS}/{clean}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
+        alias = perform_cached_request("HGNC", f"{_HGNC_ALIAS}/{clean}", "GET", None, cache_dir=cache_dir, offline=offline, transport=transport)
         if alias["status"] not in {STATUS_OK, STATUS_EMPTY}:
             return _forward(alias, "HGNC")
         if not _hgnc_docs(alias["payload"]):
@@ -826,6 +826,9 @@ def fetch_gene_identity(
     )
 
 
+_SYMBOL_PATTERN = re.compile(r"[A-Z0-9][A-Z0-9_.\-]{0,19}")
+
+
 def fetch_protein_evidence(
     symbol: str,
     cache_dir: Path,
@@ -835,9 +838,9 @@ def fetch_protein_evidence(
 ) -> dict[str, Any]:
     """Reviewed human UniProt entry for one exact gene symbol, plus QuickGO annotation."""
     clean = _text(symbol).upper()
-    if re.fullmatch(r"[A-Z0-9][A-Z0-9\-\.]{0,19}", clean) is None:
+    if _SYMBOL_PATTERN.fullmatch(clean) is None:
         return _envelope(STATUS_UNAVAILABLE, [], source="UNIPROT", reason="a gene symbol is required")
-    response = _perform(
+    response = perform_cached_request(
         "UNIPROT",
         _UNIPROT,
         "GET",
@@ -937,7 +940,7 @@ def fetch_literature(
 ) -> dict[str, Any]:
     """Bounded PubMed search per candidate: total hits are recorded, results are capped."""
     clean = _text(symbol).upper()
-    if re.fullmatch(r"[A-Z0-9][A-Z0-9\-\.]{0,19}", clean) is None:
+    if _SYMBOL_PATTERN.fullmatch(clean) is None:
         return _envelope(STATUS_UNAVAILABLE, [], source="PUBMED", reason="a gene symbol is required")
     queries = (
         f"{clean}[gene] AND (mosaic variegated aneuploidy OR chromosome segregation OR spindle assembly checkpoint)",
@@ -950,7 +953,7 @@ def fetch_literature(
     complete = True
     last: dict[str, Any] = {"status": STATUS_OK, "reason": "", "request_id": "", "response_sha256": "", "retrieved_at": _now()}
     for query in queries:
-        search = _perform(
+        search = perform_cached_request(
             "PUBMED",
             f"{_NCBI}/esearch.fcgi",
             "GET",
@@ -977,7 +980,7 @@ def fetch_literature(
         seen.update(fresh)
         if not fresh:
             continue
-        summary = _perform(
+        summary = perform_cached_request(
             "PUBMED",
             f"{_NCBI}/esummary.fcgi",
             "GET",
@@ -1051,7 +1054,7 @@ def _chembl_pages(
             complete = False
             break
         seen_offsets.add(offset)
-        response = _perform("CHEMBL", f"{_CHEMBL}/{endpoint}", "GET", {**params, "limit": PAGE_SIZE, "offset": offset}, cache_dir=cache_dir, offline=offline, transport=transport)
+        response = perform_cached_request("CHEMBL", f"{_CHEMBL}/{endpoint}", "GET", {**params, "limit": PAGE_SIZE, "offset": offset}, cache_dir=cache_dir, offline=offline, transport=transport)
         last = response
         if response["status"] != STATUS_OK:
             return rows, False, response
@@ -1074,6 +1077,33 @@ def _chembl_pages(
     else:
         complete = False
     return rows, complete, last
+
+
+
+def _chembl_molecule_name(
+    molecule_id: str,
+    cache_dir: Path,
+    offline: bool,
+    transport: Transport | None,
+) -> tuple[str, bool]:
+    response = perform_cached_request(
+        "CHEMBL",
+        f"{_CHEMBL}/molecule/{molecule_id}.json",
+        "GET",
+        {},
+        cache_dir=cache_dir,
+        offline=offline,
+        transport=transport,
+    )
+    payload = response.get("payload")
+    if (
+        response["status"] != STATUS_OK
+        or not isinstance(payload, dict)
+        or _text(payload.get("molecule_chembl_id")) != molecule_id
+        or not _text(payload.get("pref_name"))
+    ):
+        return "", False
+    return _text(payload["pref_name"]), True
 
 
 def fetch_drug_evidence(
@@ -1129,13 +1159,21 @@ def fetch_drug_evidence(
             transport,
         )
         complete = complete and mechanisms_complete
+        molecule_names: dict[str, str] = {}
         for mechanism in mechanisms:
+            molecule_id = _text(mechanism.get("molecule_chembl_id"))
+            if molecule_id not in molecule_names:
+                molecule_names[molecule_id], resolved = _chembl_molecule_name(
+                    molecule_id, cache_dir, offline, transport
+                )
+                complete = complete and resolved
             records.append(
                 {
                     "TARGET_SYMBOL": clean,
                     "TARGET_CHEMBL_ID": target_chembl_id,
                     "ENSEMBL_GENE_ID": ensembl,
-                    "DRUG_ID": _text(mechanism.get("molecule_chembl_id")),
+                    "DRUG_ID": molecule_id,
+                    "DRUG_NAME": molecule_names[molecule_id],
                     "ACTION_TYPE": _text(mechanism.get("action_type")),
                     "MECHANISM": _text(mechanism.get("mechanism_of_action")),
                     "MAX_PHASE": mechanism.get("max_phase"),
@@ -1214,7 +1252,7 @@ def _open_targets_records(
         "drugAndClinicalCandidates { rows { id maxClinicalStage drug { id name drugType "
         "mechanismsOfAction { rows { mechanismOfAction actionType } } drugWarnings { warningType description } } } } } }"
     )
-    response = _perform(
+    response = perform_cached_request(
         "OPEN_TARGETS",
         _OPEN_TARGETS,
         "POST",
