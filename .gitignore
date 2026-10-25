@@ -196,8 +196,8 @@ results/
 data/interim/
 
 # SageBio MVA hackathon WGS inputs and common genomic artifacts
-input/WGS_EX2312012_HGWCNDSX7.vcf.gz
-input/WGS_EX2312012_HGWCNDSX7.vcf.gz.tbi
+input/*.vcf.gz
+input/*.vcf.gz.tbi
 *.bcf
 *.bcf.csi
 *.bam

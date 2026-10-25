@@ -76,7 +76,7 @@ Before entering Track 2, the raw patient sequencing data underwent foundational 
 
 ### Step 1: Quality Control & Normalization
 - **Purpose**: Remove low-quality sequencing artifacts, decompose complex and multiallelic variants into normalized biallelic records, verify read depth and genotype quality, and retain confident variant calls against GRCh38.
-- **Inputs**: Raw WGS VCF (`input/patient/WGS_EX2312012_HGWCNDSX7.vcf.gz`), GRCh38 reference FASTA (`Homo_sapiens.GRCh38.dna.primary_assembly.fa`).
+- **Inputs**: Raw single-subject WGS VCF (`input/patient/*.vcf.gz`), GRCh38 reference FASTA (`Homo_sapiens.GRCh38.dna.primary_assembly.fa`).
 - **Exact Thresholds & Values**:
   - Minimum read depth: `DP >= 10`.
   - Minimum genotype quality: `GQ >= 20`.

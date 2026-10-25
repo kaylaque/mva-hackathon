@@ -2,6 +2,12 @@
 
 Early technical exploration of whole-genome sequencing (WGS) and VCF data for the SageBio **Rare Disease, Real Kid: MVA Hackathon 2026**. The project profiles VCF, BAM/CRAM, and FASTQ inputs, summarizes quality and genotype signals, and produces exploratory plots and compact tables. Results support research and candidate discovery only; they are not diagnostic or medical advice.
 
+## Acknowledgement
+
+This work was made possible through the Hackathon, organized by Sage Bionetworks in partnership with the MVA Society, Hugging Face, and BEACON (The Benchmarking, Evaluation, and Assessment Consortium for Science), with prize sponsorship from AWS and Anthropic. We are deeply grateful to the child and their family who generously contributed their data and their story to advance research into this rare disease. We acknowledge their trust in making this Hackathon possible.
+
+The underlying single-subject dataset (`SageBio/mva-hackathon-2026-data`) is gated and is not redistributed here; no patient-derived data is committed to this repository. See the Hackathon Synapse page for the dataset citation.
+
 ## Installation
 
 Requires Python 3.13 and [`uv`](https://docs.astral.sh/uv/).

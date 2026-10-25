@@ -10,7 +10,8 @@ BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAW_DATA_DIR="${BASE_DIR}/data/input/patient"
 INTERIM_DIR="${BASE_DIR}/data/interim"
 
-INPUT_VCF="${RAW_DATA_DIR}/WGS_EX2312012_HGWCNDSX7.vcf.gz"
+# Set the actual VCF filename locally; keep patient sample codes out of Git.
+INPUT_VCF="${RAW_DATA_DIR}/WGS_SUBJECT.vcf.gz"
 QC_OUT_DIR="${INTERIM_DIR}/qc"
 FILTERED_OUT_DIR="${INTERIM_DIR}/filtered"
 FILTERED_VCF="${FILTERED_OUT_DIR}/pass_quality.vcf.gz"
