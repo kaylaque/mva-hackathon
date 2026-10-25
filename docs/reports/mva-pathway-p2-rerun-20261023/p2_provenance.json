@@ -1,0 +1,32 @@
+{
+  "input_rows": 16455,
+  "input_sha256": "547ff4dd62f93013512eb6df794ac0f8a9ad420a4ca25c94b1300a670c5f3261",
+  "mva_relevance_columns_present": [],
+  "ordering": [
+    "BH_Q",
+    "FOLD_ENRICHMENT",
+    "INTERSECTION_SIZE",
+    "SOURCE",
+    "TERM_ID"
+  ],
+  "output_columns": [
+    "SOURCE",
+    "TERM_ID",
+    "TERM_NAME",
+    "PATHWAY_DB",
+    "INTERSECTION_SIZE",
+    "TERM_SIZE",
+    "QUERY_SIZE",
+    "BACKGROUND_SIZE",
+    "RAW_P",
+    "BH_Q",
+    "PROVIDER_ADJUSTED_P",
+    "PROVIDER_CORRECTION",
+    "FOLD_ENRICHMENT",
+    "CONTRIBUTING_GENES",
+    "BACKGROUND_LABEL",
+    "LOCAL_STATS_REASON"
+  ],
+  "output_rows": 0,
+  "q_threshold": 0.05
+}
